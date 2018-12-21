@@ -35,10 +35,11 @@ if __name__ == "__main__":
 	robotPose.set([0,pi/2,-pi/2,0,0,pi/2,0])
 	collisionTest = WorldCollider(world)
 
+	vis.clearText()
 
 	while(1):
 		time.sleep(0.1)
-		vis.shown()
+		vis.show()
 		pass
 
 			#pass
