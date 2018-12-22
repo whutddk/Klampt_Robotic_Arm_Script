@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	world = WorldModel()
 
 	res = world.readFile('./anno_check.xml')
-	if not res:
+	if not res:`
 		raise RuntimeError("Unable to load model ") 
 			
 	vis.add("world",world)
@@ -76,6 +76,122 @@ if __name__ == "__main__":
 		time.sleep(0.1)
 		vis.show()
 		pass
+
+while(1):
+	edgeBuff = edgeIndex
+
+	activeEdgeList = []
+
+	# 				01		02	03		04	12		13	14		23	24		34
+	completeMask = [False,False,False,False,False,False,False,False,False,False]
+
+	searchGroup = [[],[],[],[],[]]
+	searchGroup[0] = [0]
+	searchGroup[1] = [1]
+	searchGroup[2] = [2]
+	searchGroup[3] = [3]
+	searchGroup[4] = [4]
+
+	ctlRobotRandom()
+
+	while( completeMask != [True,True,True,True,True,True,True,True,True,True] ):
+		if ( (completeMask[3] == False) and (completeMask[6] == False) and (completeMask[8] == False) and (completeMask[9] == False) ):
+			growGroup(4)
+			pass
+		if ( (completeMask[2] == False) and (completeMask[5] == False) and (completeMask[7] == False) ):
+			growGroup(3)
+			pass
+		if ( (completeMask[1] == False) and (completeMask[4] == False) ):
+			growGroup(2)
+			pass
+		if ( (completeMask[0] == False) ):
+			growGroup(1)
+			pass
+		if ( True ):
+			growGroup(0)
+			pass 
+
+def ctlRobotRandom():
+	pass
+
+
+def growGroup(groupNum):
+	for edge in edgeBuff:
+		result1,result2 = searchPosesInGroup(groupNum,edge[0],edge[1])
+
+		if ( result1 == False and result2 == False ):
+			pass
+		else:
+			edgeBuff_del_edge()
+
+			if ( result1 == True and result2 == True ):
+				pass
+			else:
+				if ( False == edgeSaftyCheck(edge[0],edge[1]) ):					
+					continue
+
+				if ( result1 == True and result2 == False ):
+					
+					if ( True = mixCheck(groupNum,edge[1]) ):
+					
+					else:
+						searchGroup[groupNum].append(edge[1])
+						activeEdgeList.append([edge[0],edge[1]])#record as parents
+
+				elif:( result1 == False and result2 == True ):
+
+					
+					if ( True = mixCheck(groupNum,edge[0]) ):
+
+						
+
+					else:
+						searchGroup[groupNum].append(edge[0])
+						activeEdgeList.append([edge[1],edge[0]])#record as parents
+
+	pass
+
+
+def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
+
+	result1 = False
+	result2 = False
+
+	for pose in searchGroup[groupNum]:
+		if ( pose == PoseNum1 ):
+			result1 = True
+		if ( pose == PoseNum2 ):
+			result2 = True
+		if ( result1 == True and result2 == True ):
+			break
+	return result1, result2
+
+
+
+	pass
+
+def mixCheckMark(localGroupNum,mixPoseNum):
+
+	result = False
+	for mixGroupNum in range(0,5):
+		if ( localGroupNum == mixGroupNum ):
+			continue
+
+		if ( searchPosesInGroup(mixGroupNum,result2,result2) == True,True ):
+			# mix!
+			seekPath(localGroupNum,mixGroupNum,mixPoseNum)
+			markFlag()
+			result = True
+		
+	return result
+
+def seekPath(groupNum1,groupNum2,mixPose):
+	pass
+
+
+
+
+
 
 # set ctlRobot Random Pose
 
