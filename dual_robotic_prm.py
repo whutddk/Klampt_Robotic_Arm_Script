@@ -79,46 +79,31 @@ if __name__ == "__main__":
 
 
 
+edgeHeat[100000]
 
 
 
 
-
+edgeHeat_init()
 
 
 while(1):
 	edgeBuff = edgeIndex
 
+
+
+
+	completeMask = [False,False,False,False,False]
+
+# we define Pose0 as start pose
+	activePoseList = [0]
 	activeEdgeList = []
-
-	# 				01		02	03		04	12		13	14		23	24		34
-	completeMask = [False,False,False,False,False,False,False,False,False,False]
-
-	searchGroup = [[],[],[],[],[]]
-	searchGroup[0] = [0]
-	searchGroup[1] = [1]
-	searchGroup[2] = [2]
-	searchGroup[3] = [3]
-	searchGroup[4] = [4]
 
 	ctlRobotRandom()
 
-	while( completeMask != [True,True,True,True,True,True,True,True,True,True] ):
-		if ( (completeMask[3] == False) and (completeMask[6] == False) and (completeMask[8] == False) and (completeMask[9] == False) ):
-			growGroup(4)
-			pass
-		if ( (completeMask[2] == False) and (completeMask[5] == False) and (completeMask[7] == False) ):
-			growGroup(3)
-			pass
-		if ( (completeMask[1] == False) and (completeMask[4] == False) ):
-			growGroup(2)
-			pass
-		if ( (completeMask[0] == False) ):
-			growGroup(1)
-			pass
-		if ( True ):
-			growGroup(0)
-			pass 
+	while( completeMask != [True,True,True,True,True] ):
+		
+		growGroup()
 
 		if ( stack ):
 			break
@@ -132,9 +117,11 @@ def ctlRobotRandom():
 	pass
 
 
-def growGroup(groupNum):
+def growGroup():
+	# for edgeIndex in range(0,100000):
+	# 	edge = edgeBuff[edgeIndex]
 	for edge in edgeBuff:
-		result1,result2 = searchPosesInGroup(groupNum,edge[0],edge[1])
+		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
 
 		if ( result1 == False and result2 == False ):
 			# two pose are not in this edge,find next edge
@@ -148,144 +135,87 @@ def growGroup(groupNum):
 				pass
 			else:
 				# collision check first
-				if ( False == edgeSaftyCheck(edge[0],edge[1]) ):
+				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
+					activeEdgeList.append( edge )#record as parents
 
-					continue
-
-				if ( result1 == True and result2 == False ):
-					
-					# all mix work should be finished in  mixCheckMark()
-					if ( True == mixCheckMark(groupNum,edge[1]) ):
-						pass
-					else:
-						activeEdgeList.append( [edge[0],edge[1]] )#record as parents
-						searchGroup[groupNum].append( edge[1] )						
+					if ( result1 == True and result2 == False ):
 						
-				elif ( result1 == False and result2 == True ):
-
-					# all mix work should be finished in  mixCheckMark()
-					if ( True == mixCheckMark(groupNum,edge[0]) ):
-						pass
-					else:
-						activeEdgeList.append( [edge[1],edge[0]] )#record as parents
-						searchGroup[groupNum].append( edge[0] )
-					
+						activePoseList.append( edge[1] )		
+						# all mix work should be finished in  mixCheckMark()
+						mixCheckMark(edge[1])
+										
+							
+					elif ( result1 == False and result2 == True ):
+						activeEdgeList.append( edge )#record as parents
+						activePoseList.append( edge[0] )
+						# all mix work should be finished in  mixCheckMark()
+						mixCheckMark(edge[0])
+				else:
+					pass
 
 	return
 
 #################################################################
 
-def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
+def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
 
 	result1 = False
 	result2 = False
-
-	searchGroupList = []
-
-	if ( groupNum == 0 ):
-		searchGroupList.append(0)
-	if ( groupNum == 1 ):
-		searchGroupList.append(1)
-	if ( groupNum == 2 ):
-		searchGroupList.append(2)
-	if ( groupNum == 3 ):
-		searchGroupList.append(3)
-	if ( groupNum == 4 ):
-		searchGroupList.append(4)
-
-
-					# 01		02	03		04	12		13	14		23	24		34
-	# completeMask = [False,False,False,False,False,False,False,False,False,False]
-
-	for i in range(0,4):
-		for j in searchGroupList:
-			if ( j == 0 ):
-				if ( True == completeMask[0] ):
-					searchGroupList.append(1)
-				if ( True == completeMask[1] ):
-					searchGroupList.append(2)
-				if ( True == completeMask[2] ):
-					searchGroupList.append(3)
-				if ( True == completeMask[3] ):
-					searchGroupList.append(4)
-			elif ( j == 1 ):
-				if ( True == completeMask[4] ):
-					searchGroupList.append(2)
-				if ( True == completeMask[5] ):
-					searchGroupList.append(3)
-				if ( True == completeMask[6] ):
-					searchGroupList.append(4)
-				if ( True == completeMask[0] ):
-					searchGroupList.append(0)
-			elif ( j == 2 ):
-				if ( True == completeMask[7] ):
-					searchGroupList.append(3)
-
-				if ( True == completeMask[8] ):
-					searchGroupList.append(4)
-
-				if ( True == completeMask[1] ):
-					searchGroupList.append(0)
-
-				if ( True == completeMask[4] ):
-					searchGroupList.append(1)
-
-			elif ( j == 3 ):
-				if ( True == completeMask[9] ):
-					searchGroupList.append(4)
-
-				if ( True == completeMask[2] ):
-					searchGroupList.append(0)
-
-				if ( True == completeMask[5] ):
-					searchGroupList.append(1)
-
-				if ( True == completeMask[7] ):
-					searchGroupList.append(2)
-
-			elif ( j == 4 ):
-				if ( True == completeMask[3] ):
-					searchGroupList.append(0)
-
-				if ( True == completeMask[6] ):
-					searchGroupList.append(1)
-
-				if ( True == completeMask[8] ):
-					searchGroupList.append(2)
-
-				if ( True == completeMask[9] ):
-					searchGroupList.append(3)
-	for Num in searchGroupList:			
-		for pose in searchGroup[Num]:
-			if ( pose == PoseNum1 ):
-				result1 = True
-			if ( pose == PoseNum2 ):
-				result2 = True
-			if ( result1 == True and result2 == True ):
-				break
+		
+	for pose in :
+		if ( pose == PoseNum1 ):
+			result1 = True
+		if ( pose == PoseNum2 ):
+			result2 = True
+		if ( result1 == True and result2 == True ):
+			break
 	return result1, result2
 
 
-def mixCheckMark(localGroupNum,mixPoseNum):
+def mixCheckMark(poseNum):
 
-	result = False
-	for mixGroupNum in range(0,5):
-		if ( localGroupNum == mixGroupNum ):
-			continue
+	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
+		or ( (poseNum == 2) and (completeMask[1] == False) ) 
+		or ( (poseNum == 3) and (completeMask[2] == False) ) 
+		or ( (poseNum == 4) and (completeMask[3] == False) ) 
+		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
+	# mix!
+		seekPath(endPoseNum)
+		completeMask[poseNum-1] = True
+				
+	return 
 
-		if ( searchPosesInGroup(mixGroupNum,mixPoseNum,mixPoseNum) == True,True ):
-			# mix!
-			seekPath(localGroupNum,mixGroupNum,mixPoseNum)
-			markFlag()
-			result = True
-		
-	return result
 
-def seekPath(groupNum1,groupNum2,mixPose):
+def seekPath(endPoseNum):
+
+	backwardPoseList = [endPoseNum]
+
+	for edge in activeEdgeList:
+		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+
+		if ( ((result1 == True and result2 == True) 
+			or (result1 == False and result2 == False)) ):
+			pass
+		else:
+
+			for i in range(0,100000):
+				if ( edge == edgeIndex[i] ):
+					edgeHeat[i] = edgeHeat[i]+1
+
+			if ( result1 == True and result2 == False ):
+				backwardPoseList.append(edge[1])
+
+				pass
+			elif ( result1 == False and result2 == True ):
+				backwardPoseList.append(edge[0])
+				pass
+
+		pass
+
+
+
 	pass
 
-def markFlag()
-	pass
 
 
 
