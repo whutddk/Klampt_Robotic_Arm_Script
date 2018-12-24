@@ -91,8 +91,6 @@ while(1):
 	edgeBuff = edgeIndex
 
 
-
-
 	completeMask = [False,False,False,False,False]
 
 # we define Pose0 as start pose
@@ -100,21 +98,68 @@ while(1):
 	activeEdgeList = []
 
 	ctlRobotRandom()
-
+	loopCnt = 0;
 	while( completeMask != [True,True,True,True,True] ):
 		
 		growGroup()
 
-		if ( stack ):
+		if ( loopCnt > 1000 ):
 			break
+		loopCnt = loopCnt + 1
 
+	edgeHeatSave()
 return
 
 ############################################################################
 
 
-def ctlRobotRandom():
+def edgeHeat_init():
 	pass
+
+def edgeHeatSave():
+	pass
+
+def ctlRobotRandom():
+	axis = [0,		
+		random.uniform(-3.1416 , 3.1416),
+		random.uniform(-2.0071 , 2.0071),
+		random.uniform(-0.6981 , 3.8397),
+		random.uniform(-3.1416 , 3.1416),
+		random.uniform(-1.3090 , 4.4506),
+		random.uniform(-3.1416 , 3.1416)
+	]
+
+	ctlRobotPose.set(axis)
+
+	pass
+
+
+def edgeSaftyCheck(startPose,endPose):
+	
+	stepangle = [0,
+	(endPose[0] - startPose[0]) / 100 ,
+	(endPose[1] - startPose[1]) / 100 ,
+	(endPose[2] - startPose[2]) / 100 ,
+	(endPose[3] - startPose[3]) / 100 ,
+	(endPose[4] - startPose[4]) / 100 ,
+	(endPose[5] - startPose[5]) / 100 ] 
+
+
+	for step in range(0,100):
+
+		axis = [ 0,
+		startPose[0] + step*stepangle[0],
+		startPose[1] + step*stepangle[1],
+		startPose[2] + step*stepangle[2],
+		startPose[3] + step*stepangle[3],
+		startPose[4] + step*stepangle[4],
+		startPose[5] + step*stepangle[5] ]		
+
+		prmRobotPose.set(axis)
+
+		if (robotCollideRobot()):
+			return False
+	return True
 
 
 def growGroup():
@@ -128,7 +173,7 @@ def growGroup():
 			pass
 		else:
 			# at least one pose in edge, no matter how ,this edge should not querry next time
-			edgeBuff_del_edge()
+			edgeBuff.remove(edge)
 
 			if ( result1 == True and result2 == True ):
 				# a used less edge 
@@ -196,11 +241,12 @@ def seekPath(endPoseNum):
 		if ( ((result1 == True and result2 == True) 
 			or (result1 == False and result2 == False)) ):
 			pass
+
 		else:
 
 			for i in range(0,100000):
 				if ( edge == edgeIndex[i] ):
-					edgeHeat[i] = edgeHeat[i]+1
+					edgeHeat[i] = edgeHeat[i] + 1
 
 			if ( result1 == True and result2 == False ):
 				backwardPoseList.append(edge[1])
