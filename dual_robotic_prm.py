@@ -197,7 +197,7 @@ def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
 					# 01		02	03		04	12		13	14		23	24		34
 	# completeMask = [False,False,False,False,False,False,False,False,False,False]
 
-	for i in range(0,5):
+	for i in range(0,4):
 		for j in searchGroupList:
 			if ( j == 0 ):
 				if ( True == completeMask[0] ):
@@ -255,14 +255,14 @@ def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
 
 				if ( True == completeMask[9] ):
 					searchGroupList.append(3)
-
-	for pose in searchGroup[groupNum]:
-		if ( pose == PoseNum1 ):
-			result1 = True
-		if ( pose == PoseNum2 ):
-			result2 = True
-		if ( result1 == True and result2 == True ):
-			break
+	for Num in searchGroupList:			
+		for pose in searchGroup[Num]:
+			if ( pose == PoseNum1 ):
+				result1 = True
+			if ( pose == PoseNum2 ):
+				result2 = True
+			if ( result1 == True and result2 == True ):
+				break
 	return result1, result2
 
 
