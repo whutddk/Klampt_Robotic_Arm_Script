@@ -77,6 +77,15 @@ if __name__ == "__main__":
 		vis.show()
 		pass
 
+
+
+
+
+
+
+
+
+
 while(1):
 	edgeBuff = edgeIndex
 
@@ -111,6 +120,14 @@ while(1):
 			growGroup(0)
 			pass 
 
+		if ( stack ):
+			break
+
+return
+
+############################################################################
+
+
 def ctlRobotRandom():
 	pass
 
@@ -120,37 +137,41 @@ def growGroup(groupNum):
 		result1,result2 = searchPosesInGroup(groupNum,edge[0],edge[1])
 
 		if ( result1 == False and result2 == False ):
+			# two pose are not in this edge,find next edge
 			pass
 		else:
+			# at least one pose in edge, no matter how ,this edge should not querry next time
 			edgeBuff_del_edge()
 
 			if ( result1 == True and result2 == True ):
+				# a used less edge 
 				pass
 			else:
-				if ( False == edgeSaftyCheck(edge[0],edge[1]) ):					
+				# collision check first
+				if ( False == edgeSaftyCheck(edge[0],edge[1]) ):
+
 					continue
 
 				if ( result1 == True and result2 == False ):
 					
-					if ( True = mixCheck(groupNum,edge[1]) ):
-					
-					else:
-						searchGroup[groupNum].append(edge[1])
-						activeEdgeList.append([edge[0],edge[1]])#record as parents
+					activeEdgeList.append([edge[0],edge[1]])#record as parents
+					searchGroup[groupNum].append(edge[1])
 
-				elif:( result1 == False and result2 == True ):
-
-					
-					if ( True = mixCheck(groupNum,edge[0]) ):
-
+					# all mix work should be finished in  mixCheckMark()
+					mixCheckMark(groupNum,edge[1])
 						
+				elif ( result1 == False and result2 == True ):
 
-					else:
-						searchGroup[groupNum].append(edge[0])
-						activeEdgeList.append([edge[1],edge[0]])#record as parents
+					activeEdgeList.append([edge[1],edge[0]])#record as parents
+					searchGroup[groupNum].append(edge[0])
 
-	pass
+					# all mix work should be finished in  mixCheckMark()
+					mixCheckMark(groupNum,edge[0])
+					
 
+	return
+
+#################################################################
 
 def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
 
@@ -167,9 +188,6 @@ def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
 	return result1, result2
 
 
-
-	pass
-
 def mixCheckMark(localGroupNum,mixPoseNum):
 
 	result = False
@@ -177,7 +195,7 @@ def mixCheckMark(localGroupNum,mixPoseNum):
 		if ( localGroupNum == mixGroupNum ):
 			continue
 
-		if ( searchPosesInGroup(mixGroupNum,result2,result2) == True,True ):
+		if ( searchPosesInGroup(mixGroupNum,mixPoseNum,mixPoseNum) == True,True ):
 			# mix!
 			seekPath(localGroupNum,mixGroupNum,mixPoseNum)
 			markFlag()
@@ -188,7 +206,8 @@ def mixCheckMark(localGroupNum,mixPoseNum):
 def seekPath(groupNum1,groupNum2,mixPose):
 	pass
 
-
+def markFlag()
+	pass
 
 
 
