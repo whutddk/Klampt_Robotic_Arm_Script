@@ -40,7 +40,7 @@ if __name__ == "__main__":
 	world = WorldModel()
 
 	res = world.readFile('./anno_check.xml')
-	if not res:`
+	if not res:
 		raise RuntimeError("Unable to load model ") 
 			
 	vis.add("world",world)
@@ -54,11 +54,17 @@ if __name__ == "__main__":
 	ctlRobotPose = RobotPoser(ctlRobot)
 
 
-	prmRobotPose.set([0,pi/2,-pi/2, 0,   0, pi/2,0])
-	
+	# prmRobotPose.set([0,pi/2,-pi/2, 0,   0, pi/2,0])
+	# prmRobotPose.set([0,0,0, pi/2,   0, pi/2,0])
+	# prmRobotPose.set([0,0.006920479849202481, -1.4168282547269249, 0.19528507604150314, -0.0014828156277848174, 1.2226293225188158, -1.5612366430311047])
+	# prmRobotPose.set([0,-1.5642215079822661, -1.4167479695849718, 0.19521200511823486, -3.1375463116680358, 1.9194469288250684, 0.003616422068053552])
+	prmRobotPose.set([0,-0.7783294174380526, -1.393456789796396, 0.09674069314070417, 0.004252447813768214, 1.296659607990569, -2.352237617423516])
+
+
+
 
 	for k in range (0,50):
-		ctlRobotPose.set([0,-pi/100 * k + pi/2,   -pi/2    ,pi/2, 0, pi/2,0])
+		ctlRobotPose.set([0,0,   -pi/2    ,pi/2, 0, pi/2,0])
 		collisionTest = WorldCollider(world)
 		time.sleep(0.1)
 	# for l in collisionTest.geomList[1]:
@@ -79,188 +85,184 @@ if __name__ == "__main__":
 
 
 
-edgeHeat[100000]
+# edgeHeat[100000]
+# edgeHeat_init()
 
 
+# while(1):
+# 	edgeBuff = edgeIndex
 
 
-edgeHeat_init()
+# 	completeMask = [False,False,False,False,False]
 
+# # we define Pose0 as start pose
+# 	activePoseList = [0]
+# 	activeEdgeList = []
 
-while(1):
-	edgeBuff = edgeIndex
-
-
-	completeMask = [False,False,False,False,False]
-
-# we define Pose0 as start pose
-	activePoseList = [0]
-	activeEdgeList = []
-
-	ctlRobotRandom()
-	loopCnt = 0;
-	while( completeMask != [True,True,True,True,True] ):
+# 	ctlRobotRandom()
+# 	loopCnt = 0;
+# 	while( completeMask != [True,True,True,True,True] ):
 		
-		growGroup()
+# 		growGroup()
 
-		if ( loopCnt > 1000 ):
-			break
-		loopCnt = loopCnt + 1
+# 		if ( loopCnt > 1000 ):
+# 			break
+# 		loopCnt = loopCnt + 1
 
-	edgeHeatSave()
-return
+# 	edgeHeatSave()
+# return
 
-############################################################################
-
-
-def edgeHeat_init():
-	pass
-
-def edgeHeatSave():
-	pass
-
-def ctlRobotRandom():
-	axis = [0,		
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-2.0071 , 2.0071),
-		random.uniform(-0.6981 , 3.8397),
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-1.3090 , 4.4506),
-		random.uniform(-3.1416 , 3.1416)
-	]
-
-	ctlRobotPose.set(axis)
-
-	pass
+# ############################################################################
 
 
-def edgeSaftyCheck(startPose,endPose):
+# def edgeHeat_init():
+# 	pass
+
+# def edgeHeatSave():
+# 	pass
+
+# def ctlRobotRandom():
+# 	axis = [0,		
+# 		random.uniform(-3.1416 , 3.1416),
+# 		random.uniform(-2.0071 , 2.0071),
+# 		random.uniform(-0.6981 , 3.8397),
+# 		random.uniform(-3.1416 , 3.1416),
+# 		random.uniform(-1.3090 , 4.4506),
+# 		random.uniform(-3.1416 , 3.1416)
+# 	]
+
+# 	ctlRobotPose.set(axis)
+
+# 	pass
+
+
+# def edgeSaftyCheck(startPose,endPose):
 	
-	stepangle = [0,
-	(endPose[0] - startPose[0]) / 100 ,
-	(endPose[1] - startPose[1]) / 100 ,
-	(endPose[2] - startPose[2]) / 100 ,
-	(endPose[3] - startPose[3]) / 100 ,
-	(endPose[4] - startPose[4]) / 100 ,
-	(endPose[5] - startPose[5]) / 100 ] 
+# 	stepangle = [0,
+# 	(endPose[0] - startPose[0]) / 100 ,
+# 	(endPose[1] - startPose[1]) / 100 ,
+# 	(endPose[2] - startPose[2]) / 100 ,
+# 	(endPose[3] - startPose[3]) / 100 ,
+# 	(endPose[4] - startPose[4]) / 100 ,
+# 	(endPose[5] - startPose[5]) / 100 ] 
 
 
-	for step in range(0,100):
+# 	for step in range(0,100):
 
-		axis = [ 0,
-		startPose[0] + step*stepangle[0],
-		startPose[1] + step*stepangle[1],
-		startPose[2] + step*stepangle[2],
-		startPose[3] + step*stepangle[3],
-		startPose[4] + step*stepangle[4],
-		startPose[5] + step*stepangle[5] ]		
+# 		axis = [ 0,
+# 		startPose[0] + step*stepangle[0],
+# 		startPose[1] + step*stepangle[1],
+# 		startPose[2] + step*stepangle[2],
+# 		startPose[3] + step*stepangle[3],
+# 		startPose[4] + step*stepangle[4],
+# 		startPose[5] + step*stepangle[5] ]		
 
-		prmRobotPose.set(axis)
+# 		prmRobotPose.set(axis)
 
-		if (robotCollideRobot()):
-			return False
-	return True
+# 		if (robotCollideRobot()):
+# 			return False
+# 	return True
 
 
-def growGroup():
-	# for edgeIndex in range(0,100000):
-	# 	edge = edgeBuff[edgeIndex]
-	for edge in edgeBuff:
-		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
+# def growGroup():
+# 	# for edgeIndex in range(0,100000):
+# 	# 	edge = edgeBuff[edgeIndex]
+# 	for edge in edgeBuff:
+# 		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
 
-		if ( result1 == False and result2 == False ):
-			# two pose are not in this edge,find next edge
-			pass
-		else:
-			# at least one pose in edge, no matter how ,this edge should not querry next time
-			edgeBuff.remove(edge)
+# 		if ( result1 == False and result2 == False ):
+# 			# two pose are not in this edge,find next edge
+# 			pass
+# 		else:
+# 			# at least one pose in edge, no matter how ,this edge should not querry next time
+# 			edgeBuff.remove(edge)
 
-			if ( result1 == True and result2 == True ):
-				# a used less edge 
-				pass
-			else:
-				# collision check first
-				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
-					activeEdgeList.append( edge )#record as parents
+# 			if ( result1 == True and result2 == True ):
+# 				# a used less edge 
+# 				pass
+# 			else:
+# 				# collision check first
+# 				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
+# 					activeEdgeList.append( edge )#record as parents
 
-					if ( result1 == True and result2 == False ):
+# 					if ( result1 == True and result2 == False ):
 						
-						activePoseList.append( edge[1] )		
-						# all mix work should be finished in  mixCheckMark()
-						mixCheckMark(edge[1])
+# 						activePoseList.append( edge[1] )		
+# 						# all mix work should be finished in  mixCheckMark()
+# 						mixCheckMark(edge[1])
 										
 							
-					elif ( result1 == False and result2 == True ):
-						activeEdgeList.append( edge )#record as parents
-						activePoseList.append( edge[0] )
-						# all mix work should be finished in  mixCheckMark()
-						mixCheckMark(edge[0])
-				else:
-					pass
+# 					elif ( result1 == False and result2 == True ):
+# 						activeEdgeList.append( edge )#record as parents
+# 						activePoseList.append( edge[0] )
+# 						# all mix work should be finished in  mixCheckMark()
+# 						mixCheckMark(edge[0])
+# 				else:
+# 					pass
 
-	return
+# 	return
 
-#################################################################
+# #################################################################
 
-def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
+# def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
 
-	result1 = False
-	result2 = False
+# 	result1 = False
+# 	result2 = False
 		
-	for pose in :
-		if ( pose == PoseNum1 ):
-			result1 = True
-		if ( pose == PoseNum2 ):
-			result2 = True
-		if ( result1 == True and result2 == True ):
-			break
-	return result1, result2
+# 	for pose in :
+# 		if ( pose == PoseNum1 ):
+# 			result1 = True
+# 		if ( pose == PoseNum2 ):
+# 			result2 = True
+# 		if ( result1 == True and result2 == True ):
+# 			break
+# 	return result1, result2
 
 
-def mixCheckMark(poseNum):
+# def mixCheckMark(poseNum):
 
-	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
-		or ( (poseNum == 2) and (completeMask[1] == False) ) 
-		or ( (poseNum == 3) and (completeMask[2] == False) ) 
-		or ( (poseNum == 4) and (completeMask[3] == False) ) 
-		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
-	# mix!
-		seekPath(endPoseNum)
-		completeMask[poseNum-1] = True
+# 	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
+# 		or ( (poseNum == 2) and (completeMask[1] == False) ) 
+# 		or ( (poseNum == 3) and (completeMask[2] == False) ) 
+# 		or ( (poseNum == 4) and (completeMask[3] == False) ) 
+# 		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
+# 	# mix!
+# 		seekPath(endPoseNum)
+# 		completeMask[poseNum-1] = True
 				
-	return 
+# 	return 
 
 
-def seekPath(endPoseNum):
+# def seekPath(endPoseNum):
 
-	backwardPoseList = [endPoseNum]
+# 	backwardPoseList = [endPoseNum]
 
-	for edge in activeEdgeList:
-		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+# 	for edge in activeEdgeList:
+# 		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
 
-		if ( ((result1 == True and result2 == True) 
-			or (result1 == False and result2 == False)) ):
-			pass
+# 		if ( ((result1 == True and result2 == True) 
+# 			or (result1 == False and result2 == False)) ):
+# 			pass
 
-		else:
+# 		else:
 
-			for i in range(0,100000):
-				if ( edge == edgeIndex[i] ):
-					edgeHeat[i] = edgeHeat[i] + 1
+# 			for i in range(0,100000):
+# 				if ( edge == edgeIndex[i] ):
+# 					edgeHeat[i] = edgeHeat[i] + 1
 
-			if ( result1 == True and result2 == False ):
-				backwardPoseList.append(edge[1])
+# 			if ( result1 == True and result2 == False ):
+# 				backwardPoseList.append(edge[1])
 
-				pass
-			elif ( result1 == False and result2 == True ):
-				backwardPoseList.append(edge[0])
-				pass
+# 				pass
+# 			elif ( result1 == False and result2 == True ):
+# 				backwardPoseList.append(edge[0])
+# 				pass
 
-		pass
+# 		pass
 
 
 
-	pass
+# 	pass
 
 
 
