@@ -154,19 +154,21 @@ def growGroup(groupNum):
 
 				if ( result1 == True and result2 == False ):
 					
-					activeEdgeList.append([edge[0],edge[1]])#record as parents
-					searchGroup[groupNum].append(edge[1])
-
 					# all mix work should be finished in  mixCheckMark()
-					mixCheckMark(groupNum,edge[1])
+					if ( True == mixCheckMark(groupNum,edge[1]) ):
+						pass
+					else:
+						activeEdgeList.append( [edge[0],edge[1]] )#record as parents
+						searchGroup[groupNum].append( edge[1] )						
 						
 				elif ( result1 == False and result2 == True ):
 
-					activeEdgeList.append([edge[1],edge[0]])#record as parents
-					searchGroup[groupNum].append(edge[0])
-
 					# all mix work should be finished in  mixCheckMark()
-					mixCheckMark(groupNum,edge[0])
+					if ( True == mixCheckMark(groupNum,edge[0]) ):
+						pass
+					else:
+						activeEdgeList.append( [edge[1],edge[0]] )#record as parents
+						searchGroup[groupNum].append( edge[0] )
 					
 
 	return
@@ -177,6 +179,82 @@ def searchPosesInGroup(groupNum,PoseNum1,PoseNum2):
 
 	result1 = False
 	result2 = False
+
+	searchGroupList = []
+
+	if ( groupNum == 0 ):
+		searchGroupList.append(0)
+	if ( groupNum == 1 ):
+		searchGroupList.append(1)
+	if ( groupNum == 2 ):
+		searchGroupList.append(2)
+	if ( groupNum == 3 ):
+		searchGroupList.append(3)
+	if ( groupNum == 4 ):
+		searchGroupList.append(4)
+
+
+					# 01		02	03		04	12		13	14		23	24		34
+	# completeMask = [False,False,False,False,False,False,False,False,False,False]
+
+	for i in range(0,5):
+		for j in searchGroupList:
+			if ( j == 0 ):
+				if ( True == completeMask[0] ):
+					searchGroupList.append(1)
+				if ( True == completeMask[1] ):
+					searchGroupList.append(2)
+				if ( True == completeMask[2] ):
+					searchGroupList.append(3)
+				if ( True == completeMask[3] ):
+					searchGroupList.append(4)
+			elif ( j == 1 ):
+				if ( True == completeMask[4] ):
+					searchGroupList.append(2)
+				if ( True == completeMask[5] ):
+					searchGroupList.append(3)
+				if ( True == completeMask[6] ):
+					searchGroupList.append(4)
+				if ( True == completeMask[0] ):
+					searchGroupList.append(0)
+			elif ( j == 2 ):
+				if ( True == completeMask[7] ):
+					searchGroupList.append(3)
+
+				if ( True == completeMask[8] ):
+					searchGroupList.append(4)
+
+				if ( True == completeMask[1] ):
+					searchGroupList.append(0)
+
+				if ( True == completeMask[4] ):
+					searchGroupList.append(1)
+
+			elif ( j == 3 ):
+				if ( True == completeMask[9] ):
+					searchGroupList.append(4)
+
+				if ( True == completeMask[2] ):
+					searchGroupList.append(0)
+
+				if ( True == completeMask[5] ):
+					searchGroupList.append(1)
+
+				if ( True == completeMask[7] ):
+					searchGroupList.append(2)
+
+			elif ( j == 4 ):
+				if ( True == completeMask[3] ):
+					searchGroupList.append(0)
+
+				if ( True == completeMask[6] ):
+					searchGroupList.append(1)
+
+				if ( True == completeMask[8] ):
+					searchGroupList.append(2)
+
+				if ( True == completeMask[9] ):
+					searchGroupList.append(3)
 
 	for pose in searchGroup[groupNum]:
 		if ( pose == PoseNum1 ):
