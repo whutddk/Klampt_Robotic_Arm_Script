@@ -189,14 +189,7 @@ def growGroup():
 	edgeTemp = edgeBuff[:]
 
 	for edge in edgeTemp:
-		print "new loop"
-		# print edgeBuff[0]
-		# print edgeBuff[1]
-		# print edgeBuff[2]
-		# print edgeBuff[3]
-		# print edgeBuff[4]
-		# print edgeBuff[5]
-		# print edgeBuff[6]
+
 		if (completeMask == [True,True,True,True,True]):
 			break
 
