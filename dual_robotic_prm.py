@@ -23,6 +23,7 @@ edgeHeat = []
 edgeIndex = []
 
 
+
 def load_Pose():
 	global Pose
 
@@ -62,8 +63,6 @@ def save_edgeHeat():
 	return
 
 
-
-
 def robotCollideRobot():
 	collisionTest = WorldCollider(world)
 	for i in collisionTest.robots[0]:
@@ -73,9 +72,6 @@ def robotCollideRobot():
 			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
 				return True
 	return False
-
-
-
 
 
 def ctlRobotRandom():
@@ -90,7 +86,7 @@ def ctlRobotRandom():
 
 	ctlRobotPose.set(axis)
 
-	pass
+	return
 
 
 def edgeSaftyCheck(startPose,endPose):
@@ -119,6 +115,60 @@ def edgeSaftyCheck(startPose,endPose):
 		if (robotCollideRobot()):
 			return False
 	return True
+
+
+def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
+
+	result1 = False
+	result2 = False
+		
+	for pose in :
+		if ( pose == PoseNum1 ):
+			result1 = True
+		if ( pose == PoseNum2 ):
+			result2 = True
+		if ( result1 == True and result2 == True ):
+			break
+	return result1, result2
+
+
+
+
+def seekPath(endPoseNum):
+
+	backwardPoseList = [endPoseNum]
+
+	for edge in activeEdgeList:
+		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+
+		if ( ((result1 == True and result2 == True) 
+			or (result1 == False and result2 == False)) ):
+			pass
+
+		else:
+			for i in range(0,100000):
+				if ( edge == edgeIndex[i] ):
+					edgeHeat[i] = edgeHeat[i] + 1
+
+			if ( result1 == True and result2 == False ):
+				backwardPoseList.append(edge[1])
+
+			elif ( result1 == False and result2 == True ):
+				backwardPoseList.append(edge[0])
+	return 
+
+def mixCheckMark(poseNum):
+
+	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
+		or ( (poseNum == 2) and (completeMask[1] == False) ) 
+		or ( (poseNum == 3) and (completeMask[2] == False) ) 
+		or ( (poseNum == 4) and (completeMask[3] == False) ) 
+		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
+	# mix!
+		seekPath(endPoseNum)
+		completeMask[poseNum-1] = True
+				
+	return 
 
 
 def growGroup():
@@ -159,143 +209,75 @@ def growGroup():
 
 	return
 
-#################################################################
-
-def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
-
-	result1 = False
-	result2 = False
-		
-	for pose in :
-		if ( pose == PoseNum1 ):
-			result1 = True
-		if ( pose == PoseNum2 ):
-			result2 = True
-		if ( result1 == True and result2 == True ):
-			break
-	return result1, result2
 
 
-def mixCheckMark(poseNum):
 
-	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
-		or ( (poseNum == 2) and (completeMask[1] == False) ) 
-		or ( (poseNum == 3) and (completeMask[2] == False) ) 
-		or ( (poseNum == 4) and (completeMask[3] == False) ) 
-		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
-	# mix!
-		seekPath(endPoseNum)
-		completeMask[poseNum-1] = True
-				
-	return 
+def dual_robot_check():
+	
+	while(1):
+		edgeBuff = edgeIndex
 
 
-def seekPath(endPoseNum):
+		completeMask = [False,False,False,False,False]
 
-	backwardPoseList = [endPoseNum]
+	# we define Pose0 as start pose
+		activePoseList = [0]
+		activeEdgeList = []
 
-	for edge in activeEdgeList:
-		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+		ctlRobotRandom()
+		loopCnt = 0;
+		while( completeMask != [True,True,True,True,True] ):
+			
+			growGroup()
 
-		if ( ((result1 == True and result2 == True) 
-			or (result1 == False and result2 == False)) ):
-			pass
+			if ( loopCnt > 1000 ):
+				break
+			loopCnt = loopCnt + 1
 
-		else:
-
-			for i in range(0,100000):
-				if ( edge == edgeIndex[i] ):
-					edgeHeat[i] = edgeHeat[i] + 1
-
-			if ( result1 == True and result2 == False ):
-				backwardPoseList.append(edge[1])
-
-				pass
-			elif ( result1 == False and result2 == True ):
-				backwardPoseList.append(edge[0])
-				pass
-
-		pass
-
-	pass
+		save_edgeHeat()
+	return
 
 
 
 ###########################################
 
 
-
-
-
-
 if __name__ == "__main__":
-	# load_Pose()
+
+	load_Pose()
+	load_Index()
+	load_edgeHeat()
+
 	world = WorldModel()
 
 	res = world.readFile('./anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
+	del res
 			
-	vis.add("world",world)
+	
 
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
+
+	vis.add("world",world)
 	vis.show()
+
+
 	collisionTest = WorldCollider(world)
 	
 	prmRobotPose = RobotPoser(prmRobot)
 	ctlRobotPose = RobotPoser(ctlRobot)
 
+	dual_robot_check()
 
-	# prmRobotPose.set([0,pi/2,-pi/2, 0,   0, pi/2,0])
-	# prmRobotPose.set([0,0,0, pi/2,   0, pi/2,0])
-	# prmRobotPose.set([0,0.006920479849202481, -1.4168282547269249, 0.19528507604150314, -0.0014828156277848174, 1.2226293225188158, -1.5612366430311047])
-	# prmRobotPose.set([0,-1.5642215079822661, -1.4167479695849718, 0.19521200511823486, -3.1375463116680358, 1.9194469288250684, 0.003616422068053552])
-	prmRobotPose.set([0,-0.7783294174380526, -1.393456789796396, 0.09674069314070417, 0.004252447813768214, 1.296659607990569, -2.352237617423516])
-
-	for k in range (0,50):
-		ctlRobotPose.set([0,0,   -pi/2    ,pi/2, 0, pi/2,0])
-		collisionTest = WorldCollider(world)
-		time.sleep(0.1)
-	# for l in collisionTest.geomList[1]:
-	# 	print l
-		
-		if (robotCollideRobot()):
-			print "collision!"
-
-	while(1):
-		time.sleep(0.1)
-		vis.show()
-		pass
+	# while(1):
+	# 	time.sleep(0.1)
+	# 	pass
 
 
 
-edgeHeat[100000]
-edgeHeat_init()
 
-
-while(1):
-	edgeBuff = edgeIndex
-
-
-	completeMask = [False,False,False,False,False]
-
-# we define Pose0 as start pose
-	activePoseList = [0]
-	activeEdgeList = []
-
-	ctlRobotRandom()
-	loopCnt = 0;
-	while( completeMask != [True,True,True,True,True] ):
-		
-		growGroup()
-
-		if ( loopCnt > 1000 ):
-			break
-		loopCnt = loopCnt + 1
-
-	edgeHeatSave()
-return
 
 
 
