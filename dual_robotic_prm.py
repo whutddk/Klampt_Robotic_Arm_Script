@@ -22,7 +22,10 @@ Pose = []
 edgeHeat = []
 edgeIndex = []
 
-
+edgeBuff = edgeIndex
+completeMask = [False,False,False,False,False]
+activePoseList = []
+activeEdgeList = []
 
 def load_Pose():
 	global Pose
@@ -158,6 +161,7 @@ def seekPath(endPoseNum):
 	return 
 
 def mixCheckMark(poseNum):
+	global completeMask
 
 	if ( ( (poseNum == 1) and (completeMask[0] == False) ) 
 		or ( (poseNum == 2) and (completeMask[1] == False) ) 
@@ -165,16 +169,28 @@ def mixCheckMark(poseNum):
 		or ( (poseNum == 4) and (completeMask[3] == False) ) 
 		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
 	# mix!
-		seekPath(endPoseNum)
+	# 	seekPath(endPoseNum)
 		completeMask[poseNum-1] = True
+		print completeMask
 				
 	return 
 
 
 def growGroup():
+
+	global edgeBuff
+	global completeMask
+	global activePoseList
+	global activeEdgeList
+
 	# for edgeIndex in range(0,100000):
 	# 	edge = edgeBuff[edgeIndex]
+
 	for edge in edgeBuff:
+
+		if (completeMask == [True,True,True,True,True]):
+			break
+
 		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
 
 		if ( result1 == False and result2 == False ):
@@ -183,13 +199,12 @@ def growGroup():
 		else:
 			# at least one pose in edge, no matter how ,this edge should not querry next time
 			edgeBuff.remove(edge)
-
 			if ( result1 == True and result2 == True ):
 				# a used less edge 
 				pass
 			else:
 				# collision check first
-				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
+				if (1):#( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					activeEdgeList.append( edge )#record as parents
 
 					if ( result1 == True and result2 == False ):
@@ -197,13 +212,14 @@ def growGroup():
 						activePoseList.append( edge[1] )		
 						# all mix work should be finished in  mixCheckMark()
 						mixCheckMark(edge[1])
-										
+						# print edge[1]
 							
 					elif ( result1 == False and result2 == True ):
-						activeEdgeList.append( edge )#record as parents
+
 						activePoseList.append( edge[0] )
 						# all mix work should be finished in  mixCheckMark()
 						mixCheckMark(edge[0])
+						# print edge[0]
 				else:
 					pass
 
@@ -213,10 +229,22 @@ def growGroup():
 
 
 def dual_robot_check():
+	global edgeBuff
+	global completeMask
+	global activePoseList
+	global activeEdgeList
 	
 	while(1):
-		edgeBuff = edgeIndex
+		print "new session"
 
+		edgeBuff = edgeIndex
+		print edgeBuff[0]
+		print edgeBuff[1]
+		print edgeBuff[2]
+		print edgeBuff[3]
+		print edgeBuff[4]
+		print edgeBuff[5]
+		print edgeBuff[6]
 
 		completeMask = [False,False,False,False,False]
 
@@ -225,16 +253,16 @@ def dual_robot_check():
 		activeEdgeList = []
 
 		ctlRobotRandom()
-		time.sleep(0.1)
 
-		# loopCnt = 0;
-		# while( completeMask != [True,True,True,True,True] ):
+		loopCnt = 0;
+		while( completeMask != [True,True,True,True,True] ):
 			
-		# 	growGroup()
+			growGroup()
 
-		# 	if ( loopCnt > 1000 ):
-		# 		break
-		# 	loopCnt = loopCnt + 1
+			if ( loopCnt > 1000 ):
+				print "check fail to finish!!!!!!!!!!!!!!!!"
+				break
+			loopCnt = loopCnt + 1
 
 		# save_edgeHeat()
 	return
