@@ -238,13 +238,13 @@ def dual_robot_check():
 		print "new session"
 
 		edgeBuff = edgeIndex
-		print edgeBuff[0]
-		print edgeBuff[1]
-		print edgeBuff[2]
-		print edgeBuff[3]
-		print edgeBuff[4]
-		print edgeBuff[5]
-		print edgeBuff[6]
+		# print edgeBuff[0]
+		# print edgeBuff[1]
+		# print edgeBuff[2]
+		# print edgeBuff[3]
+		# print edgeBuff[4]
+		# print edgeBuff[5]
+		# print edgeBuff[6]
 
 		completeMask = [False,False,False,False,False]
 
