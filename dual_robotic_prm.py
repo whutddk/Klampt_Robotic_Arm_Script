@@ -9,9 +9,19 @@ import json
 
 import random
 
-pi = 3.14159 
+################################################
+
+
+
+_PI_ = 3.14159 
+_STEPNUM_ = 100
+
+
 
 Pose = []
+edgeHeat = []
+edgeIndex = []
+
 
 def load_Pose():
 	global Pose
@@ -20,7 +30,38 @@ def load_Pose():
 		data = poseFile.read()
 		Pose = json.loads(data)
 		print Pose
-	pass
+	return
+
+def load_Index():
+	global edgeIndex
+
+	with open('./edgeIndex.json','r') as edgeIndexFile:
+		data = edgeIndexFile.read()
+		edgeIndex = json.loads(data)
+		
+		print edgeIndex
+	return
+
+def load_edgeHeat():
+	global edgeHeat
+
+	with open('./edgeHeat.json','r') as edgeHeatFile:
+		data = edgeHeatFile.read()
+		edgeHeat = json.loads(data)
+		
+		print edgeHeat
+	return
+
+def save_edgeHeat():
+	global edgeHeat
+
+	with open('./edgeHeat.json','w') as edgeHeatFile:
+		data = json.dumps(edgeHeat)
+		edgeHeatFile.write(data)
+
+	return
+
+
 
 
 def robotCollideRobot():
@@ -35,83 +76,7 @@ def robotCollideRobot():
 
 
 
-if __name__ == "__main__":
-	# load_Pose()
-	world = WorldModel()
 
-	res = world.readFile('./anno_check.xml')
-	if not res:
-		raise RuntimeError("Unable to load model ") 
-			
-	vis.add("world",world)
-
-	prmRobot = world.robot(0)
-	ctlRobot = world.robot(1)
-	vis.show()
-	collisionTest = WorldCollider(world)
-	
-	prmRobotPose = RobotPoser(prmRobot)
-	ctlRobotPose = RobotPoser(ctlRobot)
-
-
-	# prmRobotPose.set([0,pi/2,-pi/2, 0,   0, pi/2,0])
-	# prmRobotPose.set([0,0,0, pi/2,   0, pi/2,0])
-	# prmRobotPose.set([0,0.006920479849202481, -1.4168282547269249, 0.19528507604150314, -0.0014828156277848174, 1.2226293225188158, -1.5612366430311047])
-	# prmRobotPose.set([0,-1.5642215079822661, -1.4167479695849718, 0.19521200511823486, -3.1375463116680358, 1.9194469288250684, 0.003616422068053552])
-	prmRobotPose.set([0,-0.7783294174380526, -1.393456789796396, 0.09674069314070417, 0.004252447813768214, 1.296659607990569, -2.352237617423516])
-
-	for k in range (0,50):
-		ctlRobotPose.set([0,0,   -pi/2    ,pi/2, 0, pi/2,0])
-		collisionTest = WorldCollider(world)
-		time.sleep(0.1)
-	# for l in collisionTest.geomList[1]:
-	# 	print l
-		
-		if (robotCollideRobot()):
-			print "collision!"
-
-	while(1):
-		time.sleep(0.1)
-		vis.show()
-		pass
-
-
-
-edgeHeat[100000]
-edgeHeat_init()
-
-
-while(1):
-	edgeBuff = edgeIndex
-
-
-	completeMask = [False,False,False,False,False]
-
-# we define Pose0 as start pose
-	activePoseList = [0]
-	activeEdgeList = []
-
-	ctlRobotRandom()
-	loopCnt = 0;
-	while( completeMask != [True,True,True,True,True] ):
-		
-		growGroup()
-
-		if ( loopCnt > 1000 ):
-			break
-		loopCnt = loopCnt + 1
-
-	edgeHeatSave()
-return
-
-############################################################################
-
-
-def edgeHeat_init():
-	pass
-
-def edgeHeatSave():
-	pass
 
 def ctlRobotRandom():
 	axis = [0,		
@@ -131,15 +96,15 @@ def ctlRobotRandom():
 def edgeSaftyCheck(startPose,endPose):
 	
 	stepangle = [0,
-	(endPose[0] - startPose[0]) / 100 ,
-	(endPose[1] - startPose[1]) / 100 ,
-	(endPose[2] - startPose[2]) / 100 ,
-	(endPose[3] - startPose[3]) / 100 ,
-	(endPose[4] - startPose[4]) / 100 ,
-	(endPose[5] - startPose[5]) / 100 ] 
+	(endPose[0] - startPose[0]) / _STEPNUM_ ,
+	(endPose[1] - startPose[1]) / _STEPNUM_ ,
+	(endPose[2] - startPose[2]) / _STEPNUM_ ,
+	(endPose[3] - startPose[3]) / _STEPNUM_ ,
+	(endPose[4] - startPose[4]) / _STEPNUM_ ,
+	(endPose[5] - startPose[5]) / _STEPNUM_ ] 
 
 
-	for step in range(0,100):
+	for step in range(0,_STEPNUM_):
 
 		axis = [ 0,
 		startPose[0] + step*stepangle[0],
@@ -252,27 +217,101 @@ def seekPath(endPoseNum):
 
 		pass
 
-
-
 	pass
 
 
 
+###########################################
 
 
-set ctlRobot Random Pose
 
-	set 0,1,2,3,4 active 
-while(!10 group complete)
-	for 10W edge:
-		if ( one active  another not ) in all group:
-			collision check
-			if pass :
-				activate another
-				finish check
-					if finish :
-						used edgeNum ++
-					  finished group mark 
+
+
+
+if __name__ == "__main__":
+	# load_Pose()
+	world = WorldModel()
+
+	res = world.readFile('./anno_check.xml')
+	if not res:
+		raise RuntimeError("Unable to load model ") 
+			
+	vis.add("world",world)
+
+	prmRobot = world.robot(0)
+	ctlRobot = world.robot(1)
+	vis.show()
+	collisionTest = WorldCollider(world)
+	
+	prmRobotPose = RobotPoser(prmRobot)
+	ctlRobotPose = RobotPoser(ctlRobot)
+
+
+	# prmRobotPose.set([0,pi/2,-pi/2, 0,   0, pi/2,0])
+	# prmRobotPose.set([0,0,0, pi/2,   0, pi/2,0])
+	# prmRobotPose.set([0,0.006920479849202481, -1.4168282547269249, 0.19528507604150314, -0.0014828156277848174, 1.2226293225188158, -1.5612366430311047])
+	# prmRobotPose.set([0,-1.5642215079822661, -1.4167479695849718, 0.19521200511823486, -3.1375463116680358, 1.9194469288250684, 0.003616422068053552])
+	prmRobotPose.set([0,-0.7783294174380526, -1.393456789796396, 0.09674069314070417, 0.004252447813768214, 1.296659607990569, -2.352237617423516])
+
+	for k in range (0,50):
+		ctlRobotPose.set([0,0,   -pi/2    ,pi/2, 0, pi/2,0])
+		collisionTest = WorldCollider(world)
+		time.sleep(0.1)
+	# for l in collisionTest.geomList[1]:
+	# 	print l
+		
+		if (robotCollideRobot()):
+			print "collision!"
+
+	while(1):
+		time.sleep(0.1)
+		vis.show()
+		pass
+
+
+
+edgeHeat[100000]
+edgeHeat_init()
+
+
+while(1):
+	edgeBuff = edgeIndex
+
+
+	completeMask = [False,False,False,False,False]
+
+# we define Pose0 as start pose
+	activePoseList = [0]
+	activeEdgeList = []
+
+	ctlRobotRandom()
+	loopCnt = 0;
+	while( completeMask != [True,True,True,True,True] ):
+		
+		growGroup()
+
+		if ( loopCnt > 1000 ):
+			break
+		loopCnt = loopCnt + 1
+
+	edgeHeatSave()
+return
+
+
+
+# set ctlRobot Random Pose
+
+# 	set 0,1,2,3,4 active 
+# while(!10 group complete)
+# 	for 10W edge:
+# 		if ( one active  another not ) in all group:
+# 			collision check
+# 			if pass :
+# 				activate another
+# 				finish check
+# 					if finish :
+# 						used edgeNum ++
+# 					  finished group mark 
 				
 			
-			delete edge from 10W edgeList
+# 			delete edge from 10W edgeList
