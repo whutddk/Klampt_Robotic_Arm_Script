@@ -260,19 +260,19 @@ def seekPath(endPoseNum):
 
 
 
-set ctlRobot Random Pose
+# set ctlRobot Random Pose
 
-	set 0,1,2,3,4 active 
-while(!10 group complete)
-	for 10W edge:
-		if ( one active  another not ) in all group:
-			collision check
-			if pass :
-				activate another
-				finish check
-					if finish :
-						used edgeNum ++
-					  finished group mark 
+# 	set 0,1,2,3,4 active 
+# while(!10 group complete)
+# 	for 10W edge:
+# 		if ( one active  another not ) in all group:
+# 			collision check
+# 			if pass :
+# 				activate another
+# 				finish check
+# 					if finish :
+# 						used edgeNum ++
+# 					  finished group mark 
 				
 			
-			delete edge from 10W edgeList
+# 			delete edge from 10W edgeList
