@@ -225,16 +225,18 @@ def dual_robot_check():
 		activeEdgeList = []
 
 		ctlRobotRandom()
-		loopCnt = 0;
-		while( completeMask != [True,True,True,True,True] ):
+		time.sleep(0.1)
+
+		# loopCnt = 0;
+		# while( completeMask != [True,True,True,True,True] ):
 			
-			growGroup()
+		# 	growGroup()
 
-			if ( loopCnt > 1000 ):
-				break
-			loopCnt = loopCnt + 1
+		# 	if ( loopCnt > 1000 ):
+		# 		break
+		# 	loopCnt = loopCnt + 1
 
-		save_edgeHeat()
+		# save_edgeHeat()
 	return
 
 
@@ -254,8 +256,6 @@ if __name__ == "__main__":
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 	del res
-			
-	
 
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
@@ -269,8 +269,7 @@ if __name__ == "__main__":
 	prmRobotPose = RobotPoser(prmRobot)
 	ctlRobotPose = RobotPoser(ctlRobot)
 
-	while(1):
-		pass
+
 	dual_robot_check()
 
 	# while(1):
