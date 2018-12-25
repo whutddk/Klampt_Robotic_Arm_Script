@@ -122,7 +122,7 @@ def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
 	result1 = False
 	result2 = False
 		
-	for pose in :
+	for pose in poseList:
 		if ( pose == PoseNum1 ):
 			result1 = True
 		if ( pose == PoseNum2 ):
@@ -264,10 +264,12 @@ if __name__ == "__main__":
 	vis.show()
 
 
+
 	collisionTest = WorldCollider(world)
 	
 	prmRobotPose = RobotPoser(prmRobot)
 	ctlRobotPose = RobotPoser(ctlRobot)
+
 
 	dual_robot_check()
 
