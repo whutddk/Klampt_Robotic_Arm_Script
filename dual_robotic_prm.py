@@ -264,7 +264,6 @@ if __name__ == "__main__":
 	vis.show()
 
 
-
 	collisionTest = WorldCollider(world)
 	
 	prmRobotPose = RobotPoser(prmRobot)
