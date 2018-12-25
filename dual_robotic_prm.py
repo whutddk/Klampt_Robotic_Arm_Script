@@ -30,7 +30,7 @@ def load_Pose():
 	with open('./poseAxis.json','r') as poseFile:
 		data = poseFile.read()
 		Pose = json.loads(data)
-		print Pose
+		# print Pose
 	return
 
 def load_Index():
@@ -40,7 +40,7 @@ def load_Index():
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
-		print edgeIndex
+		# print edgeIndex
 	return
 
 def load_edgeHeat():
@@ -50,7 +50,7 @@ def load_edgeHeat():
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
 		
-		print edgeHeat
+		# print edgeHeat
 	return
 
 def save_edgeHeat():
@@ -269,7 +269,8 @@ if __name__ == "__main__":
 	prmRobotPose = RobotPoser(prmRobot)
 	ctlRobotPose = RobotPoser(ctlRobot)
 
-
+	while(1):
+		pass
 	dual_robot_check()
 
 	# while(1):
