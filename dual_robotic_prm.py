@@ -152,33 +152,27 @@ def seekPath(endPoseNum):
 			for i in range(0,100000):
 				if ( edge == edgeIndex[i] ):
 					edgeHeat[i] = edgeHeat[i] + 1
+					# print "heat:" 
+					# print edge
 
 			if ( result1 == True and result2 == False ):
 				
-
 				backwardPoseList.append(edge[1])
 				backwardPoseTemp.append(edge[1])
 
-
-
-
 			elif ( result1 == False and result2 == True ):
-
 
 				backwardPoseList.append(edge[0])
 				backwardPoseTemp.append(edge[0])
-
 
 			res1,res2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
 			if ( res1 == True and res2 == True  ):
 				break
 
+	# print backwardPoseList
+	# print backwardPoseTemp
 
-	print backwardPoseList
-	print backwardPoseTemp
-
-
-	print "break"
+	# print "break"
 
 	return 
 
