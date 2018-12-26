@@ -183,7 +183,14 @@ def mixCheckMark(poseNum):
 		or ( (poseNum == 2) and (completeMask[1] == False) ) 
 		or ( (poseNum == 3) and (completeMask[2] == False) ) 
 		or ( (poseNum == 4) and (completeMask[3] == False) ) 
-		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
+		or ( (poseNum == 5) and (completeMask[4] == False) )
+		or ( (poseNum == 6) and (completeMask[5] == False) ) 
+		or ( (poseNum == 7) and (completeMask[6] == False) ) 
+		or ( (poseNum == 8) and (completeMask[7] == False) ) 
+		or ( (poseNum == 9) and (completeMask[8] == False) ) 
+		or ( (poseNum == 10) and (completeMask[9] == False) ) ):
+
+
 	# mix!
 		seekPath(poseNum)
 		completeMask[poseNum-1] = True
@@ -206,7 +213,7 @@ def growGroup():
 
 	for edge in edgeTemp:
 
-		if (completeMask == [True,True,True,True,True]):
+		if (completeMask == [True,True,True,True,True,True,True,True,True]):
 			break
 
 		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
@@ -248,6 +255,7 @@ def growGroup():
 
 
 def dual_robot_check():
+	global Pose
 	global edgeBuff
 	global completeMask
 	global activePoseList
@@ -259,7 +267,7 @@ def dual_robot_check():
 
 		edgeBuff = edgeIndex[:]
 
-		completeMask = [False,False,False,False,False]
+		completeMask = [False,False,False,False,False,False,False,False,False]
 
 	# we define Pose0 as start pose
 		activePoseList = [0]
@@ -268,8 +276,26 @@ def dual_robot_check():
 
 		ctlRobotRandom()
 
+		#first pose check
+
+		# no doubt Pose0 is safty
+		# axis = Pose[0][:]
+		# axis.insert(0,0)
+		# prmRobotPose.set(axis)
+		# if (robotCollideRobot()):
+		# 	continue
+
+		for finalPoseNum in range(1,10):
+			axis = Pose[finalPoseNum][:]
+			axis.insert(0,0)
+			prmRobotPose.set(axis)
+			if (robotCollideRobot()):
+				completeMask[finalPoseNum - 1] = True
+
+
+
 		loopCnt = 0;
-		while( completeMask != [True,True,True,True,True] ):
+		while( completeMask != [True,True,True,True,True,True,True,True,True] ):
 			
 			growGroup()
 
