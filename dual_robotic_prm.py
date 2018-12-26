@@ -26,6 +26,8 @@ edgeBuff = edgeIndex
 completeMask = [False,False,False,False,False]
 activePoseList = []
 activeEdgeList = []
+backwardPoseList = []
+
 
 def load_Pose():
 	global Pose
@@ -132,13 +134,15 @@ def seekPath(endPoseNum):
 
 	global activeEdgeList
 	global edgeHeat
+	global backwardPoseList
 
-	backwardPoseList = [endPoseNum]
+
+	backwardPoseTemp = [endPoseNum]
 
 	for edge in activeEdgeList:
 		# print "edge"
 		# print edge
-		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+		result1,result2 = searchPosesInGroup(backwardPoseTemp,edge[0],edge[1])
 
 		if ( ((result1 == True and result2 == True) 
 			or (result1 == False and result2 == False)) ):
@@ -150,19 +154,32 @@ def seekPath(endPoseNum):
 					edgeHeat[i] = edgeHeat[i] + 1
 
 			if ( result1 == True and result2 == False ):
+				
+
 				backwardPoseList.append(edge[1])
+				backwardPoseTemp.append(edge[1])
+
+
+
 
 			elif ( result1 == False and result2 == True ):
+
+
 				backwardPoseList.append(edge[0])
+				backwardPoseTemp.append(edge[0])
 
-			if ( (edge[0] == 0) or (edge[1] == 0) ):
-				# print "backwardPoseList"
-				print backwardPoseList
 
-				return
+			res1,res2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+			if ( res1 == True and res2 == True  ):
 				break
+
+
+	print backwardPoseList
+	print backwardPoseTemp
+
+
 	print "break"
-	
+
 	return 
 
 def mixCheckMark(poseNum):
@@ -241,7 +258,8 @@ def dual_robot_check():
 	global completeMask
 	global activePoseList
 	global activeEdgeList
-	
+	global backwardPoseList
+
 	while(1):
 		print "new session"
 
@@ -252,6 +270,7 @@ def dual_robot_check():
 	# we define Pose0 as start pose
 		activePoseList = [0]
 		activeEdgeList = []
+		backwardPoseList = []
 
 		ctlRobotRandom()
 
