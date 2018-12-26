@@ -23,7 +23,7 @@ edgeHeat = []
 edgeIndex = []
 
 edgeBuff = edgeIndex
-completeMask = [False,False,False,False,False]
+completeMask = [False,False,False,False,False,False,False,False,False]
 activePoseList = []
 activeEdgeList = []
 backwardPoseList = []
@@ -95,7 +95,9 @@ def ctlRobotRandom():
 
 
 def edgeSaftyCheck(startPoseNum,endPoseNum):
-	
+	global Pose
+
+
 	endPose = Pose[endPoseNum]
 	startPose = Pose[startPoseNum]
 
@@ -103,7 +105,7 @@ def edgeSaftyCheck(startPoseNum,endPoseNum):
 
 
 	for step in range(0,_STEPNUM_):
-		time.sleep(0.001)
+		# time.sleep(0.001)
 		axis = [ 0,	startPose[0] + step*stepAngle[0],startPose[1] + step*stepAngle[1],startPose[2] + step*stepAngle[2],startPose[3] + step*stepAngle[3],startPose[4] + step*stepAngle[4],startPose[5] + step*stepAngle[5] ]		
 
 		prmRobotPose.set(axis)
@@ -134,6 +136,7 @@ def seekPath(endPoseNum):
 
 	global activeEdgeList
 	global edgeHeat
+	global edgeIndex
 	global backwardPoseList
 
 
@@ -187,14 +190,13 @@ def mixCheckMark(poseNum):
 		or ( (poseNum == 6) and (completeMask[5] == False) ) 
 		or ( (poseNum == 7) and (completeMask[6] == False) ) 
 		or ( (poseNum == 8) and (completeMask[7] == False) ) 
-		or ( (poseNum == 9) and (completeMask[8] == False) ) 
-		or ( (poseNum == 10) and (completeMask[9] == False) ) ):
+		or ( (poseNum == 9) and (completeMask[8] == False) )  ):
 
 
 	# mix!
 		seekPath(poseNum)
 		completeMask[poseNum-1] = True
-		# print completeMask
+		print completeMask
 				
 	return 
 
@@ -257,10 +259,13 @@ def growGroup():
 def dual_robot_check():
 	global Pose
 	global edgeBuff
+	global edgeIndex
 	global completeMask
 	global activePoseList
 	global activeEdgeList
 	global backwardPoseList
+
+
 
 	while(1):
 		print "new session"
@@ -291,6 +296,7 @@ def dual_robot_check():
 			prmRobotPose.set(axis)
 			if (robotCollideRobot()):
 				completeMask[finalPoseNum - 1] = True
+				print "ATTENTION!!!"
 
 
 
