@@ -101,7 +101,7 @@ def edgeSaftyCheck(startPoseNum,endPoseNum):
 
 
 	for step in range(0,_STEPNUM_):
-		time.sleep(0.02)
+		time.sleep(0.001)
 		axis = [ 0,	startPose[0] + step*stepAngle[0],startPose[1] + step*stepAngle[1],startPose[2] + step*stepAngle[2],startPose[3] + step*stepAngle[3],startPose[4] + step*stepAngle[4],startPose[5] + step*stepAngle[5] ]		
 
 		prmRobotPose.set(axis)
@@ -130,9 +130,14 @@ def searchPosesInGroup(poseList,PoseNum1,PoseNum2):
 
 def seekPath(endPoseNum):
 
+	global activeEdgeList
+	global edgeHeat
+
 	backwardPoseList = [endPoseNum]
 
 	for edge in activeEdgeList:
+		# print "edge"
+		# print edge
 		result1,result2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
 
 		if ( ((result1 == True and result2 == True) 
@@ -149,6 +154,15 @@ def seekPath(endPoseNum):
 
 			elif ( result1 == False and result2 == True ):
 				backwardPoseList.append(edge[0])
+
+			if ( (edge[0] == 0) or (edge[1] == 0) ):
+				# print "backwardPoseList"
+				print backwardPoseList
+
+				return
+				break
+	print "break"
+	
 	return 
 
 def mixCheckMark(poseNum):
@@ -160,7 +174,7 @@ def mixCheckMark(poseNum):
 		or ( (poseNum == 4) and (completeMask[3] == False) ) 
 		or ( (poseNum == 5) and (completeMask[4] == False) ) ):
 	# mix!
-	# 	seekPath(endPoseNum)
+		seekPath(poseNum)
 		completeMask[poseNum-1] = True
 		# print completeMask
 				
@@ -197,7 +211,7 @@ def growGroup():
 				pass
 			else:
 				# collision check first
-				print edge
+				# print edge
 				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					activeEdgeList.append( edge )#record as parents
 
