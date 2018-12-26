@@ -92,26 +92,17 @@ def ctlRobotRandom():
 	return
 
 
-def edgeSaftyCheck(startPose,endPose):
+def edgeSaftyCheck(startPoseNum,endPoseNum):
 	
-	stepangle = [0,
-	(endPose[0] - startPose[0]) / _STEPNUM_ ,
-	(endPose[1] - startPose[1]) / _STEPNUM_ ,
-	(endPose[2] - startPose[2]) / _STEPNUM_ ,
-	(endPose[3] - startPose[3]) / _STEPNUM_ ,
-	(endPose[4] - startPose[4]) / _STEPNUM_ ,
-	(endPose[5] - startPose[5]) / _STEPNUM_ ] 
+	endPose = Pose[endPoseNum]
+	startPose = Pose[startPoseNum]
+
+	stepangle = [0,(endPose[0] - startPose[0]) / _STEPNUM_ ,(endPose[1] - startPose[1]) / _STEPNUM_ ,(endPose[2] - startPose[2]) / _STEPNUM_ ,(endPose[3] - startPose[3]) / _STEPNUM_ ,(endPose[4] - startPose[4]) / _STEPNUM_ ,(endPose[5] - startPose[5]) / _STEPNUM_ ] 
 
 
 	for step in range(0,_STEPNUM_):
 
-		axis = [ 0,
-		startPose[0] + step*stepangle[0],
-		startPose[1] + step*stepangle[1],
-		startPose[2] + step*stepangle[2],
-		startPose[3] + step*stepangle[3],
-		startPose[4] + step*stepangle[4],
-		startPose[5] + step*stepangle[5] ]		
+		axis = [ 0,	startPose[0] + step*stepangle[0],startPose[1] + step*stepangle[1],startPose[2] + step*stepangle[2],startPose[3] + step*stepangle[3],startPose[4] + step*stepangle[4],startPose[5] + step*stepangle[5] ]		
 
 		prmRobotPose.set(axis)
 
@@ -206,7 +197,7 @@ def growGroup():
 				pass
 			else:
 				# collision check first
-				if (1):#( True == edgeSaftyCheck(edge[0],edge[1]) ):
+				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					activeEdgeList.append( edge )#record as parents
 
 					if ( result1 == True and result2 == False ):
