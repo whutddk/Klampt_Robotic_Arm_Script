@@ -196,7 +196,7 @@ def mixCheckMark(poseNum):
 	# mix!
 		seekPath(poseNum)
 		completeMask[poseNum-1] = True
-		print completeMask
+		# print completeMask
 				
 	return 
 
@@ -281,24 +281,13 @@ def dual_robot_check():
 
 		ctlRobotRandom()
 
-		#first pose check
-
-		# no doubt Pose0 is safty
-		# axis = Pose[0][:]
-		# axis.insert(0,0)
-		# prmRobotPose.set(axis)
-		# if (robotCollideRobot()):
-		# 	continue
-
 		for finalPoseNum in range(1,10):
 			axis = Pose[finalPoseNum][:]
 			axis.insert(0,0)
 			prmRobotPose.set(axis)
 			if (robotCollideRobot()):
 				completeMask[finalPoseNum - 1] = True
-				print "ATTENTION!!!"
-
-
+				# print "ATTENTION!!!"
 
 		loopCnt = 0;
 		while( completeMask != [True,True,True,True,True,True,True,True,True] ):
