@@ -97,12 +97,12 @@ def edgeSaftyCheck(startPoseNum,endPoseNum):
 	endPose = Pose[endPoseNum]
 	startPose = Pose[startPoseNum]
 
-	stepangle = [0,(endPose[0] - startPose[0]) / _STEPNUM_ ,(endPose[1] - startPose[1]) / _STEPNUM_ ,(endPose[2] - startPose[2]) / _STEPNUM_ ,(endPose[3] - startPose[3]) / _STEPNUM_ ,(endPose[4] - startPose[4]) / _STEPNUM_ ,(endPose[5] - startPose[5]) / _STEPNUM_ ] 
+	stepAngle = [(endPose[0] - startPose[0]) / _STEPNUM_ ,(endPose[1] - startPose[1]) / _STEPNUM_ ,(endPose[2] - startPose[2]) / _STEPNUM_ ,(endPose[3] - startPose[3]) / _STEPNUM_ ,(endPose[4] - startPose[4]) / _STEPNUM_ ,(endPose[5] - startPose[5]) / _STEPNUM_ ] 
 
 
 	for step in range(0,_STEPNUM_):
-
-		axis = [ 0,	startPose[0] + step*stepangle[0],startPose[1] + step*stepangle[1],startPose[2] + step*stepangle[2],startPose[3] + step*stepangle[3],startPose[4] + step*stepangle[4],startPose[5] + step*stepangle[5] ]		
+		time.sleep(0.02)
+		axis = [ 0,	startPose[0] + step*stepAngle[0],startPose[1] + step*stepAngle[1],startPose[2] + step*stepAngle[2],startPose[3] + step*stepAngle[3],startPose[4] + step*stepAngle[4],startPose[5] + step*stepAngle[5] ]		
 
 		prmRobotPose.set(axis)
 
@@ -162,7 +162,7 @@ def mixCheckMark(poseNum):
 	# mix!
 	# 	seekPath(endPoseNum)
 		completeMask[poseNum-1] = True
-		print completeMask
+		# print completeMask
 				
 	return 
 
@@ -197,6 +197,7 @@ def growGroup():
 				pass
 			else:
 				# collision check first
+				print edge
 				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					activeEdgeList.append( edge )#record as parents
 
