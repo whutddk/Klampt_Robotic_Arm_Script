@@ -36,20 +36,20 @@ def load_data():
 
 
 def save_jointList():
-	# global jointList
-	# with open('./jointList.json','w') as jointListFile:
+	global jointList
+	with open('./jointList.json','w') as jointListFile:
 		
-	# 	data = json.dumps(jointList)
-	# 	jointListFile.write(data)
+		data = json.dumps(jointList)
+		jointListFile.write(data)
 	pass
 	
 
 def save_edgeIndex():
-	# global edgeIndex
-	# with open('./edgeIndex.json','w') as edgeIndexFile:
+	global edgeIndex
+	with open('./edgeIndex.json','w') as edgeIndexFile:
 		
-	# 	data = json.dumps(edgeIndex)
-	# 	edgeIndexFile.write(data)\
+		data = json.dumps(edgeIndex)
+		edgeIndexFile.write(data)
 	pass
 
 
@@ -63,7 +63,6 @@ def robotSelfCollideCheck():
 			if ( ((i+1) == j) or ((i-1) == j) or ( i==j ) ):
 				continue
 			
-	# 	if i < 0: continue
 			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
 	 			return True
 	return False
@@ -131,7 +130,7 @@ if __name__ == "__main__":
 	prmRobotPose = RobotPoser(prmRobot)
 
 
-	# load_data()
+	load_data()
 
 	edgeNum = len(edgeIndex)
 
