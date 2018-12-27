@@ -2,6 +2,7 @@
 <world>
   <robot name="anno" file="robots/probot_6axis.rob" />
 
+
   <simulation>
 	<globals maxContacts = "-1"/>
 

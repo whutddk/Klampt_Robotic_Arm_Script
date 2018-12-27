@@ -57,12 +57,17 @@ def save_edgeIndex():
 
 def robotSelfCollideCheck():
 	collisionTest = WorldCollider(world)
-	for i in collisionTest.robots[0]:
-		print i
+	# for i in collisionTest.robots[0]:
+	for i in range(0,8):
+		for j in range (0,8):
+			if ( ((i+1) == j) or ((i-1) == j) or ( i==j ) ):
+				continue
+			
 	# 	if i < 0: continue
-	# 	if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
-	# 		return False
-	# return True
+			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
+				print True
+	 			return True
+	return False
 
 
 def prmRobotRandom():
