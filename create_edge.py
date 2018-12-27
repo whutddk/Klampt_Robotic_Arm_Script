@@ -69,38 +69,42 @@ def robotSelfCollideCheck():
 
 
 def prmRobotRandom():
-	axis = [0,		
+	axisSave = [		
 		random.uniform(-3.1416 , 3.1416),
 		random.uniform(-2.0071 , 2.0071),
 		random.uniform(-0.6981 , 3.8397),
 		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-1.3090 , 4.4506),
+		random.uniform(-0.2617 , 3.4032),
 		random.uniform(-3.1416 , 3.1416)
 	]
+	axis = axisSave[:]
+	axis.insert(0,0)
 
 	prmRobotPose.set(axis)
 
-	return
+	return axisSave
 
 def edge_constraint():
 	global jointList
 	global edgeIndex
 	global edgeNum
 
-	newIndex = len(jointList) - 1
+	newIndex = (len(jointList) - 1)
+
 
 	for preIndex in range(0,newIndex):
 	# for prePose in poseList:
-		if ( ( abs(jointList[preIndex][0] - jointList[newIndex][0]) < (0.417 / 180 * pi * 30) ) and
-			( abs(jointList[preIndex][1] - jointList[newIndex][1]) < (0.183 / 180 * pi * 30) ) and
-			( abs(jointList[preIndex][2] - jointList[newIndex][2]) < (0.25 / 180 * pi * 30) ) and
-			( abs(jointList[preIndex][3] - jointList[newIndex][3]) < (0.2 / 180 * pi * 30) ) and
-			( abs(jointList[preIndex][4] - jointList[newIndex][4]) < (0.2 / 180 * pi * 30) ) and
-			( abs(jointList[preIndex][5] - jointList[newIndex][5]) < (0.543 / 180 * pi * 30) ) ):
+
+		if ( ( abs(jointList[preIndex][0] - jointList[newIndex][0]) < (0.417 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][1] - jointList[newIndex][1]) < (0.183 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][2] - jointList[newIndex][2]) < (0.25 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][3] - jointList[newIndex][3]) < (0.2 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][4] - jointList[newIndex][4]) < (0.2 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][5] - jointList[newIndex][5]) < (0.543 / 180 * _PI_ * 30) ) ):
 			edge = [preIndex,newIndex]
 			edgeIndex.append(edge)
 			edgeNum = edgeNum + 1
-			save_edgeIndex()
+			# save_edgeIndex()
 			print edge
 	print len(jointList)
 
@@ -133,10 +137,12 @@ if __name__ == "__main__":
 	load_data()
 
 	edgeNum = len(edgeIndex)
+	print edgeNum
+
 
 	while(edgeNum < 100000):
 
-		time.sleep(0.1)
+		# time.sleep(0.1)
 		jointSet = prmRobotRandom()
 		if ( False == robotSelfCollideCheck() ):
 			jointList.append(jointSet)
