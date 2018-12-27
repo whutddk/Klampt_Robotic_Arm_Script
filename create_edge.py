@@ -17,7 +17,7 @@ _PI_ = 3.14159
 
 jointList = []
 edgeIndexList = []
-
+edgeIndex = []
 
 def load_data():
 	global edgeIndex
@@ -65,7 +65,6 @@ def robotSelfCollideCheck():
 			
 	# 	if i < 0: continue
 			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
-				print True
 	 			return True
 	return False
 
@@ -109,26 +108,6 @@ def edge_constraint():
 
 ###############################
 
-# load_data()
-
-# edgeNum = len(edgeIndex)
-
-# while(edgeNum < 100000):
-# 	jointSet = prmRobotRandom()
-# 	if (True == robotSelfCollideCheck()):
-# 		jointList.append(jointSet)
-# 		edge_constraint()
-
-
-		
-
-
-
-
-
-
-
-###########################################
 
 
 if __name__ == "__main__":
@@ -151,7 +130,20 @@ if __name__ == "__main__":
 	
 	prmRobotPose = RobotPoser(prmRobot)
 
-	robotSelfCollideCheck()
+
+	# load_data()
+
+	edgeNum = len(edgeIndex)
+
+	while(edgeNum < 100000):
+
+		time.sleep(0.1)
+		jointSet = prmRobotRandom()
+		if ( False == robotSelfCollideCheck() ):
+			jointList.append(jointSet)
+			edge_constraint()
+
+
 
 
 
