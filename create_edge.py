@@ -84,27 +84,32 @@ def prmRobotRandom():
 
 	return axisSave
 
-def edge_constraint():
+def edge_constraint(jointSet):
 	global jointList
 	global edgeIndex
 	global edgeNum
 
-	newIndex = (len(jointList) - 1)
+	jointLenth = len(jointList)
 
 
-	for preIndex in range(0,newIndex):
+	for preIndex in range(0,jointLenth):
 	# for prePose in poseList:
 
-		if ( ( abs(jointList[preIndex][0] - jointList[newIndex][0]) < (0.417 / 180 * _PI_ * 30) ) and
-			( abs(jointList[preIndex][1] - jointList[newIndex][1]) < (0.183 / 180 * _PI_ * 30) ) and
-			( abs(jointList[preIndex][2] - jointList[newIndex][2]) < (0.25 / 180 * _PI_ * 30) ) and
-			( abs(jointList[preIndex][3] - jointList[newIndex][3]) < (0.2 / 180 * _PI_ * 30) ) and
-			( abs(jointList[preIndex][4] - jointList[newIndex][4]) < (0.2 / 180 * _PI_ * 30) ) and
-			( abs(jointList[preIndex][5] - jointList[newIndex][5]) < (0.543 / 180 * _PI_ * 30) ) ):
-			edge = [preIndex,newIndex]
+		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 30) ) and
+			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 30) ) ):
+			
 			edgeIndex.append(edge)
+
 			edgeNum = edgeNum + 1
+			edge = [preIndex,jointLenth]
+			jointList.append(jointSet)
+
 			# save_edgeIndex()
+			# save_jointList()
 			print edge
 	print len(jointList)
 
@@ -145,8 +150,8 @@ if __name__ == "__main__":
 		# time.sleep(0.1)
 		jointSet = prmRobotRandom()
 		if ( False == robotSelfCollideCheck() ):
-			jointList.append(jointSet)
-			edge_constraint()
+			
+			edge_constraint(jointSet)
 
 
 
