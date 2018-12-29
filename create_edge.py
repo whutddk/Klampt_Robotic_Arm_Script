@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-29 14:36:47
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-29 14:45:09
+# @Last Modified time: 2018-12-29 15:07:21
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -102,12 +102,12 @@ def edge_constraint(jointSet):
 	for preIndex in range(0,jointLenth):
 	# for prePose in poseList:
 
-		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ * 100) ) and
-			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 100) ) and
-			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ * 100) ) and
-			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 100) ) and
-			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 100) ) and
-			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 100) ) ):
+		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ * 20) ) and
+			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 20) ) and
+			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ * 20) ) and
+			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 20) ) and
+			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 20) ) and
+			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 20) ) ):
 			
 			
 
