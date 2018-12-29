@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-29 14:36:47
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-29 14:38:40
+# @Last Modified time: 2018-12-29 14:40:00
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -109,10 +109,11 @@ def edge_constraint(jointSet):
 			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 100) ) and
 			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 100) ) ):
 			
-			edgeIndex.append(edge)
+			
 
 			edgeNum = edgeNum + 1
 			edge = [preIndex,jointLenth]
+			edgeIndex.append(edge)
 			jointList.append(jointSet)
 
 			# save_edgeIndex()
