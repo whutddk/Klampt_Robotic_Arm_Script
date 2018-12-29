@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-29 14:36:47
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-29 14:40:00
+# @Last Modified time: 2018-12-29 14:45:09
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -119,7 +119,7 @@ def edge_constraint(jointSet):
 			# save_edgeIndex()
 			# save_jointList()
 			print edge
-	print len(jointList)
+	print len(edgeIndex)
 
 
 ###############################
