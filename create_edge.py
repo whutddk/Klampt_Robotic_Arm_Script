@@ -77,13 +77,14 @@ def robotSelfCollideCheck():
 
 def prmRobotRandom():
 	axisSave = [		
-		random.randint(-3142 , 3142)/1000,
-		random.randint(-2007 , 2007)/1000,
-		random.randint(-698 , 3840)/1000,
-		random.randint(-3142 , 3142)/1000,
-		random.randint(-261 , 3403)/1000,
-		random.randint(-3142 , 3142)/1000
+		random.randint(-31416 , 31416)/10000.,
+		random.randint(-20071 , 20071)/10000.,
+		random.randint(-6981 , 38397)/10000.,
+		random.randint(-31416 , 31416)/10000.,
+		random.randint(-2617 , 34032)/10000.,
+		random.randint(-31416 , 31416)/10000.
 	]
+	print axisSave
 	axis = axisSave[:]
 	axis.insert(0,0)
 
@@ -109,12 +110,12 @@ def edge_constraint(jointSet):
 			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 3 * 250 / 10 ) ) and
 			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 3 * 250 / 10 ) ) and
 			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 3 * 250 / 10 ) ) 		and
-			( abs(jointList[preIndex][0] - jointSet[0]) > (0.417 / 180 * _PI_   ) ) and
-			( abs(jointList[preIndex][1] - jointSet[1]) > (0.183 / 180 * _PI_ ) ) and
-			( abs(jointList[preIndex][2] - jointSet[2]) > (0.25 / 180 * _PI_   ) ) and
-			( abs(jointList[preIndex][3] - jointSet[3]) > (0.2 / 180 * _PI_  ) ) and
-			( abs(jointList[preIndex][4] - jointSet[4]) > (0.2 / 180 * _PI_ ) ) and
-			( abs(jointList[preIndex][5] - jointSet[5]) > (0.543 / 180 * _PI_ ) ) ):
+			( abs(jointList[preIndex][0] - jointSet[0]) > (0.417 / 180 * _PI_ * 0.5   ) ) and
+			( abs(jointList[preIndex][1] - jointSet[1]) > (0.183 / 180 * _PI_* 0.5 ) ) and
+			( abs(jointList[preIndex][2] - jointSet[2]) > (0.25 / 180 * _PI_ * 0.5  ) ) and
+			( abs(jointList[preIndex][3] - jointSet[3]) > (0.2 / 180 * _PI_ * 0.5 ) ) and
+			( abs(jointList[preIndex][4] - jointSet[4]) > (0.2 / 180 * _PI_* 0.5 ) ) and
+			( abs(jointList[preIndex][5] - jointSet[5]) > (0.543 / 180 * _PI_* 0.5 ) ) ):
 			
 			
 			save = True
@@ -129,7 +130,7 @@ def edge_constraint(jointSet):
 	if ( save == True ):
 		jointList.append(jointSet)
 		save_jointList()
-	print len(edgeIndex)
+		print len(edgeIndex)
 
 
 ###############################
