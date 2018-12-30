@@ -84,7 +84,7 @@ def prmRobotRandom():
 		random.randint(-2617 , 34032)/10000.,
 		random.randint(-31416 , 31416)/10000.
 	]
-	print axisSave
+	#print axisSave
 	axis = axisSave[:]
 	axis.insert(0,0)
 
