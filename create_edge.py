@@ -148,8 +148,8 @@ if __name__ == "__main__":
 
 	prmRobot = world.robot(0)
 
-	vis.add("world",world)
-	vis.show()
+	#vis.add("world",world)
+	#vis.show()
 
 
 	collisionTest = WorldCollider(world)
