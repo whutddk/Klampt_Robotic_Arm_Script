@@ -79,7 +79,7 @@ def prmRobotRandom():
 	axisSave = [		
 		random.randint(-3142 , 3142)/1000,
 		random.randint(-2007 , 2007)/1000,
-		random.randint(-0698 , 3840)/1000,
+		random.randint(-698 , 3840)/1000,
 		random.randint(-3142 , 3142)/1000,
 		random.randint(-261 , 3403)/1000,
 		random.randint(-3142 , 3142)/1000
