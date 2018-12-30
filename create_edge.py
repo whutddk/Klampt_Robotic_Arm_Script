@@ -104,12 +104,12 @@ def edge_constraint(jointSet):
 	for preIndex in range(0,jointLenth):
 	# for prePose in poseList:
 
-		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ *3 * 250 / 10  ) ) and
-			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 3 * 250 / 10 ) ) and
-			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ *3 * 250 / 10  ) ) and
-			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 3 * 250 / 10 ) ) and
-			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 3 * 250 / 10 ) ) and
-			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 3 * 250 / 10 ) ) 		and
+		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ *2 * 50 / 10  ) ) and
+			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 2 * 50 / 10 ) ) and
+			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ *2 * 50 / 10  ) ) and
+			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 2 * 50 / 10 ) ) and
+			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 2 * 50 / 10 ) ) and
+			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 2 * 50 / 10 ) ) 		and
 			( abs(jointList[preIndex][0] - jointSet[0]) > (0.417 / 180 * _PI_ * 0.5   ) ) and
 			( abs(jointList[preIndex][1] - jointSet[1]) > (0.183 / 180 * _PI_* 0.5 ) ) and
 			( abs(jointList[preIndex][2] - jointSet[2]) > (0.25 / 180 * _PI_ * 0.5  ) ) and
@@ -164,7 +164,7 @@ if __name__ == "__main__":
 	print edgeNum
 
 
-	while(edgeNum < 100000):
+	while(edgeNum < 1000000):
 	# while( len(jointList)<5000 ):
 		# time.sleep(0.1)
 		jointSet = prmRobotRandom()
