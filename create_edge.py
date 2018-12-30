@@ -104,12 +104,12 @@ def edge_constraint(jointSet):
 	for preIndex in range(0,jointLenth):
 	# for prePose in poseList:
 
-		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ *2 * 50 / 10  ) ) and
-			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 2 * 50 / 10 ) ) and
-			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ *2 * 50 / 10  ) ) and
-			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 2 * 50 / 10 ) ) and
-			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 2 * 50 / 10 ) ) and
-			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 2 * 50 / 10 ) ) 		and
+		if ( ( abs(jointList[preIndex][0] - jointSet[0]) < (0.417 / 180 * _PI_ *3 * 100 / 10  ) ) and
+			( abs(jointList[preIndex][1] - jointSet[1]) < (0.183 / 180 * _PI_ * 3 * 100 / 10 ) ) and
+			( abs(jointList[preIndex][2] - jointSet[2]) < (0.25 / 180 * _PI_ *3 * 100 / 10  ) ) and
+			( abs(jointList[preIndex][3] - jointSet[3]) < (0.2 / 180 * _PI_ * 3 * 100 / 10 ) ) and
+			( abs(jointList[preIndex][4] - jointSet[4]) < (0.2 / 180 * _PI_ * 3 * 100 / 10 ) ) and
+			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 3 * 100 / 10 ) ) 		and
 			( abs(jointList[preIndex][0] - jointSet[0]) > (0.417 / 180 * _PI_ * 0.25   ) ) and
 			( abs(jointList[preIndex][1] - jointSet[1]) > (0.183 / 180 * _PI_* 0.25 ) ) and
 			( abs(jointList[preIndex][2] - jointSet[2]) > (0.25 / 180 * _PI_ * 0.25  ) ) and
