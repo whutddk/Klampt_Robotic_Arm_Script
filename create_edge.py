@@ -77,12 +77,12 @@ def robotSelfCollideCheck():
 
 def prmRobotRandom():
 	axisSave = [		
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-2.0071 , 2.0071),
-		random.uniform(-0.6981 , 3.8397),
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-0.2617 , 3.4032),
-		random.uniform(-3.1416 , 3.1416)
+		random.randint(-3142 , 3142)/1000,
+		random.randint(-2007 , 2007)/1000,
+		random.randint(-0698 , 3840)/1000,
+		random.randint(-3142 , 3142)/1000,
+		random.randint(-261 , 3403)/1000,
+		random.randint(-3142 , 3142)/1000
 	]
 	axis = axisSave[:]
 	axis.insert(0,0)
@@ -98,6 +98,7 @@ def edge_constraint(jointSet):
 
 	jointLenth = len(jointList)
 
+	save = False
 
 	for preIndex in range(0,jointLenth):
 	# for prePose in poseList:
@@ -110,15 +111,18 @@ def edge_constraint(jointSet):
 			( abs(jointList[preIndex][5] - jointSet[5]) < (0.543 / 180 * _PI_ * 3 * 250 / 10 ) ) ):
 			
 			
-
+			save = True
 			edgeNum = edgeNum + 1
 			edge = [preIndex,jointLenth]
 			edgeIndex.append(edge)
-			jointList.append(jointSet)
+			
 
 			save_edgeIndex()
-			save_jointList()
+			
 			print edge
+	if ( save == True ):
+		jointList.append(jointSet)
+		save_jointList()
 	print len(edgeIndex)
 
 
