@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 18:29:07
+# @Last Modified time: 2018-12-31 18:55:23
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -148,7 +148,7 @@ def seekPath(endPoseNum):
 
 
 	backwardPoseTemp = [endPoseNum]
-
+	backwardPoseList.append(endPoseNum)
 	while(1):
 		for edge in activeEdgeList:
 			# print "edge"
@@ -159,29 +159,28 @@ def seekPath(endPoseNum):
 				or (result1 == False and result2 == False)) ):
 				pass
 
-			else:
+			elif ( result1 == True and result2 == False ):
+	
+
 				print "heat:" 
 				print edge
 				for i in range(0,100000):
 					if ( edge == edgeIndex[i] ):
 						edgeHeat[i] = edgeHeat[i] + 1
 
-				res1,res2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
-				if ( result1 == True and result2 == False ):
-					
-					backwardPoseList.append(edge[1])
-					backwardPoseTemp.append(edge[1])
+				# elif ( result1 == False and result2 == True ):
 
-				elif ( result1 == False and result2 == True ):
+				# 	backwardPoseList.append(edge[0])
+				# 	backwardPoseTemp.append(edge[0])
 
-					backwardPoseList.append(edge[0])
-					backwardPoseTemp.append(edge[0])
-
-				
+				res1,res2 = searchPosesInGroup(backwardPoseList,edge[1],edge[1])
 				if ( res1 == True and res2 == True  ):
 					print backwardPoseList
 					print backwardPoseTemp
 					return
+
+				backwardPoseList.append(edge[1])
+				backwardPoseTemp.append(edge[1])
 
 	# print backwardPoseList
 	# print backwardPoseTemp
@@ -246,12 +245,13 @@ def growGroup():
 				# collision check first
 				# print edge
 				if (1):#( True == edgeSaftyCheck(edge[0],edge[1]) ):
-					activeEdgeList.append( edge )#record as parents
+					
 
 					if ( result1 == True and result2 == False ):
 						
 						activePoseList.append( edge[1] )		
 						# all mix work should be finished in  mixCheckMark()
+						activeEdgeList.append( [edge[1],edge[0]] )#record as parents
 						mixCheckMark(edge[1])
 						# print edge[1]
 							
@@ -259,6 +259,7 @@ def growGroup():
 
 						activePoseList.append( edge[0] )
 						# all mix work should be finished in  mixCheckMark()
+						activeEdgeList.append( [edge[0],edge[1]] )#record as parents
 						mixCheckMark(edge[0])
 						# print edge[0]
 				else:
