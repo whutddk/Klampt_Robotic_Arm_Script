@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 17:07:36
+# @Last Modified time: 2018-12-31 18:29:07
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -149,35 +149,39 @@ def seekPath(endPoseNum):
 
 	backwardPoseTemp = [endPoseNum]
 
-	for edge in activeEdgeList:
-		# print "edge"
-		# print edge
-		result1,result2 = searchPosesInGroup(backwardPoseTemp,edge[0],edge[1])
+	while(1):
+		for edge in activeEdgeList:
+			# print "edge"
+			# print edge
+			result1,result2 = searchPosesInGroup(backwardPoseTemp,edge[0],edge[1])
 
-		if ( ((result1 == True and result2 == True) 
-			or (result1 == False and result2 == False)) ):
-			pass
+			if ( ((result1 == True and result2 == True) 
+				or (result1 == False and result2 == False)) ):
+				pass
 
-		else:
-			for i in range(0,100000):
-				if ( edge == edgeIndex[i] ):
-					edgeHeat[i] = edgeHeat[i] + 1
-					# print "heat:" 
-					# print edge
+			else:
+				print "heat:" 
+				print edge
+				for i in range(0,100000):
+					if ( edge == edgeIndex[i] ):
+						edgeHeat[i] = edgeHeat[i] + 1
 
-			if ( result1 == True and result2 == False ):
+				res1,res2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
+				if ( result1 == True and result2 == False ):
+					
+					backwardPoseList.append(edge[1])
+					backwardPoseTemp.append(edge[1])
+
+				elif ( result1 == False and result2 == True ):
+
+					backwardPoseList.append(edge[0])
+					backwardPoseTemp.append(edge[0])
+
 				
-				backwardPoseList.append(edge[1])
-				backwardPoseTemp.append(edge[1])
-
-			elif ( result1 == False and result2 == True ):
-
-				backwardPoseList.append(edge[0])
-				backwardPoseTemp.append(edge[0])
-
-			res1,res2 = searchPosesInGroup(backwardPoseList,edge[0],edge[1])
-			if ( res1 == True and res2 == True  ):
-				break
+				if ( res1 == True and res2 == True  ):
+					print backwardPoseList
+					print backwardPoseTemp
+					return
 
 	# print backwardPoseList
 	# print backwardPoseTemp
@@ -286,7 +290,7 @@ def dual_robot_check():
 	# we define Pose0 as start pose
 		activePoseList = [0]
 		activeEdgeList = []
-		backwardPoseList = []
+		backwardPoseList = [0]
 
 		ctlRobotRandom()
 
