@@ -1,3 +1,10 @@
+# @File Name: dual_robotic_prm.py
+# @File Path: /home/whutddk/Klampt/klampt_robotic_arm_script/dual_robotic_prm/dual_robotic_prm.py
+# @Author: whutddkUbuntu16
+# @Date:   2018-12-27 19:14:09
+# @Last Modified by:   whutddkUbuntu16
+# @Last Modified time: 2018-12-31 16:15:31
+# @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
 import sys
@@ -18,7 +25,7 @@ _STEPNUM_ = 100
 
 
 
-Pose = []
+jointList = []
 edgeHeat = []
 edgeIndex = []
 
@@ -29,13 +36,13 @@ activeEdgeList = []
 backwardPoseList = []
 
 
-def load_Pose():
-	global Pose
+def load_jointList():
+	global jointList
 
-	with open('./poseAxis.json','r') as poseFile:
-		data = poseFile.read()
-		Pose = json.loads(data)
-		# print Pose
+	with open('../result/jointList.json','r') as jointListFile:
+		data = jointListFile.read()
+		jointList = json.loads(data)
+		# print jointList
 	return
 
 def load_Index():
@@ -51,7 +58,7 @@ def load_Index():
 def load_edgeHeat():
 	global edgeHeat
 
-	with open('./edgeHeat.json','r') as edgeHeatFile:
+	with open('../result/edgeHeat.json','r') as edgeHeatFile:
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
 		
@@ -95,11 +102,11 @@ def ctlRobotRandom():
 
 
 def edgeSaftyCheck(startPoseNum,endPoseNum):
-	global Pose
+	global jointList
 
 
-	endPose = Pose[endPoseNum]
-	startPose = Pose[startPoseNum]
+	endPose = jointList[endPoseNum]
+	startPose = jointList[startPoseNum]
 
 	stepAngle = [(endPose[0] - startPose[0]) / _STEPNUM_ ,(endPose[1] - startPose[1]) / _STEPNUM_ ,(endPose[2] - startPose[2]) / _STEPNUM_ ,(endPose[3] - startPose[3]) / _STEPNUM_ ,(endPose[4] - startPose[4]) / _STEPNUM_ ,(endPose[5] - startPose[5]) / _STEPNUM_ ] 
 
@@ -257,7 +264,7 @@ def growGroup():
 
 
 def dual_robot_check():
-	global Pose
+	global jointList
 	global edgeBuff
 	global edgeIndex
 	global completeMask
@@ -309,7 +316,7 @@ def dual_robot_check():
 
 if __name__ == "__main__":
 
-	load_Pose()
+	load_jointList()
 	load_Index()
 	load_edgeHeat()
 
