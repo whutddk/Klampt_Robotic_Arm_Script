@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 16:30:51
+# @Last Modified time: 2018-12-31 17:04:29
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -21,7 +21,7 @@ import random
 
 
 _PI_ = 3.14159 
-_STEPNUM_ = 100
+_STEPNUM_ = 50
 
 
 
@@ -203,7 +203,7 @@ def mixCheckMark(poseNum):
 	# mix!
 		seekPath(poseNum)
 		completeMask[poseNum-1] = True
-		# print completeMask
+		print completeMask
 				
 	return 
 
@@ -219,7 +219,7 @@ def growGroup():
 	# 	edge = edgeBuff[edgeIndex]
 
 	edgeTemp = edgeBuff[:]
-
+	print len( activeEdgeList )
 	for edge in edgeTemp:
 
 		if (completeMask == [True,True,True,True,True,True,True,True,True]):
@@ -229,6 +229,8 @@ def growGroup():
 
 		if ( result1 == False and result2 == False ):
 			# two pose are not in this edge,find next edge
+			print "error edge"
+			print edge
 			pass
 		else:
 			# at least one pose in edge, no matter how ,this edge should not querry next time
@@ -239,7 +241,7 @@ def growGroup():
 			else:
 				# collision check first
 				# print edge
-				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
+				if (1):#( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					activeEdgeList.append( edge )#record as parents
 
 					if ( result1 == True and result2 == False ):
@@ -298,7 +300,7 @@ def dual_robot_check():
 
 		loopCnt = 0;
 		while( completeMask != [True,True,True,True,True,True,True,True,True] ):
-			
+			print "next loop"
 			growGroup()
 
 			if ( loopCnt > 1000 ):
