@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 17:04:29
+# @Last Modified time: 2018-12-31 17:07:36
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -229,8 +229,8 @@ def growGroup():
 
 		if ( result1 == False and result2 == False ):
 			# two pose are not in this edge,find next edge
-			print "error edge"
-			print edge
+			# print "error edge"
+			# print edge
 			pass
 		else:
 			# at least one pose in edge, no matter how ,this edge should not querry next time
