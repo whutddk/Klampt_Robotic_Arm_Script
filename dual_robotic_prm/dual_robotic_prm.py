@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 16:15:31
+# @Last Modified time: 2018-12-31 16:30:51
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('./edgeIndex.json','r') as edgeIndexFile:
+	with open('../result/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -58,7 +58,7 @@ def load_Index():
 def load_edgeHeat():
 	global edgeHeat
 
-	with open('../result/edgeHeat.json','r') as edgeHeatFile:
+	with open('./edgeHeat.json','r') as edgeHeatFile:
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
 		
@@ -289,7 +289,7 @@ def dual_robot_check():
 		ctlRobotRandom()
 
 		for finalPoseNum in range(1,10):
-			axis = Pose[finalPoseNum][:]
+			axis = jointList[finalPoseNum][:]
 			axis.insert(0,0)
 			prmRobotPose.set(axis)
 			if (robotCollideRobot()):
@@ -322,7 +322,7 @@ if __name__ == "__main__":
 
 	world = WorldModel()
 
-	res = world.readFile('./anno_check.xml')
+	res = world.readFile('../dual_anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 	del res
