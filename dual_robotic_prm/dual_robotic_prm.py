@@ -314,7 +314,7 @@ def dual_robot_check():
 				print "check fail to finish!!!!!!!!!!!!!!!!"
 				break
 			else:
-			preActiveEdge = curActiveEdge
+				preActiveEdge = curActiveEdge
 			
 
 		save_edgeHeat()
