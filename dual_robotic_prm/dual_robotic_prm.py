@@ -21,7 +21,7 @@ import random
 
 
 _PI_ = 3.14159 
-_STEPNUM_ = 50
+_STEPNUM_ = 25
 
 
 
@@ -303,17 +303,21 @@ def dual_robot_check():
 				completeMask[finalPoseNum - 1] = True
 				# print "ATTENTION!!!"
 
-		loopCnt = 0;
+		preActiveEdge = 0
+
 		while( completeMask != [True,True,True,True,True,True,True,True,True] ):
 			print "next loop"
 			growGroup()
 
-			if ( loopCnt > 1000 ):
+			curActiveEdge = len( activeEdgeList )
+			if ( curActiveEdge == preActiveEdge ):
 				print "check fail to finish!!!!!!!!!!!!!!!!"
 				break
-			loopCnt = loopCnt + 1
+			else:
+			preActiveEdge = curActiveEdge
+			
 
-		# save_edgeHeat()
+		save_edgeHeat()
 	return
 
 
@@ -337,8 +341,8 @@ if __name__ == "__main__":
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
 
-	vis.add("world",world)
-	vis.show()
+	#vis.add("world",world)
+	#vis.show()
 
 
 	collisionTest = WorldCollider(world)
