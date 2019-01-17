@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 20:47:18
+# @Last Modified time: 2019-01-17 20:57:03
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
+	with open('../result/create_Edge_3m200ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../result/create_Edge_3m200ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -244,7 +244,7 @@ def growGroup():
 			else:
 				# collision check first
 				# print edge
-				if (1):#( True == edgeSaftyCheck(edge[0],edge[1]) ):
+				if ( True == edgeSaftyCheck(edge[0],edge[1]) ):
 					
 
 					if ( result1 == True and result2 == False ):
@@ -308,23 +308,23 @@ def dual_robot_check():
 						if (robotCollideRobot()):
 							completeMask[finalPoseNum - 1] = True
 							# print "ATTENTION!!!"
-					time.sleep(0.1)
+							#time.sleep(0.1)
 
-			# preActiveEdge = 0
+					preActiveEdge = 0
 
-			# while( completeMask != [True,True,True,True,True,True,True,True] ):
-			# 	print "next loop"
-			# 	growGroup()
+					while( completeMask != [True,True,True,True,True,True,True,True] ):
+						print "next loop"
+						growGroup()
 
-			# 	curActiveEdge = len( activeEdgeList )
-			# 	if ( curActiveEdge == preActiveEdge ):
-			# 		print "check fail to finish!!!!!!!!!!!!!!!!"
-			# 		break
-			# 	else:
-			# 		preActiveEdge = curActiveEdge
-				
+						curActiveEdge = len( activeEdgeList )
+						if ( curActiveEdge == preActiveEdge ):
+							print "check fail to finish!!!!!!!!!!!!!!!!"
+							break
+						else:
+							preActiveEdge = curActiveEdge
+						
 
-			# save_edgeHeat()
+					save_edgeHeat()
 	return
 
 
