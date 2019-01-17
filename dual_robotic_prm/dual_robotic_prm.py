@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-31 18:55:23
+# @Last Modified time: 2019-01-17 17:09:37
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -30,7 +30,7 @@ edgeHeat = []
 edgeIndex = []
 
 edgeBuff = edgeIndex
-completeMask = [False,False,False,False,False,False,False,False,False]
+completeMask = [False,False,False,False,False,False,False,False]
 activePoseList = []
 activeEdgeList = []
 backwardPoseList = []
@@ -200,7 +200,7 @@ def mixCheckMark(poseNum):
 		or ( (poseNum == 6) and (completeMask[5] == False) ) 
 		or ( (poseNum == 7) and (completeMask[6] == False) ) 
 		or ( (poseNum == 8) and (completeMask[7] == False) ) 
-		or ( (poseNum == 9) and (completeMask[8] == False) )  ):
+		  ):
 
 
 	# mix!
@@ -225,7 +225,7 @@ def growGroup():
 	print len( activeEdgeList )
 	for edge in edgeTemp:
 
-		if (completeMask == [True,True,True,True,True,True,True,True,True]):
+		if (completeMask == [True,True,True,True,True,True,True]):
 			break
 
 		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
@@ -286,7 +286,7 @@ def dual_robot_check():
 
 		edgeBuff = edgeIndex[:]
 
-		completeMask = [False,False,False,False,False,False,False,False,False]
+		completeMask = [False,False,False,False,False,False,False,False]
 
 	# we define Pose0 as start pose
 		activePoseList = [0]
@@ -295,7 +295,7 @@ def dual_robot_check():
 
 		ctlRobotRandom()
 
-		for finalPoseNum in range(1,10):
+		for finalPoseNum in range(1,9):
 			axis = jointList[finalPoseNum][:]
 			axis.insert(0,0)
 			prmRobotPose.set(axis)
@@ -305,7 +305,7 @@ def dual_robot_check():
 
 		preActiveEdge = 0
 
-		while( completeMask != [True,True,True,True,True,True,True,True,True] ):
+		while( completeMask != [True,True,True,True,True,True,True,True] ):
 			print "next loop"
 			growGroup()
 
