@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 20:57:03
+# @Last Modified time: 2019-01-17 21:24:20
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../result/create_Edge_3m200ms/jointList.json','r') as jointListFile:
+	with open('../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../result/create_Edge_3m200ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -225,7 +225,7 @@ def growGroup():
 	print len( activeEdgeList )
 	for edge in edgeTemp:
 
-		if (completeMask == [True,True,True,True,True,True,True]):
+		if (completeMask == [True,True,True,True,True,True,True,True]):
 			break
 
 		result1,result2 = searchPosesInGroup(activePoseList,edge[0],edge[1])
@@ -281,50 +281,56 @@ def dual_robot_check():
 
 
 
-	while(1):
-		print "new session"
+	for sh in range ( 0,10 ):
+		for ar in range ( 0,10 ):
+			for el in range ( 0,10 ):
+				print "new session"
+				print "sh"
+				print sh
+				print "ar"
+				print ar
+				print "el"
+				print el
 
-		edgeBuff = edgeIndex[:]
+				edgeBuff = edgeIndex[:]
 
-		completeMask = [False,False,False,False,False,False,False,False]
+				completeMask = [False,False,False,False,False,False,False,False]
 
-	# we define Pose0 as start pose
-		activePoseList = [0]
-		activeEdgeList = []
-		backwardPoseList = [0]
+			# we define Pose0 as start pose
+				activePoseList = [0]
+				activeEdgeList = []
+				backwardPoseList = [0]
 
-		# ctlRobotRandom()
+				# ctlRobotRandom()
 
-		for sh in range ( 0,10 ):
-			for ar in range ( 0,10 ):
-				for el in range ( 0,10 ):
 
-					ctlRobotPose.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
 
-					for finalPoseNum in range(1,9):
-						axis = jointList[finalPoseNum][:]
-						axis.insert(0,0)
-						prmRobotPose.set(axis)
-						if (robotCollideRobot()):
-							completeMask[finalPoseNum - 1] = True
-							# print "ATTENTION!!!"
-							#time.sleep(0.1)
+				ctlRobotPose.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
 
-					preActiveEdge = 0
+				for finalPoseNum in range(1,9):
+					axis = jointList[finalPoseNum][:]
+					axis.insert(0,0)
+					prmRobotPose.set(axis)
+					if (robotCollideRobot()):
+						completeMask[finalPoseNum - 1] = True
+						# print "ATTENTION!!!"
+						#time.sleep(0.1)
 
-					while( completeMask != [True,True,True,True,True,True,True,True] ):
-						print "next loop"
-						growGroup()
+				preActiveEdge = 0
 
-						curActiveEdge = len( activeEdgeList )
-						if ( curActiveEdge == preActiveEdge ):
-							print "check fail to finish!!!!!!!!!!!!!!!!"
-							break
-						else:
-							preActiveEdge = curActiveEdge
-						
+				while( completeMask != [True,True,True,True,True,True,True,True] ):
+					print "next loop"
+					growGroup()
 
-					save_edgeHeat()
+					curActiveEdge = len( activeEdgeList )
+					if ( curActiveEdge == preActiveEdge ):
+						print "check fail to finish!!!!!!!!!!!!!!!!"
+						break
+					else:
+						preActiveEdge = curActiveEdge
+					
+
+				save_edgeHeat()
 	return
 
 
