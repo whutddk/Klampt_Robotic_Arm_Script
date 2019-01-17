@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 17:13:36
+# @Last Modified time: 2019-01-17 19:56:36
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -111,7 +111,7 @@ def edgeSaftyCheck(startPoseNum,endPoseNum):
 	stepAngle = [(endPose[0] - startPose[0]) / _STEPNUM_ ,(endPose[1] - startPose[1]) / _STEPNUM_ ,(endPose[2] - startPose[2]) / _STEPNUM_ ,(endPose[3] - startPose[3]) / _STEPNUM_ ,(endPose[4] - startPose[4]) / _STEPNUM_ ,(endPose[5] - startPose[5]) / _STEPNUM_ ] 
 
 
-	for step in range(0,_STEPNUM_):
+	for step in range(0,_STEPNUM_ + 1 ):
 		# time.sleep(0.001)
 		axis = [ 0,	startPose[0] + step*stepAngle[0],startPose[1] + step*stepAngle[1],startPose[2] + step*stepAngle[2],startPose[3] + step*stepAngle[3],startPose[4] + step*stepAngle[4],startPose[5] + step*stepAngle[5] ]		
 
