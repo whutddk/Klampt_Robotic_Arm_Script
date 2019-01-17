@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 17:09:37
+# @Last Modified time: 2019-01-17 17:13:36
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../result/jointList.json','r') as jointListFile:
+	with open('../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../result/edgeIndex.json','r') as edgeIndexFile:
+	with open('../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
