@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 19:56:36
+# @Last Modified time: 2019-01-17 20:47:18
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -293,31 +293,38 @@ def dual_robot_check():
 		activeEdgeList = []
 		backwardPoseList = [0]
 
-		ctlRobotRandom()
+		# ctlRobotRandom()
 
-		for finalPoseNum in range(1,9):
-			axis = jointList[finalPoseNum][:]
-			axis.insert(0,0)
-			prmRobotPose.set(axis)
-			if (robotCollideRobot()):
-				completeMask[finalPoseNum - 1] = True
-				# print "ATTENTION!!!"
+		for sh in range ( 0,10 ):
+			for ar in range ( 0,10 ):
+				for el in range ( 0,10 ):
 
-		preActiveEdge = 0
+					ctlRobotPose.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
 
-		while( completeMask != [True,True,True,True,True,True,True,True] ):
-			print "next loop"
-			growGroup()
+					for finalPoseNum in range(1,9):
+						axis = jointList[finalPoseNum][:]
+						axis.insert(0,0)
+						prmRobotPose.set(axis)
+						if (robotCollideRobot()):
+							completeMask[finalPoseNum - 1] = True
+							# print "ATTENTION!!!"
+					time.sleep(0.1)
 
-			curActiveEdge = len( activeEdgeList )
-			if ( curActiveEdge == preActiveEdge ):
-				print "check fail to finish!!!!!!!!!!!!!!!!"
-				break
-			else:
-				preActiveEdge = curActiveEdge
-			
+			# preActiveEdge = 0
 
-		save_edgeHeat()
+			# while( completeMask != [True,True,True,True,True,True,True,True] ):
+			# 	print "next loop"
+			# 	growGroup()
+
+			# 	curActiveEdge = len( activeEdgeList )
+			# 	if ( curActiveEdge == preActiveEdge ):
+			# 		print "check fail to finish!!!!!!!!!!!!!!!!"
+			# 		break
+			# 	else:
+			# 		preActiveEdge = curActiveEdge
+				
+
+			# save_edgeHeat()
 	return
 
 
@@ -341,8 +348,8 @@ if __name__ == "__main__":
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
 
-	#vis.add("world",world)
-	#vis.show()
+	vis.add("world",world)
+	vis.show()
 
 
 	collisionTest = WorldCollider(world)
