@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-01-26 20:00:57
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-01-26 20:27:23
+# @Last Modified time: 2019-01-26 20:30:54
 # @Email: 295054118@whut.edu.cn"
 
 import sys
@@ -17,7 +17,7 @@ import random
 p = [[0.01123, -1.32404, -0.41556, -0.00164, 1.73955, 0],[0.56577, -1.35028, 0.06264, -3.141026, 1.85242, 0.56],[0.00871, -1.31410, -0.15823, -0.01047, 1.47401, 0],[-0.55153, -1.35044, 0.063146, -0.00185, 1.28761, -0.55],[0.42077, -1.55091, 0.682296, -3.14079, 2.27198, 0.42],[0.00587, -1.45458, 0.422789, 0, 1.03311, 0],[-0.41034, -1.55140, 0.68351, -3.139590, 2.27294, -0.41],[1.4, -1.45458, 0.42279, 0, 1.03311, 0],[-1.4, -1.45458, 0.42279, 0, 1.03311, 0]]
 
 jointList = []
-# edgeIndex = []
+
 
 
 for i in range (0,9):
@@ -30,13 +30,6 @@ for i in range (1,9):
 
 		
 
-
-
-# with open('./edgeIndex.json','w') as edgeIndexFile:
-	
-# 	data = json.dumps(edgeIndex)
-# 	edgeIndexFile.write(data)
-# pass
 
 with open('./jointList.json','w') as jointListFile:
 	
