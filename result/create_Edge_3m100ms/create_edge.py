@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # @File Name: create_edge.py
-# @File Path: M:\MAS2\Robotic Arm\Klampt_Robotic_Arm_Script\result\create_Edge_3m50ms\create_edge.py
+# @File Path: M:\MAS2\Robotic Arm\Klampt_Robotic_Arm_Script\result\create_Edge_3m100ms\create_edge.py
 # @Author: Ruige_Lee
 # @Date:   2018-12-29 14:36:47
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-01-26 20:47:28
+# @Last Modified time: 2019-01-26 20:58:55
 # @Email: 295054118@whut.edu.cn"
 
 from klampt import *
@@ -146,15 +146,15 @@ if __name__ == "__main__":
 
 	world = WorldModel()
 
-	res = world.readFile('./anno_check.xml')
+	res = world.readFile('../../anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 	del res
 
 	prmRobot = world.robot(0)
 
-	#vis.add("world",world)
-	#vis.show()
+	vis.add("world",world)
+	vis.show()
 
 
 	collisionTest = WorldCollider(world)
