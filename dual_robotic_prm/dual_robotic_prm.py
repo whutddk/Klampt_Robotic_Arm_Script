@@ -354,8 +354,8 @@ if __name__ == "__main__":
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
 
-	vis.add("world",world)
-	vis.show()
+	#vis.add("world",world)
+	#vis.show()
 
 
 	collisionTest = WorldCollider(world)
