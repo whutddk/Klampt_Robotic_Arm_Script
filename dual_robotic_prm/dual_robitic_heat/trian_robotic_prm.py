@@ -272,7 +272,7 @@ def trian_robot_check():
 
 
 
-	for sh in range ( 1,6 ):
+	for sh in range ( 0,6 ):
 		for ar in range ( 1,11 ):
 			for el in range ( 1,11 ):
 				print "new session"
