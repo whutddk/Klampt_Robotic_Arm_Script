@@ -78,9 +78,13 @@ def save_edgeHeat():
 def robotCollideRobot():
 	collisionTest = WorldCollider(world)
 	for i in collisionTest.robots[0]:
+		if i < 0: continue
 		for j in collisionTest.robots[1]:
-			if j < 0: continue
-			if i < 0: continue
+			if j < 0: continue		
+			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
+				return True
+		for j in collisionTest.robots[2]:
+			if j < 0: continue		
 			if collisionTest.geomList[j][1].collides(collisionTest.geomList[i][1]):
 				return True
 	return False
@@ -270,7 +274,7 @@ def growGroup():
 
 
 
-def dual_robot_check():
+def trian_robot_check():
 	global jointList
 	global edgeBuff
 	global edgeIndex
@@ -281,7 +285,7 @@ def dual_robot_check():
 
 
 
-	for sh in range ( 0,10 ):
+	for sh in range ( 0,5 ):
 		for ar in range ( 0,10 ):
 			for el in range ( 0,10 ):
 				print "new session"
@@ -305,32 +309,32 @@ def dual_robot_check():
 
 
 
-				ctlRobotPose.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
+				ctlRobotPoseLeft.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
+				ctlRobotPoseRight.set([0,0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
+				time.sleep(0.1)
+				#for finalPoseNum in range(1,9):
+					#axis = jointList[finalPoseNum][:]
+					#axis.insert(0,0)
+					#prmRobotPose.set(axis)
+					#if (robotCollideRobot()):
+						#completeMask[finalPoseNum - 1] = True
 
-				for finalPoseNum in range(1,9):
-					axis = jointList[finalPoseNum][:]
-					axis.insert(0,0)
-					prmRobotPose.set(axis)
-					if (robotCollideRobot()):
-						completeMask[finalPoseNum - 1] = True
-						# print "ATTENTION!!!"
-						#time.sleep(0.1)
 
-				preActiveEdge = 0
+				#preActiveEdge = 0
 
-				while( completeMask != [True,True,True,True,True,True,True,True] ):
-					print "next loop"
-					growGroup()
+				#while( completeMask != [True,True,True,True,True,True,True,True] ):
+					#print "next loop"
+					#growGroup()
 
-					curActiveEdge = len( activeEdgeList )
-					if ( curActiveEdge == preActiveEdge ):
-						print "check fail to finish!!!!!!!!!!!!!!!!"
-						break
-					else:
-						preActiveEdge = curActiveEdge
+					#curActiveEdge = len( activeEdgeList )
+					#if ( curActiveEdge == preActiveEdge ):
+						#print "check fail to finish!!!!!!!!!!!!!!!!"
+						#break
+					#else:
+						#preActiveEdge = curActiveEdge
 					
 
-				save_edgeHeat()
+				#save_edgeHeat()
 	return
 
 
@@ -352,44 +356,26 @@ if __name__ == "__main__":
 	del res
 
 	prmRobot = world.robot(0)
-	ctlRobot_left = world.robot(1)
-	ctlRobot_right = world.robot(2)
+	ctlRobotLeft = world.robot(1)
+	ctlRobotRight = world.robot(2)
 	vis.add("world",world)
 	vis.show()
 
 
 
-#	collisionTest = WorldCollider(world)
+	collisionTest = WorldCollider(world)
 	
-#	prmRobotPose = RobotPoser(prmRobot)
-#	ctlRobotPose = RobotPoser(ctlRobot)
+	prmRobotPose = RobotPoser(prmRobot)
+	ctlRobotPoseLeft = RobotPoser(ctlRobotLeft)
+	ctlRobotPoseRight = RobotPoser(ctlRobotRight)
 
 
-#	dual_robot_check()
+	trian_robot_check()
 
-	while(1):
-		time.sleep(0.1)
-		pass
-
-
-
+	# while(1):
+		# time.sleep(0.1)
+		# pass
 
 
 
 
-# set ctlRobot Random Pose
-
-# 	set 0,1,2,3,4 active 
-# while(!10 group complete)
-# 	for 10W edge:
-# 		if ( one active  another not ) in all group:
-# 			collision check
-# 			if pass :
-# 				activate another
-# 				finish check
-# 					if finish :
-# 						used edgeNum ++
-# 					  finished group mark 
-				
-			
-# 			delete edge from 10W edgeList
