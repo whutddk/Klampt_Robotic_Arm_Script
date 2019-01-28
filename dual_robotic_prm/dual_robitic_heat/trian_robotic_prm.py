@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
+	with open('../../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -353,7 +353,7 @@ if __name__ == "__main__":
 
 	prmRobot = world.robot(0)
 	ctlRobot_left = world.robot(1)
-	ctlRobot_right = world.robot(0)
+	ctlRobot_right = world.robot(2)
 	vis.add("world",world)
 	vis.show()
 
@@ -364,8 +364,8 @@ if __name__ == "__main__":
 #	prmRobotPose = RobotPoser(prmRobot)
 #	ctlRobotPose = RobotPoser(ctlRobot)
 
-#
-	dual_robot_check()
+
+#	dual_robot_check()
 
 	while(1):
 		time.sleep(0.1)
