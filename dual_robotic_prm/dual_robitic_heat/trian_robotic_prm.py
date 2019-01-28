@@ -3,7 +3,7 @@
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
 # @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 21:24:20
+# @Last Modified time: 2019-01-28 15:05:50
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -90,19 +90,6 @@ def robotCollideRobot():
 	return False
 
 
-def ctlRobotRandom():
-	axis = [0,		
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-2.0071 , 2.0071),
-		random.uniform(-0.6981 , 3.8397),
-		random.uniform(-3.1416 , 3.1416),
-		random.uniform(-1.3090 , 4.4506),
-		random.uniform(-3.1416 , 3.1416)
-	]
-
-	ctlRobotPose.set(axis)
-
-	return
 
 
 def edgeSaftyCheck(startPoseNum,endPoseNum):
@@ -285,9 +272,9 @@ def trian_robot_check():
 
 
 
-	for sh in range ( 0,5 ):
-		for ar in range ( 0,10 ):
-			for el in range ( 0,10 ):
+	for sh in range ( 1,6 ):
+		for ar in range ( 1,11 ):
+			for el in range ( 1,11 ):
 				print "new session"
 				print "sh"
 				print sh
@@ -305,36 +292,38 @@ def trian_robot_check():
 				activeEdgeList = []
 				backwardPoseList = [0]
 
-				# ctlRobotRandom()
 
 
 
+	
 				ctlRobotPoseLeft.set([0,-1.57+0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
 				ctlRobotPoseRight.set([0,0.314*sh,-2.0071+0.20071*ar,-0.6981 + 0.22681*el,0,1.57,0])
-				time.sleep(0.1)
-				#for finalPoseNum in range(1,9):
-					#axis = jointList[finalPoseNum][:]
-					#axis.insert(0,0)
-					#prmRobotPose.set(axis)
-					#if (robotCollideRobot()):
-						#completeMask[finalPoseNum - 1] = True
+				prmRobotPose.set([0,0,-_PI_/2,_PI_/2,0,_PI_/2,0,0])
+				#print robotCollideRobot()
+				#time.sleep(0.1)
+				for finalPoseNum in range(1,9):
+					axis = jointList[finalPoseNum][:]
+					axis.insert(0,0)
+					prmRobotPose.set(axis)
+					if (robotCollideRobot()):
+						completeMask[finalPoseNum - 1] = True
 
 
-				#preActiveEdge = 0
+				preActiveEdge = 0
 
-				#while( completeMask != [True,True,True,True,True,True,True,True] ):
-					#print "next loop"
-					#growGroup()
+				while( completeMask != [True,True,True,True,True,True,True,True] ):
+					print "next loop"
+					growGroup()
 
-					#curActiveEdge = len( activeEdgeList )
-					#if ( curActiveEdge == preActiveEdge ):
-						#print "check fail to finish!!!!!!!!!!!!!!!!"
-						#break
-					#else:
-						#preActiveEdge = curActiveEdge
+					curActiveEdge = len( activeEdgeList )
+					if ( curActiveEdge == preActiveEdge ):
+						print "check fail to finish!!!!!!!!!!!!!!!!"
+						break
+					else:
+						preActiveEdge = curActiveEdge
 					
 
-				#save_edgeHeat()
+				save_edgeHeat()
 	return
 
 
