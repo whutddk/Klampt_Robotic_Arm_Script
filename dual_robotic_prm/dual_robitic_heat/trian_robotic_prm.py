@@ -346,29 +346,30 @@ if __name__ == "__main__":
 
 	world = WorldModel()
 
-	res = world.readFile('../dual_anno_check.xml')
+	res = world.readFile('../../trian_anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 	del res
 
 	prmRobot = world.robot(0)
-	ctlRobot = world.robot(1)
+	ctlRobot_left = world.robot(1)
+	ctlRobot_right = world.robot(0)
+	vis.add("world",world)
+	vis.show()
 
-	#vis.add("world",world)
-	#vis.show()
 
 
-	collisionTest = WorldCollider(world)
+#	collisionTest = WorldCollider(world)
 	
-	prmRobotPose = RobotPoser(prmRobot)
-	ctlRobotPose = RobotPoser(ctlRobot)
+#	prmRobotPose = RobotPoser(prmRobot)
+#	ctlRobotPose = RobotPoser(ctlRobot)
 
-
+#
 	dual_robot_check()
 
-	# while(1):
-	# 	time.sleep(0.1)
-	# 	pass
+	while(1):
+		time.sleep(0.1)
+		pass
 
 
 
