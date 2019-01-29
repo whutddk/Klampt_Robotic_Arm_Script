@@ -347,8 +347,8 @@ if __name__ == "__main__":
 	prmRobot = world.robot(0)
 	ctlRobotLeft = world.robot(1)
 	ctlRobotRight = world.robot(2)
-	vis.add("world",world)
-	vis.show()
+	 # vis.add("world",world)
+	# vis.show()
 
 
 
