@@ -4,7 +4,7 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-05 22:44:49
+# @Last Modified time: 2019-02-05 22:57:41
 # @Email: 295054118@whut.edu.cn
 
 
@@ -80,7 +80,7 @@ load_data()
 while(1):
 	maxHeat = 0
 	heatNum = 0
-	for heat in edgeHeat:
+	for heat in range(0,100000):
 		if (edgeHeat[heat] > maxHeat):
 			maxHeat = edgeHeat[heat]
 			heatNum = heat
@@ -89,9 +89,9 @@ while(1):
 	else:
 		newEdgeIndex.append(edgeIndex[heatNum])
 		edgeHeat[heatNum] = 0
-		print (heatNum)
-		print (newEdgeIndex)
-	# 
+		print (maxHeat)
+print (newEdgeIndex)
+print (len(newEdgeIndex)) 
 
 pass
 
