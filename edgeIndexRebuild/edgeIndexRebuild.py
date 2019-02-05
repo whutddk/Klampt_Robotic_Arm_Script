@@ -4,30 +4,24 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-05 20:58:47
+# @Last Modified time: 2019-02-05 22:44:49
 # @Email: 295054118@whut.edu.cn
 
 
 
 
+import sys
+import time
+
+import json
 
 
-# dry run
-# 打开jointList 打开edgeIndex 
+import sys
+import time
 
-# for edgeIndex until aim
-
-#	resave edgeIndex
-#	search maxJointList rebuild
+import json
 
 
-
-# heat run
-# 打开jointList 打开edgeIndex 打开heat文件
-
-# heat 生成二维，对一个维度进行排序
-# 筛选出新的edgeIndex
-# 查找joint，重新生成edge序号
 
 
 jointList = []
@@ -36,7 +30,7 @@ edgeHeat = []
 
 newJointList = []
 newEdgeIndex = []
-
+newEdgeHeat = []
 
 def load_data():
 	global edgeIndex
@@ -46,6 +40,7 @@ def load_data():
 	with open('./edgeHeat.json','r') as edgeHeatFile:
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
+
 
 	with open('./jointList.json','r') as jointListFile:
 			
@@ -79,6 +74,35 @@ def save_edgeIndex():
 	pass
 
 
-def heat_rebuild():
-	pass
+# def heat_rebuild():
+load_data()
+
+while(1):
+	maxHeat = 0
+	heatNum = 0
+	for heat in edgeHeat:
+		if (edgeHeat[heat] > maxHeat):
+			maxHeat = edgeHeat[heat]
+			heatNum = heat
+	if ( maxHeat == 0 ):
+		break
+	else:
+		newEdgeIndex.append(edgeIndex[heatNum])
+		edgeHeat[heatNum] = 0
+		print (heatNum)
+		print (newEdgeIndex)
+	# 
+
+pass
+
+
+
+# heat run
+# 打开jointList 打开edgeIndex 打开heat文件
+
+# heat 生成二维，对一个维度进行排序
+# 筛选出新的edgeIndex
+# 查找joint，重新生成edge序号
+
+
 
