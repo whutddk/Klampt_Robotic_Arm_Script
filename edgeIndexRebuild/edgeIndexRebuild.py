@@ -4,7 +4,7 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-05 22:57:41
+# @Last Modified time: 2019-02-06 10:06:57
 # @Email: 295054118@whut.edu.cn
 
 
@@ -88,8 +88,18 @@ while(1):
 		break
 	else:
 		newEdgeIndex.append(edgeIndex[heatNum])
-		edgeHeat[heatNum] = 0
+		edgeHeat[heatNum] = -1
 		print (maxHeat)
+
+heat = 0
+while (len(newEdgeIndex) < 1024 ):
+	if (edgeHeat[heat] == 0 ):
+		newEdgeIndex.append(edgeIndex[heat])
+	heat = heat +1 
+
+	pass
+
+
 print (newEdgeIndex)
 print (len(newEdgeIndex)) 
 
