@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
+	with open('../../result/create_Edge_3m200ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../../result/create_Edge_3m200ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
