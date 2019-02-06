@@ -1,9 +1,9 @@
 # @File Name: initedgeHeat.py
-# @File Path: /home/whutddk/Klampt/klampt_robotic_arm_script/backup/initedgeHeat.py
+# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\backup\initedgeHeat.py
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-26 19:58:19
-# @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2019-01-17 20:49:58
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-06 18:28:51
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -24,7 +24,7 @@ def init_edgeHeat():
 
 		edgeHeat = []
 
-		for i in range(0,1000000):
+		for i in range(0,100000):
 			edgeHeat.append(0)
 
 
