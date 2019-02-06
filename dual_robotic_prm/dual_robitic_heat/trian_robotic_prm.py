@@ -1,9 +1,9 @@
-# @File Name: trian_robotic_prm.py
-# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\dual_robotic_prm\dual_robitic_heat\trian_robotic_prm.py
+# @File Name: dual_robotic_prm.py
+# @File Path: /home/whutddk/Klampt/klampt_robotic_arm_script/dual_robotic_prm/dual_robotic_prm.py
 # @Author: whutddkUbuntu16
 # @Date:   2018-12-27 19:14:09
-# @Last Modified by:   29505
-# @Last Modified time: 2019-02-06 18:26:19
+# @Last Modified by:   whutddkUbuntu16
+# @Last Modified time: 2019-01-28 15:05:50
 # @Email: 295054118@whut.edu.cn
 from klampt import *
 from klampt.model.collide import *
@@ -39,7 +39,7 @@ backwardPoseList = []
 def load_jointList():
 	global jointList
 
-	with open('../../result/create_Edge_3m200ms/jointList.json','r') as jointListFile:
+	with open('../../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
 		data = jointListFile.read()
 		jointList = json.loads(data)
 		# print jointList
@@ -48,7 +48,7 @@ def load_jointList():
 def load_Index():
 	global edgeIndex
 
-	with open('../../result/create_Edge_3m200ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
