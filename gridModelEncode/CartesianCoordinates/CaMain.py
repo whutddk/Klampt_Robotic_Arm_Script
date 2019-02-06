@@ -1,3 +1,11 @@
+# @File Name: CaMain.py
+# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\gridModelEncode\CartesianCoordinates\CaMain.py
+# @Author: 29505
+# @Date:   2018-12-30 09:59:45
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-06 11:49:35
+# @Email: 295054118@whut.edu.cn
+
 from klampt import *
 from klampt.model.collide import *
 import sys
@@ -26,12 +34,12 @@ def make_testing_mesh(world):
 
 				grid.loadFile("terrains/cube.off")
 
-				grid.transform([0.032,0,0,0,0.032,0,0,0,0.032],[0.032*y - 0.512,0.032*x-0.512,0.032*z])			
+				grid.transform([0.023,0,0,  0,0.030,0,  0,0,0.020],[0.023*x + 0.120,0.030*y-0.480,0.020*z])			
 
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
+				Mesh.appearance().setColor(0.1,0.1,0.2,0.1)
 	return 
 
 def load_Pose():
