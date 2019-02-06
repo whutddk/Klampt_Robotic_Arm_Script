@@ -4,7 +4,7 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-05 21:37:09
+# @Last Modified time: 2019-02-06 21:11:46
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -66,7 +66,7 @@ for i in range (0,100000):
 	newEdgeIndex.append(edgeIndex[i])
 save_edgeIndex()
 
-for i in range (0,edgeIndex[99999][1]):
+for i in range (0,edgeIndex[99999][1]+1):
 	newJointList.append(jointList[i])
 save_jointList()
 pass
