@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2018-12-30 09:59:45
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-07 10:02:48
+# @Last Modified time: 2019-02-07 10:10:16
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -144,8 +144,12 @@ def create_Edge(Index):
 			z = int(result[13:16])
 			oneEdge[1024*x+32*y+z] = 1
 			cnt = cnt + 1;
+			# print (x)
+			# print (y)
+			# print (z)
 		print ("cnt in this frame")
 		print (cnt)
+
 	edge.append(oneEdge)
 	store_Edge()
 	pass
@@ -162,14 +166,14 @@ if __name__ == "__main__":
 	load_Index()
 	load_edge()
 
-	#make_testing_mesh(world)
+	make_testing_mesh(world)
 				
 	
 	#sim = Simulator(world)
 	robot = world.robot(0)
 
-	vis.add("world",world)
-	vis.show()
+	#vis.add("world",world)
+	#vis.show()
 
 	collisionTest = WorldCollider(world)
 	
