@@ -4,7 +4,7 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-07 09:41:59
+# @Last Modified time: 2019-02-07 09:44:30
 # @Email: 295054118@whut.edu.cn
 
 
@@ -67,7 +67,7 @@ def load_data():
 
 def save_edgeIndex():
 	global newEdgeIndex
-	with open('../result/create_Edge_3m250ms/HeatCut/edgeIndex.json','w') as newEdgeIndexFile:
+	with open('../result/create_Edge_3m250ms/HeatCut/4096/edgeIndex.json','w') as newEdgeIndexFile:
 		
 		data = json.dumps(newEdgeIndex)
 		newEdgeIndexFile.write(data)
@@ -94,7 +94,7 @@ while(1):
 print (len(newEdgeIndex))
 
 heat = 0
-while (len(newEdgeIndex) < 1024 ):
+while (len(newEdgeIndex) < 4096 ):
 	if (edgeHeat[heat] == 0 ):
 		newEdgeIndex.append(edgeIndex[heat])
 	heat = heat +1 
