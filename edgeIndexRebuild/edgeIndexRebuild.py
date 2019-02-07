@@ -4,7 +4,7 @@
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-06 10:06:57
+# @Last Modified time: 2019-02-07 09:38:32
 # @Email: 295054118@whut.edu.cn
 
 
@@ -37,17 +37,17 @@ def load_data():
 	global jointList
 	global edgeHeat
 
-	with open('./edgeHeat.json','r') as edgeHeatFile:
+	with open('./result/create_Edge_3m250ms/edgeHeat.json','r') as edgeHeatFile:
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
 
 
-	with open('./jointList.json','r') as jointListFile:
+	with open('./result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
 			
 		data = jointListFile.read()
 		jointList = json.loads(data)
 	
-	with open('./edgeIndex.json','r') as edgeIndexFile:
+	with open('./result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
 			
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
@@ -56,18 +56,18 @@ def load_data():
 
 
 
-def save_jointList():
-	global newJointList
-	with open('./newJointList.json','w') as newJointListFile:
+# def save_jointList():
+# 	global newJointList
+# 	with open('./250msx3/pose.json','w') as newJointListFile:
 		
-		data = json.dumps(newJointList)
-		newJointListFile.write(data)
-	pass
+# 		data = json.dumps(newJointList)
+# 		newJointListFile.write(data)
+# 	pass
 	
 
 def save_edgeIndex():
 	global newEdgeIndex
-	with open('./newEdgeIndex.json','w') as newEdgeIndexFile:
+	with open('./250msx3/edgeIndex.json','w') as newEdgeIndexFile:
 		
 		data = json.dumps(newEdgeIndex)
 		newEdgeIndexFile.write(data)
@@ -102,6 +102,7 @@ while (len(newEdgeIndex) < 1024 ):
 
 print (newEdgeIndex)
 print (len(newEdgeIndex)) 
+save_edgeIndex()
 
 pass
 
