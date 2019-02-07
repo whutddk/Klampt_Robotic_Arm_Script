@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2018-12-30 09:59:45
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-07 10:10:16
+# @Last Modified time: 2019-02-07 10:12:26
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -123,7 +123,7 @@ def create_Edge(Index):
 	oneEdge = [0 for m in range(0,16384)]
 
 	for k in range (0,101):
-		time.sleep(0.01)
+		#time.sleep(0.01)
 		robotPose.set([0,
 			(shoulderStart + shoulderDis*k), 
 			(armStart + armDis*k),
