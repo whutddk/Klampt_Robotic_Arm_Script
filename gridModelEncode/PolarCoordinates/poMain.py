@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-08 20:24:05
+# @Last Modified time: 2019-02-08 20:30:18
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -172,8 +172,8 @@ if __name__ == "__main__":
 	
 	#sim = Simulator(world)
 	robot = world.robot(0)
-	vis.add("world",world)
-	vis.show()
+	# vis.add("world",world)
+	# vis.show()
 	collisionTest = WorldCollider(world)
 	
 	robotPose = RobotPoser(robot)
