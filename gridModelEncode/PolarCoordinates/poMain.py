@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-08 14:37:42
+# @Last Modified time: 2019-02-08 20:24:05
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -16,6 +16,7 @@ from klampt import vis
 import json
 
 import random
+import math
 
 Pose = []
 edge = []
@@ -30,16 +31,20 @@ def make_testing_mesh(world):
 	for z in range(0,32):
 		for rad in range (0,32):
 			for x in range (0,16):
-				grid = Geometry3D()
 
-				grid.loadFile("./polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off')
+				radius = 0.120 + 0.023*(x+1)
+				theta = -1.3197 + 0.0825*rad
+				if ( (radius * math.cos(theta+0.0825) > 0.120) or ( (radius * math.cos(theta) > 0.120) ) ):
+					grid = Geometry3D()
 
-				grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.020*z])			
+					grid.loadFile("./polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off')
 
-				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
+					grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.020*z])			
 
-				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
+					Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
+
+					Mesh.geometry().set(grid)
+					Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
 	return 
 
 def load_Pose():
