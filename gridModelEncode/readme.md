@@ -15,7 +15,7 @@ z 极限620.35   0~620.35 5BITS 640 = 20*32
 
 z 极限620.35   0~620.35       5BITS 640 = 20*32
 x (483-120)=363mm           4BITS 368 = 23*16
- -1 to 1 rad with 5bits and every bit present 0.0625 rad
+ -0.25145 to 0.25145 rad with 5bits and every bit present 0.0157 rad
 
 -----------------
 

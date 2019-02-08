@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-08 10:10:10
+# @Last Modified time: 2019-02-08 14:37:42
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -32,9 +32,9 @@ def make_testing_mesh(world):
 			for x in range (0,16):
 				grid = Geometry3D()
 
-				grid.loadFile("./polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off'")
+				grid.loadFile("./polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off')
 
-				grid.transform([1,0,0,0,1,0,0,0,1],[1,1,0.020*z])			
+				grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.020*z])			
 
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
 
@@ -47,10 +47,10 @@ def load_Pose():
 	global edgeIndex
 	global edge
 
-	with open('./pose.json','r') as poseFile:
+	with open('../../result/create_Edge_3m250ms/jointList.json','r') as poseFile:
 		data = poseFile.read()
 		Pose = json.loads(data)
-		print Pose
+		print (Pose)
 	pass
 
 def load_edge():
@@ -58,7 +58,7 @@ def load_edge():
 	global edgeIndex
 	global edge
 
-	with open('./edge.json','r') as edgeFile:
+	with open('F:/klampt/250msx3grid-po/edge.json','r') as edgeFile:
 		data = edgeFile.read()
 		edge = json.loads(data)
 		#print edge
@@ -69,7 +69,7 @@ def load_Index():
 	global edgeIndex
 	global edge
 
-	with open('./edgeIndex.json','r') as edgeIndexFile:
+	with open('../../result/create_Edge_3m250ms/HeatCut/4096/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -80,7 +80,7 @@ def store_Edge():
 	global edgeIndex
 	global edge
 
-	with open('./edge.json','w') as edgeFile:
+	with open('F:/klampt/250msx3grid-po/edge.json','w') as edgeFile:
 		data = json.dumps(edge)
 		edgeFile.write(data)
 	pass
@@ -120,7 +120,7 @@ def create_Edge(Index):
 	fingerDis = ( fingerEnd - fingerStart ) / 100
 	toolDis = ( toolEnd - toolStart ) / 100
 
-	oneEdge = [0 for m in xrange(0,16384)]
+	oneEdge = [0 for m in range(0,16384)]
 
 	for k in range (0,101):
 		time.sleep(0.01)
@@ -154,7 +154,7 @@ if __name__ == "__main__":
 	
 	world = WorldModel()
 
-	res = world.readFile('./anno_check.xml')
+	res = world.readFile('../../anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 			
@@ -162,7 +162,7 @@ if __name__ == "__main__":
 	load_Index()
 	load_edge()
 
-	#make_testing_mesh(world)
+	make_testing_mesh(world)
 				
 	
 	#sim = Simulator(world)
