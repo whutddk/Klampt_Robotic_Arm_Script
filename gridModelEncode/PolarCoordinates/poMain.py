@@ -1,3 +1,11 @@
+# @File Name: poMain.py
+# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\gridModelEncode\PolarCoordinates\poMain.py
+# @Author: 29505
+# @Date:   2019-02-07 09:33:58
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-08 10:10:10
+# @Email: 295054118@whut.edu.cn
+
 from klampt import *
 from klampt.model.collide import *
 import sys
@@ -20,15 +28,15 @@ def make_testing_mesh(world):
 	"""
 
 	for z in range(0,32):
-		for y in range (0,32):
+		for rad in range (0,32):
 			for x in range (0,16):
 				grid = Geometry3D()
 
-				grid.loadFile("terrains/cube.off")
+				grid.loadFile("./polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off'")
 
-				grid.transform([0.032,0,0,0,0.032,0,0,0,0.032],[0.032*y - 0.512,0.032*x-0.512,0.032*z])			
+				grid.transform([1,0,0,0,1,0,0,0,1],[1,1,0.020*z])			
 
-				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
+				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
 				Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
@@ -65,7 +73,7 @@ def load_Index():
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
-		print edgeIndex
+		print (edgeIndex)
 
 def store_Edge():
 	global Pose
@@ -85,25 +93,25 @@ def create_Edge(Index):
 	global edgeIndex
 	global edge
 
-	print "now Create Edge:"
-	print Index
+	print ("now Create Edge:")
+	print (Index)
 
 	i = edgeIndex[Index][0]
 	j = edgeIndex[Index][1]
 
-	shoulderStart = Pose[j][0] / 180 * 3.14159
-	armStart = Pose[j][1] / 180 * 3.14159
-	elbowStart = Pose[j][2] / 180 * 3.14159
-	wristStart = Pose[j][3] / 180 * 3.14159
-	fingerStart = Pose[j][4] / 180 * 3.14159
-	toolStart = Pose[j][5] / 180 * 3.14159
+	shoulderStart = Pose[j][0]
+	armStart = Pose[j][1]
+	elbowStart = Pose[j][2]
+	wristStart = Pose[j][3]
+	fingerStart = Pose[j][4]
+	toolStart = Pose[j][5]
 
-	shoulderEnd = Pose[i][0] / 180 * 3.14159
-	armEnd = Pose[i][1] / 180 * 3.14159
-	elbowEnd = Pose[i][2] / 180 * 3.14159
-	wristEnd = Pose[i][3] / 180 * 3.14159
-	fingerEnd = Pose[i][4] / 180 * 3.14159
-	toolEnd = Pose[i][5] / 180 * 3.14159
+	shoulderEnd = Pose[i][0]
+	armEnd = Pose[i][1]
+	elbowEnd = Pose[i][2]
+	wristEnd = Pose[i][3]
+	fingerEnd = Pose[i][4]
+	toolEnd = Pose[i][5]
 
 	shoulderDis = (shoulderEnd - shoulderStart) / 100
 	armDis = (armEnd - armStart) / 100
@@ -116,7 +124,14 @@ def create_Edge(Index):
 
 	for k in range (0,101):
 		time.sleep(0.01)
-		robotPose.set([0,shoulderStart + shoulderDis*k,- (armStart + armDis*k),-(elbowStart + elbowDis*k),- (wristStart + wristDis*k),-(fingerStart + fingerDis*k),toolStart + toolDis*k])
+		robotPose.set([0,
+			(shoulderStart + shoulderDis*k),
+			(armStart + armDis*k),
+			(elbowStart + elbowDis*k),
+			(wristStart + wristDis*k),
+			(fingerStart + fingerDis*k),
+			(toolStart + toolDis*k),
+			0])
 		collisionTest = WorldCollider(world)
 
 		cnt = 0;
@@ -129,8 +144,8 @@ def create_Edge(Index):
 			z = int(result[13:16])
 			oneEdge[1024*x+32*y+z] = 1
 			cnt = cnt + 1;
-		print "cnt in this frame"
-		print cnt
+		print ("cnt in this frame")
+		print (cnt)
 	edge.append(oneEdge)
 	store_Edge()
 	pass
@@ -149,9 +164,10 @@ if __name__ == "__main__":
 
 	#make_testing_mesh(world)
 				
-	vis.add("world",world)
+	
 	#sim = Simulator(world)
 	robot = world.robot(0)
+	vis.add("world",world)
 	vis.show()
 	collisionTest = WorldCollider(world)
 	

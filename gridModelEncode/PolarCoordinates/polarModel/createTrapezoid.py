@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-08 09:18:50
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-08 10:03:34
+# @Last Modified time: 2019-02-08 10:05:37
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -29,7 +29,7 @@ for x in range (0,16):
 			X2_1 = (radius + 0.023) * math.cos(theta)
 			Y2_1 = (radius + 0.023) * math.sin(theta)
 			X2_2 = (radius + 0.023) * math.cos(theta+0.0625)
-			Y2_2 = (radius + 0.023) * math.sin(theta+0.0625))
+			Y2_2 = (radius + 0.023) * math.sin(theta+0.0625)
 
 
 			modelFile.write('OFF\n')
