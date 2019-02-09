@@ -20,6 +20,6 @@ x (483-120)=363mm           4BITS 368 = 23*16
 -----------------
 
 
-distance(r) range from 142.1mm to 483mm
-azimuth(fi) range from -0.25145 to 0.25145 rad
-zenith(thta) range from -0.49378 rad to ?(1.57) rad
+distance(r) range from 120mm to 483mm
+azimuth(fi) range from -1.3197 to 1.3197 rad
+zenith(thta) range from -1.14 rad to 1.26 rad  0.075rad/bit

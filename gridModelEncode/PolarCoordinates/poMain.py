@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-08 20:30:18
+# @Last Modified time: 2019-02-09 10:45:59
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -179,7 +179,7 @@ if __name__ == "__main__":
 	robotPose = RobotPoser(robot)
 	
 	#print robotPose.get()
-	while(len(edge) < 1024):
+	while(len(edge) < 4096):
 		create_Edge(len(edge))
 
 
