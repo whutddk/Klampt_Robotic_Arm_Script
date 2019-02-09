@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2018-12-04 11:25:50
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-09 10:36:19
+# @Last Modified time: 2019-02-09 11:32:39
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -19,45 +19,46 @@ for x in range (0,16):
 			with open('./trapezoid'+ str(x)+ '_'+ str(rad) +"_" +str(fi) +'.off','w') as modelFile:
 				radius = 0.120 + 0.023*x
 				theta = -1.3197 + 0.0825*rad
-				fieta = -1.1442 + 0.075*fi
+				# fieta = -1.1442 + 0.075*fi
+				fieta = -1.57 + 0.098*fi
 
-				X1_1 = radius * math.cos(theta) * math.sin(fieta)
-				Y1_1 = radius * math.sin(theta) * math.sin(fieta)
-				Z1_1 = radius * math.cos(fieta)+0.264
+				X1_1 = radius * math.cos(theta) * math.cos(fieta)
+				Y1_1 = radius * math.sin(theta) * math.cos(fieta)
+				Z1_1 = radius * math.sin(fieta)+0.264
 
-				X1_2 = radius * math.cos(theta) * math.sin(fieta+0.075)
-				Y1_2 = radius * math.sin(theta) * math.sin(fieta+0.075)
-				Z1_2 = radius * math.cos((fieta+0.075) ) + 0.264
-
-
-
-				X2_1 = (radius + 0.023) * math.cos(theta) * math.sin(fieta)
-				Y2_1 = (radius + 0.023) * math.sin(theta) * math.sin(fieta)
-				Z2_1 = (radius + 0.023) * math.cos(fieta) + 0.264
-
-				X2_2 = (radius + 0.023) * math.cos(theta) * math.sin(fieta + 0.075)
-				Y2_2 = (radius + 0.023) * math.sin(theta) * math.sin(fieta + 0.075)
-				Z2_2 = (radius + 0.023) * math.cos(fieta+0.075)+0.264
+				X1_2 = radius * math.cos(theta) * math.cos(fieta+0.098)
+				Y1_2 = radius * math.sin(theta) * math.cos(fieta+0.098)
+				Z1_2 = radius * math.sin((fieta+0.098) ) + 0.264
 
 
 
-				X3_1 = radius * math.cos(theta + 0.0825) * math.sin(fieta)
-				Y3_1 = radius * math.sin(theta + 0.0825) * math.sin(fieta)
-				Z3_1 = radius * math.cos(fieta) + 0.264
+				X2_1 = (radius + 0.023) * math.cos(theta) * math.cos(fieta)
+				Y2_1 = (radius + 0.023) * math.sin(theta) * math.cos(fieta)
+				Z2_1 = (radius + 0.023) * math.sin(fieta) + 0.264
 
-				X3_2 = radius * math.cos(theta+0.0825) * math.sin( fieta + 0.075 )
-				Y3_2 = radius * math.sin(theta+0.0825) * math.sin( fieta + 0.075 )
-				Z3_2 = radius * math.cos(fieta+0.075) + 0.264
+				X2_2 = (radius + 0.023) * math.cos(theta) * math.cos(fieta + 0.098)
+				Y2_2 = (radius + 0.023) * math.sin(theta) * math.cos(fieta + 0.098)
+				Z2_2 = (radius + 0.023) * math.sin(fieta+0.098)+0.264
 
 
 
-				X4_1 = (radius + 0.023) * math.cos(theta+0.0825) * math.sin(fieta )
-				Y4_1 = (radius + 0.023) * math.sin(theta+0.0825) * math.sin(fieta )
-				Z4_1 = (radius + 0.023) * math.cos(fieta)+0.264
+				X3_1 = radius * math.cos(theta + 0.0825) * math.cos(fieta)
+				Y3_1 = radius * math.sin(theta + 0.0825) * math.cos(fieta)
+				Z3_1 = radius * math.sin(fieta) + 0.264
 
-				X4_2 = (radius + 0.023) * math.cos(theta+0.0825) * math.sin(fieta + 0.075)
-				Y4_2 = (radius + 0.023) * math.sin(theta+0.0825) * math.sin(fieta + 0.075)
-				Z4_2 = (radius + 0.023) * math.cos(fieta+0.075) + 0.264
+				X3_2 = radius * math.cos(theta+0.0825) * math.cos( fieta + 0.098 )
+				Y3_2 = radius * math.sin(theta+0.0825) * math.cos( fieta + 0.098 )
+				Z3_2 = radius * math.sin(fieta+0.098) + 0.264
+
+
+
+				X4_1 = (radius + 0.023) * math.cos(theta+0.0825) * math.cos(fieta )
+				Y4_1 = (radius + 0.023) * math.sin(theta+0.0825) * math.cos(fieta )
+				Z4_1 = (radius + 0.023) * math.sin(fieta)+0.264
+
+				X4_2 = (radius + 0.023) * math.cos(theta+0.0825) * math.cos(fieta + 0.098)
+				Y4_2 = (radius + 0.023) * math.sin(theta+0.0825) * math.cos(fieta + 0.098)
+				Z4_2 = (radius + 0.023) * math.sin(fieta+0.098) + 0.264
 
 
 				modelFile.write('OFF\n')
