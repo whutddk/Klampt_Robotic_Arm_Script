@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <robot name="anno" file="robots/probot_6axis.rob" />
+  <robot name="ctlannoLeft" file="robots/ctlAnno-left.rob" />
+  <robot name="ctlannoRight" file="robots/ctlAnno-right.rob" />
+
+  <simulation>
+	<globals maxContacts = "-1"/>
+
+	
+
+
+	<robot index = "0" body ="-1" />
+	
+  </simulation>
+</world>
