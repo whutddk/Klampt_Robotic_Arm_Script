@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2018-12-30 09:59:45
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-14 21:54:49
+# @Last Modified time: 2019-02-14 21:58:42
 # @Email: 295054118@whut.edu.cn
 
 from klampt import *
@@ -49,8 +49,7 @@ if __name__ == "__main__":
 
 	make_testing_mesh(world)
 				
-	
-	#sim = Simulator(world)
+
 	robot = world.robot(0)
 
 	vis.add("world",world)
