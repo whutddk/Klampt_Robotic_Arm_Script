@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 11:32:13
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 17:38:21
+# @Last Modified time: 2019-02-18 17:42:08
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -76,7 +76,7 @@ def load_data():
 
 def save_edgeIndex():
 	global newEdgeIndex
-	with open('../result/create_Edge_3m250ms/HeatCut/4096/edgeIndex.json','w') as newEdgeIndexFile:
+	with open('../result/create_Edge_3m100ms/HeatCut/4096/edgeIndex.json','w') as newEdgeIndexFile:
 		
 		data = json.dumps(newEdgeIndex)
 		newEdgeIndexFile.write(data)
