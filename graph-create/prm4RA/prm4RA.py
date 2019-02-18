@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
-# @File Name: graph_create.py
-# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\prm4RA\graph_create.py
+# @File Name: prm4RA.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\prm4RA\prm4RA.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 11:32:13
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 17:07:58
+# @Email: 295054118@whut.edu.cn"
+
+# -*- c5ding: utf-8 -*-
+# @File Name: prm4RA.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\prm4RA\prm4RA.py
 # @Author: Ruige_Lee
 # @Date:   2018-12-29 14:36:47
 # @Last Modified by:   Ruige_Lee
@@ -45,7 +54,7 @@ if __name__ == "__main__":
 
 
 	world = WorldModel()
-	make_obstacle(world)
+	# make_obstacle(world)
 
 	res = world.readFile('./anno_graph.xml')
 	if not res:
@@ -88,14 +97,14 @@ if __name__ == "__main__":
 	# RobotPose6.set([0,0,0,0,0,0,0,0])
 	# RobotPose7.set([0,0,0,0,0,0,0,0])
 
-	RobotPose0.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose1.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose2.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose3.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose4.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose5.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose6.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
-	RobotPose7.set([0,-0.9,-1.3,1.57,0.4,0.54,-1.57,0])
+	RobotPose0.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose1.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose2.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose3.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose4.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose5.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose6.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	RobotPose7.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
 
 
 	while(1):
