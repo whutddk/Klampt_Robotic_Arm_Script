@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 09:11:50
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 10:16:37
+# @Last Modified time: 2019-02-18 10:32:31
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: poGraph.py
@@ -48,7 +48,20 @@ def make_testing_mesh(world):
 				Mesh.appearance().setColor(0.1,0.5,0.1,0.08)
 	return 
 
+def make_obstacle(world):
 
+	grid = Geometry3D()
+
+	grid.loadFile("../../terrains/cube.off")
+
+	grid.transform([0.368,0,0,  0,0.960,0,  0,0,0.640],[0.120,-0.480,0])			
+
+	Mesh = world.makeTerrain("obstacleArea")
+
+	Mesh.geometry().set(grid)
+	Mesh.appearance().setColor(0.5,0.1,0.1,0.08)
+
+	return 
 
 if __name__ == "__main__":
 	
@@ -60,7 +73,9 @@ if __name__ == "__main__":
 			
 
 	make_testing_mesh(world)
-				
+	make_obstacle(world)	
+
+
 	robot = world.robot(0)
 
 	vis.add("world",world)
@@ -68,6 +83,7 @@ if __name__ == "__main__":
 
 	collisionTest = WorldCollider(world)
 	
+
 	robotPose = RobotPoser(robot)
 	
 

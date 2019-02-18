@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 09:44:06
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 10:18:25
+# @Last Modified time: 2019-02-18 10:26:28
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: ObGraph.py
@@ -38,7 +38,7 @@ def make_obstacle(world):
 	Mesh = world.makeTerrain("obstacleArea")
 
 	Mesh.geometry().set(grid)
-	Mesh.appearance().setColor(0.1,0.5,0.1,0.08)
+	Mesh.appearance().setColor(0.5,0.1,0.1,0.2)
 
 	return 
 
