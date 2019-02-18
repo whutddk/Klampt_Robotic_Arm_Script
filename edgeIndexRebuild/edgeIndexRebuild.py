@@ -1,6 +1,15 @@
+# -*- coding: utf-8 -*-
+# @File Name: edgeIndexRebuild.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\edgeIndexRebuild\edgeIndexRebuild.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 11:32:13
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 17:38:21
+# @Email: 295054118@whut.edu.cn"
+
 
 # @File Name: edgeIndexRebuild.py
-# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\edgeIndexRebuild\edgeIndexRebuild.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\edgeIndexRebuild\edgeIndexRebuild.py
 # @Author: 29505
 # @Date:   2019-02-05 20:38:20
 # @Last Modified by:   29505
@@ -37,17 +46,17 @@ def load_data():
 	global jointList
 	global edgeHeat
 
-	with open('../result/create_Edge_3m250ms/edgeHeat.json','r') as edgeHeatFile:
+	with open('../result/create_Edge_3m100ms/edgeHeat.json','r') as edgeHeatFile:
 		data = edgeHeatFile.read()
 		edgeHeat = json.loads(data)
 
 
-	with open('../result/create_Edge_3m250ms/jointList.json','r') as jointListFile:
+	with open('../result/create_Edge_3m100ms/jointList.json','r') as jointListFile:
 			
 		data = jointListFile.read()
 		jointList = json.loads(data)
 	
-	with open('../result/create_Edge_3m250ms/edgeIndex.json','r') as edgeIndexFile:
+	with open('../result/create_Edge_3m100ms/edgeIndex.json','r') as edgeIndexFile:
 			
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
