@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 09:11:50
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 10:29:25
+# @Last Modified time: 2019-02-18 11:09:05
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: CaGraph.py
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 			
 
 	make_testing_mesh(world)
-	make_obstacle(world)	
+	# make_obstacle(world)	
 
 	robot = world.robot(0)
 
