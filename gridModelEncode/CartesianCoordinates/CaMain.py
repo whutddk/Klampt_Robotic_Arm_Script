@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
 # @File Name: CaMain.py
-# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\gridModelEncode\CartesianCoordinates\CaMain.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\gridModelEncode\CartesianCoordinates\CaMain.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 11:32:13
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 17:47:17
+# @Email: 295054118@whut.edu.cn"
+
+# @File Name: CaMain.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\gridModelEncode\CartesianCoordinates\CaMain.py
 # @Author: 29505
 # @Date:   2018-12-30 09:59:45
 # @Last Modified by:   29505
@@ -47,7 +56,7 @@ def load_Pose():
 	global edgeIndex
 	global edge
 
-	with open('../../result/create_Edge_3m250ms/jointList.json','r') as poseFile:
+	with open('../../result/create_Edge_3m100ms/jointList.json','r') as poseFile:
 		data = poseFile.read()
 		Pose = json.loads(data)
 		print (Pose)
@@ -58,7 +67,7 @@ def load_edge():
 	global edgeIndex
 	global edge
 
-	with open('F:/klampt/250msx3grid/edge.json','r') as edgeFile:
+	with open('./100msx3grid-ca/edge.json','r') as edgeFile:
 		data = edgeFile.read()
 		edge = json.loads(data)
 		#print edge
@@ -69,7 +78,7 @@ def load_Index():
 	global edgeIndex
 	global edge
 
-	with open('../../result/create_Edge_3m250ms/HeatCut/4096/edgeIndex.json','r') as edgeIndexFile:
+	with open('../../result/create_Edge_3m100ms/HeatCut/4096/edgeIndex.json','r') as edgeIndexFile:
 		data = edgeIndexFile.read()
 		edgeIndex = json.loads(data)
 		
@@ -80,7 +89,7 @@ def store_Edge():
 	global edgeIndex
 	global edge
 
-	with open('F:/klampt/250msx3grid/edge.json','w') as edgeFile:
+	with open('./100msx3grid-ca/edge.json','w') as edgeFile:
 		data = json.dumps(edge)
 		edgeFile.write(data)
 	pass
