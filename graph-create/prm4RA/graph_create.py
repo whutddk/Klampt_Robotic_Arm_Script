@@ -1,10 +1,13 @@
-# @File Name: create_edge.py
-# @File Path: /home/whutddk/Klampt/klampt_robotic_arm_script/create_edge.py
-# @Author: whutddkUbuntu16
+# -*- coding: utf-8 -*-
+# @File Name: graph_create.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\prm4RA\graph_create.py
+# @Author: Ruige_Lee
 # @Date:   2018-12-29 14:36:47
-# @Last Modified by:   whutddkUbuntu16
-# @Last Modified time: 2018-12-29 15:55:14
-# @Email: 295054118@whut.edu.cn
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 14:28:40
+# @Email: 295054118@whut.edu.cn"
+
+
 from klampt import *
 from klampt.model.collide import *
 import sys
