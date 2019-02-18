@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
 # @File Name: CaGraph.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\CaGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\CaGraph.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 09:11:50
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 10:18:38
+# @Email: 295054118@whut.edu.cn"
+
+# @File Name: CaGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\CaGraph.py
 # @Author: 29505
 # @Date:   2018-12-30 09:59:45
 # @Last Modified by:   29505
@@ -34,7 +43,7 @@ def make_testing_mesh(world):
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.1,0.1,0.2,0.1)
+				Mesh.appearance().setColor(0.1,0.5,0.1,0.08)
 	return 
 
 

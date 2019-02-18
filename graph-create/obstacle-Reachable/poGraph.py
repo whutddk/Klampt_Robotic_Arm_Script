@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
 # @File Name: poGraph.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\poGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\poGraph.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 09:11:50
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 10:16:37
+# @Email: 295054118@whut.edu.cn"
+
+# @File Name: poGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\poGraph.py
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
@@ -27,20 +36,16 @@ def make_testing_mesh(world):
 		for rad in range (0,32):
 			for x in range (0,16):
 
-				# radius = 0.120 + 0.023*(x+1)
-				# theta = -1.3197 + 0.0825*rad
-				# if ( (radius * math.cos(theta+0.0825) > 0.120) or ( (radius * math.cos(theta) > 0.120) ) ):
-				if (1):
-					grid = Geometry3D()
+				grid = Geometry3D()
 
-					grid.loadFile("../../gridModelEncode/PolarCoordinates/polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off')
+				grid.loadFile("../../gridModelEncode/PolarCoordinates/polarModel/trapezoid"+ str(x) +"_" +str(rad) +'.off')
 
-					grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.020*z])			
+				grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.020*z])			
 
-					Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
+				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%rad + "," + "%3d"%z)
 
-					Mesh.geometry().set(grid)
-					Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
+				Mesh.geometry().set(grid)
+				Mesh.appearance().setColor(0.1,0.5,0.1,0.08)
 	return 
 
 

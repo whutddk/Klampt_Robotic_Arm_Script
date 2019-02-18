@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
 # @File Name: spGraph.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\spGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\spGraph.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-18 09:11:50
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-02-18 10:21:19
+# @Email: 295054118@whut.edu.cn"
+
+# @File Name: spGraph.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\graph-create\obstacle-Reachable\spGraph.py
 # @Author: 29505
 # @Date:   2019-02-07 09:33:58
 # @Last Modified by:   29505
@@ -27,22 +36,6 @@ def make_testing_mesh(world):
 		for y in range (0,32):
 			for x in range (0,16):
 
-				# radius = 0.120 + 0.023*x
-				# theta = -1.3197 + 0.0825*y
-				# fieta = -1.57 + 0.098*z
-
-				# XTest = (radius + 0.023) * math.cos(theta) * math.cos(fieta)
-				# ZMinTest = (radius + 0.023) * math.sin(fieta+0.098)+0.264
-				# ZMaxTest = (radius ) * math.sin(fieta)+0.264
-
-				# if ( XTest < 0.120): 
-
-				# 	continue
-				# if (ZMinTest < 0):
-				# 	continue
-				# if (ZMaxTest > 0.640):
-				# 	continue
-
 				grid = Geometry3D()
 
 				grid.loadFile('../../gridModelEncode/sphericalCoordinate/spModel/trapezoid'+str(x)+'_'+str(y)+'_'+str(z)+'.off')
@@ -52,7 +45,7 @@ def make_testing_mesh(world):
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
+				Mesh.appearance().setColor(0.1,0.5,0.1,0.08)
 	return 
 
 
