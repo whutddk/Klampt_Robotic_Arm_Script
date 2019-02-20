@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-20 19:40:54
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-20 20:52:26
+# @Last Modified time: 2019-02-20 21:06:59
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -38,8 +38,30 @@ def make_testing_mesh(world):
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.1,0.1,0.2,0.1)
+				Mesh.appearance().setColor(0.1,0.1,0.2,0.0)
 	return 
+
+def make_show_mesh(world):
+	"""automatically create a mesh test grid
+	"""
+	global gridList
+
+	for index in gridList:
+		x = index[0]
+		y = index[1]
+		z = index[2]
+
+		grid = Geometry3D()
+
+		grid.loadFile("../../terrains/cube.off")
+
+		grid.transform([0.023,0,0,  0,0.030,0,  0,0,0.020],[0.023*x + 0.120,0.030*y-0.480,0.020*z])			
+
+		Mesh = world.makeTerrain("showGrid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
+
+		Mesh.geometry().set(grid)
+		Mesh.appearance().setColor(0.1,0.1,0.2,0.3)
+		return 
 
 
 def record_edge_grid():
@@ -90,8 +112,13 @@ def record_edge_grid():
 			y = int(result [9:12])
 			z = int(result[13:16])
 			gridList.append([x,y,z])
+			
+			
+			
 	print (gridList)
 	pass
+
+
 
 
 
@@ -119,9 +146,11 @@ if __name__ == "__main__":
 	collisionTest = WorldCollider(world)
 
 	record_edge_grid()
+	make_show_mesh(world)
 
+	collisionTest = WorldCollider(world)
 	while(1):
-		time.sleep(0.1)
+		# time.sleep(0.1)
 		vis.shown()
 		#pass
 
