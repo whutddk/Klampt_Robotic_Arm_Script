@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-20 19:40:54
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-21 09:56:35
+# @Last Modified time: 2019-02-21 10:00:16
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -45,7 +45,7 @@ def make_show_mesh(world):
 		Mesh = world.makeTerrain("showGrid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 		Mesh.geometry().set(grid)
-		Mesh.appearance().setColor(0.1,1,0.1,0.1)
+		Mesh.appearance().setColor(0.1,1,0.1,0.7)
 	return 
 
 def make_obstacle_mesh(world):
@@ -83,7 +83,7 @@ if __name__ == "__main__":
 	pass
 
 	
-	make_obstacle_mesh(world)
+	# make_obstacle_mesh(world)
 	make_show_mesh(world)
 
 	collisionTest = WorldCollider(world)
