@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-20 19:40:54
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-21 09:50:58
+# @Last Modified time: 2019-02-21 10:49:17
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -49,12 +49,12 @@ def make_obstacle_mesh(world):
 
 				grid.loadFile("../../terrains/cube.off")
 
-				grid.transform([0.022,0,0,  0,0.029,0,  0,0,0.019],[0.23 + 0.023*x,0.030*y,0.20 + 0.020*z])			
+				grid.transform([0.0215,0,0,  0,0.0285,0,  0,0,0.0185],[0.23 + 0.023*x,0.030*y,0.20 + 0.020*z])			
 
 				Mesh = world.makeTerrain("Obstacle")
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.6,0.1,0.1,1)
+				Mesh.appearance().setColor(1,0.1,0.1,1)
 	return 
 
 if __name__ == "__main__":
