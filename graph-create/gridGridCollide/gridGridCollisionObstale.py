@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-20 19:40:54
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-21 09:38:27
+# @Last Modified time: 2019-02-21 09:50:58
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -31,7 +31,7 @@ def make_obstacle(world):
 
 	grid.loadFile("../../terrains/cube.off")
 
-	grid.transform([0.115,0,0,  0,0.115,0,  0,0,0.115],[0.23,0,0.23])			
+	grid.transform([0.115,0,0,  0,0.150,0,  0,0,0.100],[0.23,0,0.20])			
 
 	Mesh = world.makeTerrain("Obstacle")
 
@@ -40,6 +40,22 @@ def make_obstacle(world):
 	return 
 
 
+def make_obstacle_mesh(world):
+
+	for x in range(0,5):
+		for y in range(0,5):
+			for z in range(0,5):
+				grid = Geometry3D()
+
+				grid.loadFile("../../terrains/cube.off")
+
+				grid.transform([0.022,0,0,  0,0.029,0,  0,0,0.019],[0.23 + 0.023*x,0.030*y,0.20 + 0.020*z])			
+
+				Mesh = world.makeTerrain("Obstacle")
+
+				Mesh.geometry().set(grid)
+				Mesh.appearance().setColor(0.6,0.1,0.1,1)
+	return 
 
 if __name__ == "__main__":
 	
@@ -51,8 +67,8 @@ if __name__ == "__main__":
 			
 
 
-	make_obstacle(world)
-				
+	# make_obstacle(world)
+	make_obstacle_mesh(world)				
 	
 	#sim = Simulator(world)
 	robot = world.robot(0)

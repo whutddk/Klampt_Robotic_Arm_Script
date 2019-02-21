@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-20 19:40:54
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-20 21:20:34
+# @Last Modified time: 2019-02-21 09:56:35
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -40,12 +40,29 @@ def make_show_mesh(world):
 
 		grid.loadFile("../../terrains/cube.off")
 
-		grid.transform([0.023,0,0,  0,0.030,0,  0,0,0.020],[0.023*x + 0.120,0.030*y-0.480,0.020*z])			
+		grid.transform([0.022,0,0,  0,0.029,0,  0,0,0.019],[0.023*x + 0.120,0.030*y-0.480,0.020*z])			
 
 		Mesh = world.makeTerrain("showGrid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 		Mesh.geometry().set(grid)
-		Mesh.appearance().setColor(0.1,0.1,0.2,0.3)
+		Mesh.appearance().setColor(0.1,1,0.1,0.1)
+	return 
+
+def make_obstacle_mesh(world):
+
+	for x in range(0,5):
+		for y in range(0,5):
+			for z in range(0,5):
+				grid = Geometry3D()
+
+				grid.loadFile("../../terrains/cube.off")
+
+				grid.transform([0.022,0,0,  0,0.029,0,  0,0,0.019],[0.23 + 0.023*x,0.030*y,0.20 + 0.020*z])			
+
+				Mesh = world.makeTerrain("Obstacle")
+
+				Mesh.geometry().set(grid)
+				Mesh.appearance().setColor(0.6,0.1,0.1,0.8)
 	return 
 
 
@@ -55,9 +72,9 @@ if __name__ == "__main__":
 
 	world = WorldModel()
 
-	res = world.readFile('../../anno_check.xml')
-	if not res:
-		raise RuntimeError("Unable to load model ") 
+	# res = world.readFile('../../anno_check.xml')
+	# if not res:
+	# 	raise RuntimeError("Unable to load model ") 
 			
 	with open('./collideGrid.json','r') as poseFile:
 		data = poseFile.read()
@@ -65,9 +82,9 @@ if __name__ == "__main__":
 		
 	pass
 
-	make_show_mesh(world)
 	
-
+	make_obstacle_mesh(world)
+	make_show_mesh(world)
 
 	collisionTest = WorldCollider(world)
 
