@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 11:32:13
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 17:47:17
+# @Last Modified time: 2019-02-23 17:58:01
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: CaMain.py
@@ -67,7 +67,7 @@ def load_edge():
 	global edgeIndex
 	global edge
 
-	with open('./100msx3grid-ca/edge.json','r') as edgeFile:
+	with open('F:/Klampt/100msx3grid-ca/edge.json','r') as edgeFile:
 		data = edgeFile.read()
 		edge = json.loads(data)
 		#print edge
@@ -89,7 +89,7 @@ def store_Edge():
 	global edgeIndex
 	global edge
 
-	with open('./100msx3grid-ca/edge.json','w') as edgeFile:
+	with open('F:/Klampt/100msx3grid-ca/edge.json','w') as edgeFile:
 		data = json.dumps(edge)
 		edgeFile.write(data)
 	pass
