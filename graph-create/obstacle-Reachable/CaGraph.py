@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 09:11:50
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 11:09:05
+# @Last Modified time: 2019-02-18 19:43:49
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: CaGraph.py
@@ -43,7 +43,7 @@ def make_testing_mesh(world):
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				Mesh.appearance().setColor(0.1,0.5,0.1,0.1)
+				Mesh.appearance().setColor(0.1,0.8,0.1,0.1)
 	return 
 
 def make_obstacle(world):

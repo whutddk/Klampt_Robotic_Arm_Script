@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 11:32:13
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-02-18 17:07:58
+# @Last Modified time: 2019-02-21 10:13:05
 # @Email: 295054118@whut.edu.cn"
 
 # -*- c5ding: utf-8 -*-
@@ -88,50 +88,50 @@ if __name__ == "__main__":
 	RobotPose6 = RobotPoser(Robot6)
 	RobotPose7 = RobotPoser(Robot7)
 
-	# RobotPose0.set([0,0,0,0,0,0,0,0])
-	# RobotPose1.set([0,0,0,0,0,0,0,0])
-	# RobotPose2.set([0,0,0,0,0,0,0,0])
-	# RobotPose3.set([0,0,0,0,0,0,0,0])
-	# RobotPose4.set([0,0,0,0,0,0,0,0])
-	# RobotPose5.set([0,0,0,0,0,0,0,0])
-	# RobotPose6.set([0,0,0,0,0,0,0,0])
-	# RobotPose7.set([0,0,0,0,0,0,0,0])
+	RobotPose0.set([0,0,0,0,0,0,0,0])
+	RobotPose1.set([0,0,0,0,0,0,0,0])
+	RobotPose2.set([0,0,0,0,0,0,0,0])
+	RobotPose3.set([0,0,0,0,0,0,0,0])
+	RobotPose4.set([0,0,0,0,0,0,0,0])
+	RobotPose5.set([0,0,0,0,0,0,0,0])
+	RobotPose6.set([0,0,0,0,0,0,0,0])
+	RobotPose7.set([0,0,0,0,0,0,0,0])
 
-	RobotPose0.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose1.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose2.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose3.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose4.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose5.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose6.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
-	RobotPose7.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose0.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose1.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose2.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose3.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose4.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose5.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose6.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
+	# RobotPose7.set([0,0.9,-1.1,0.2,0.4,0.54,-1.57,0])
 
 
 	while(1):
-	# 	for i in range (0,100):
-	# 		if (i<12):
-	# 			RobotPose0.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+		for i in range (0,100):
+			if (i<12):
+				RobotPose0.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<25):
-	# 			RobotPose1.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<25):
+				RobotPose1.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<37):
-	# 			RobotPose2.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<37):
+				RobotPose2.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<50):
-	# 			RobotPose3.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<50):
+				RobotPose3.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<62):
-	# 			RobotPose4.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<62):
+				RobotPose4.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<75):
-	# 			RobotPose5.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<75):
+				RobotPose5.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<87):
-	# 			RobotPose6.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<87):
+				RobotPose6.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
-	# 		if (i<100):
-	# 			RobotPose7.set([0,1.57/100 *i,-1.57/100 *i,1.57/100 *i,0,0,0,0])
+			if (i<100):
+				RobotPose7.set([0,0,-1.57/100 *i,1.57/100 *i,0,0,0,0])
 
 
 	# 		time.sleep(0.01)
