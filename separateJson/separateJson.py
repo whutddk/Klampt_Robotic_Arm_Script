@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-18 11:32:21
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-03 15:53:08
+# @Last Modified time: 2019-03-03 19:23:11
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: separateJson.py
@@ -23,7 +23,7 @@ import random
 edge = []
 edge512px = [[],[],[],[],[],[],[],[]]
 
-fileLoc = 'F:/Klampt/100msx3grid-po/'
+fileLoc = 'F:/Klampt/100msx3grid-ca/'
 
 def load_edge():
 	global edge
