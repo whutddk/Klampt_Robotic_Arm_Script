@@ -1,0 +1,61 @@
+# -*- coding: utf-8 -*-
+# @File Name: accuracyDecrease455-454.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\accuracyDecrease\accuracyDecrease455-454.py
+# @Author: Ruige_Lee
+# @Date:   2019-03-04 11:11:51
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-03-04 11:41:40
+# @Email: 295054118@whut.edu.cn"
+
+
+
+import sys
+import time
+import json
+
+
+
+sourceFileLoc = '../gridModelEncode/CartesianCoordinates/250msx3grid-ca/'
+destFileLoc = './ca/4-5-4/250msx3/'
+
+
+edgeSource = []
+edgeDest = []
+
+def load_edge(f):
+	global edgeSource
+
+	with open( sourceFileLoc +'edge512p'+str(f)+'.json','r') as edgeFile:
+		data = edgeFile.read()
+		edgeSource = json.loads(data)
+		#print edge
+
+
+def store_Edge_512p8(f):
+	global edgeDest
+
+	with open( destFileLoc +'edge512p'+str(f)+'.json','w') as edgeFile:
+		data = json.dumps(edgeDest)
+		edgeFile.write(data)
+	pass
+
+
+def compress():
+	global edgeSource
+	global edgeDest
+
+	compressEdge = []
+	for edge in edgeSource:
+		for i in range (0,8192):
+			if (edge[2*i] == 1  or edge[2*i+1] == 1 ):
+				compressEdge.appand(1)
+			else:
+				compressEdge.appand(0)
+		edgeDest.appand(compressEdge)
+		
+
+
+for f in range (0,8):
+	load_edge(f)
+	compress()
+	store_Edge_512p8(f)
