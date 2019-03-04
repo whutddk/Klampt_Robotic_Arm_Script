@@ -2,18 +2,11 @@
 # @File Name: separateJson.py
 # @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\separateJson\separateJson.py
 # @Author: Ruige_Lee
-# @Date:   2019-02-18 11:32:21
+# @Date:   2019-02-12 16:34:22
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-03 19:23:11
+# @Last Modified time: 2019-03-04 11:27:27
 # @Email: 295054118@whut.edu.cn"
 
-# @File Name: separateJson.py
-# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\separateJson\separateJson.py
-# @Author: 29505
-# @Date:   2019-02-12 16:34:22
-# @Last Modified by:   29505
-# @Last Modified time: 2019-02-12 16:55:42
-# @Email: 295054118@whut.edu.cn
 
 import sys
 import time
