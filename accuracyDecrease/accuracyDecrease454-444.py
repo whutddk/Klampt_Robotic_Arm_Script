@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-03-04 14:16:32
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 14:35:01
+# @Last Modified time: 2019-03-04 14:39:52
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -16,8 +16,8 @@ import json
 
 
 
-sourceFileLoc = './sp/4-5-4/100msx3/'
-destFileLoc = './sp/4-4-4/100msx3/'
+sourceFileLoc = './ca/4-5-4/250msx3/'
+destFileLoc = './ca/4-4-4/250msx3/'
 
 
 edgeSource = []
@@ -48,7 +48,7 @@ def compress():
 	
 	for edge in edgeSource:
 		compressEdge = []
-		for i in range (0,128):
+		for i in range (0,256):
 			for j in range (0,16):
 				if (edge[32*i+j] == 1  or edge[32*i+16+j] == 1 ):
 					compressEdge.append(1)
