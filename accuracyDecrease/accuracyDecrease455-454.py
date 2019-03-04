@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-03-04 11:11:51
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 11:41:40
+# @Last Modified time: 2019-03-04 14:06:39
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -15,8 +15,8 @@ import json
 
 
 
-sourceFileLoc = '../gridModelEncode/CartesianCoordinates/250msx3grid-ca/'
-destFileLoc = './ca/4-5-4/250msx3/'
+sourceFileLoc = '../gridModelEncode/PolarCoordinates/250msx3grid-po/'
+destFileLoc = './po/4-5-4/250msx3/'
 
 
 edgeSource = []
@@ -28,7 +28,7 @@ def load_edge(f):
 	with open( sourceFileLoc +'edge512p'+str(f)+'.json','r') as edgeFile:
 		data = edgeFile.read()
 		edgeSource = json.loads(data)
-		#print edge
+		# print (edgeSource)
 
 
 def store_Edge_512p8(f):
@@ -44,18 +44,24 @@ def compress():
 	global edgeSource
 	global edgeDest
 
-	compressEdge = []
+	
 	for edge in edgeSource:
+		compressEdge = []
 		for i in range (0,8192):
 			if (edge[2*i] == 1  or edge[2*i+1] == 1 ):
-				compressEdge.appand(1)
+				compressEdge.append(1)
+				# print (1)
 			else:
-				compressEdge.appand(0)
-		edgeDest.appand(compressEdge)
+				compressEdge.append(0)
+				# print (0)
+		edgeDest.append(compressEdge)
+		# print (edgeDest)
+	# print (edgeDest)
 		
 
 
 for f in range (0,8):
 	load_edge(f)
+	edgeDest = []
 	compress()
 	store_Edge_512p8(f)
