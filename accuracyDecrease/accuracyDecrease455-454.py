@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-03-04 11:11:51
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 14:09:06
+# @Last Modified time: 2019-03-04 14:12:35
 # @Email: 295054118@whut.edu.cn"
 
 
@@ -15,8 +15,8 @@ import json
 
 
 
-sourceFileLoc = '../gridModelEncode/sphericalCoordinate/250msx3grid-sp/'
-destFileLoc = './sp/4-5-4/250msx3/'
+sourceFileLoc = '../gridModelEncode/CartesianCoordinates/100msx3grid-ca/'
+destFileLoc = './ca/4-5-4/100msx3/'
 
 
 edgeSource = []
