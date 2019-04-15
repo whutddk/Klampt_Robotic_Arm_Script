@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<world>
+  <robot name="anno0" file="../../robots/probot_6axis.rob" />
+  <robot name="anno1" file="../../robots/probot_6axis.rob" />
+  <robot name="anno2" file="../../robots/probot_6axis.rob" />
+  <robot name="anno3" file="../../robots/probot_6axis.rob" />
+  <robot name="anno4" file="../../robots/probot_6axis.rob" />
+  <robot name="anno5" file="../../robots/probot_6axis.rob" />
+  <robot name="anno6" file="../../robots/probot_6axis.rob" />
+  <robot name="anno7" file="../../robots/probot_6axis.rob" />
+
+  <simulation>
+	<globals maxContacts = "-1"/>
+
+	
+
+
+	<robot index = "0" body ="-1" />
+	
+  </simulation>
+</world>

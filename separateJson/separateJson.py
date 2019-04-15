@@ -1,10 +1,12 @@
+# -*- coding: utf-8 -*-
 # @File Name: separateJson.py
-# @File Path: K:\work\MAS2\Klampt_Robotic_Arm_Script\separateJson\separateJson.py
-# @Author: 29505
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\separateJson\separateJson.py
+# @Author: Ruige_Lee
 # @Date:   2019-02-12 16:34:22
-# @Last Modified by:   29505
-# @Last Modified time: 2019-02-12 16:55:42
-# @Email: 295054118@whut.edu.cn
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-03-04 11:27:27
+# @Email: 295054118@whut.edu.cn"
+
 
 import sys
 import time
@@ -14,7 +16,7 @@ import random
 edge = []
 edge512px = [[],[],[],[],[],[],[],[]]
 
-fileLoc = 'F:/klampt/250msx3grid-sp/'
+fileLoc = 'F:/Klampt/100msx3grid-ca/'
 
 def load_edge():
 	global edge
