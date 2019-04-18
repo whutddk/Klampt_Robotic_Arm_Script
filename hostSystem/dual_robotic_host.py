@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-04-18 16:53:15
 # @Last Modified by:   29505
-# @Last Modified time: 2019-04-18 17:30:48
+# @Last Modified time: 2019-04-18 20:06:08
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -24,7 +24,7 @@ from klampt import vis
 from klampt.vis.glinterface import GLPluginInterface
 
 
-
+import serial
 
 
 _PI_ = 3.14159 
@@ -119,7 +119,7 @@ class freeKlampt():
 
 
 
-class KepBoardCapture(GLPluginInterface):
+class KepBoardCapture(GLPluginInterface,freeKlampt):
 
 	def __init__(self,world):
 
@@ -129,9 +129,17 @@ class KepBoardCapture(GLPluginInterface):
 
 	def keyboardfunc(self,c, x, y):
 
-		pass
+		if ( c == "F11" ):
+			freecar.send_powerUp()
 
+		elif ( c == "F12" ):
+			freecar.send_powerDown()
 
+		elif ( c == "home" ):
+			freecar.send_enable()
+
+		elif ( c == "end" ):
+			freecar.send_disable()
 
 
 if __name__ == "__main__":
@@ -143,11 +151,15 @@ if __name__ == "__main__":
 		raise RuntimeError("Unable to load model ") 
 	del res
 
+
+	freeKlampt = freeKlampt()
+
+
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
 
 
-	plugin = KepBoardCapture(world)
+	plugin = KepBoardCapture(world,freeKlampt)
 	vis.pushPlugin(plugin)
 
 	vis.add("world",world)
@@ -164,6 +176,6 @@ if __name__ == "__main__":
 	ctlRobotPose.set([0,0,0,0,0,0,0,0])
 
 	while(1):
-		time.sleep(0.1)
-		pass
-
+		freeKlampt.get_robotPose()
+		prmRobotPose.set([0,axisA[0],axisA[1],axisA[2],axisA[3],axisA[4],axisA[5],0])
+		ctlRobotPose.set([0,axisB[0],axisB[1],axisB[2],axisB[3],axisB[4],axisB[5],0])
