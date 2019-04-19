@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-04-18 16:53:15
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-04-19 11:36:12
+# @Last Modified time: 2019-04-19 12:03:29
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -48,47 +48,47 @@ class freeKlampt():
 		self.rob2 = [0]
 
 	def send_powerUp(self):
-		self.ser.write(255)
-		self.ser.write(85)
-		self.ser.write(170)
-		self.ser.write(119)
-		self.ser.write(0)
-		self.ser.write(11)
-		self.ser.write(128)
+		# print (bytes([255]))
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([11]))
+		self.ser.write(bytes([128]))
 
 
 	def send_powerDown(self):
-		self.ser.write(255)
-		self.ser.write(85)
-		self.ser.write(170)
-		self.ser.write(119)
-		self.ser.write(0)
-		self.ser.write(12)
-		self.ser.write(129)
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([12]))
+		self.ser.write(bytes([129]))
 
 	def send_enable(self):
-		self.ser.write(255)
-		self.ser.write(85)
-		self.ser.write(170)
-		self.ser.write(119)
-		self.ser.write(0)
-		self.ser.write(101)
-		self.ser.write(218)
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([101]))
+		self.ser.write(bytes([218]))
 
 	def send_disable(self):
-		self.ser.write(255)
-		self.ser.write(85)
-		self.ser.write(170)
-		self.ser.write(119)
-		self.ser.write(0)
-		self.ser.write(104)
-		self.ser.write(221)
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([104]))
+		self.ser.write(bytes([221]))
 
 	def get_robotPose(self):
 		if (self.ser.in_waiting != 0):
-			# self.recBuf.append(     (str(binascii.b2a_hex(self.ser.read()) )[2:-1])   )
-			self.recBuf.append(    ord(self.ser.read())  )
 
+			self.recBuf.append(    ord(self.ser.read())  )
 			
 			bufLen = len(self.recBuf)
 			if ( bufLen >= 28 
@@ -116,7 +116,7 @@ class freeKlampt():
 							self.axisA[i] = self.axisA[i] - 65536
 
 						self.axisA[i] = self.axisA[i]/ 10000
-					print(self.axisA)
+					# print(self.axisA)
 
 					for i in range (0,6):
 						self.axisB[i] = (self.recBuf[dataOffset+12 + 2*i]*256 + self.recBuf[dataOffset+12 + 2*i + 1])
@@ -124,7 +124,7 @@ class freeKlampt():
 							self.axisB[i] = self.axisB[i] - 65536
 
 						self.axisB[i] = self.axisB[i] / 10000
-					print(self.axisB)
+					# print(self.axisB)
 				
 				self.recBuf = []
 
@@ -146,17 +146,22 @@ class KepBoardCapture(GLPluginInterface,freeKlampt):
 
 	def keyboardfunc(self,c, x, y):
 
-		if ( c == "F11" ):
-			freeKlampt.send_powerUp()
 
-		elif ( c == "F12" ):
+		if ( c == "f11" ):
+			freeKlampt.send_powerUp()
+			# print ("done")
+
+		elif ( c == "f12" ):
 			freeKlampt.send_powerDown()
+			# print ("done")
 
 		elif ( c == "home" ):
 			freeKlampt.send_enable()
+			# print ("done")
 
 		elif ( c == "end" ):
 			freeKlampt.send_disable()
+			# print ("done")
 
 
 if __name__ == "__main__":
