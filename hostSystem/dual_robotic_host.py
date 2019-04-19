@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-04-18 16:53:15
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-04-19 12:03:29
+# @Last Modified time: 2019-04-19 15:18:04
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -75,6 +75,7 @@ class freeKlampt():
 		self.ser.write(bytes([0]))
 		self.ser.write(bytes([101]))
 		self.ser.write(bytes([218]))
+		print(self.axisA)
 
 	def send_disable(self):
 		self.ser.write(bytes([255]))
@@ -115,7 +116,7 @@ class freeKlampt():
 						if ( self.axisA[i] > 32767 ):
 							self.axisA[i] = self.axisA[i] - 65536
 
-						self.axisA[i] = self.axisA[i]/ 10000
+						self.axisA[i] = self.axisA[i]/ 5000
 					# print(self.axisA)
 
 					for i in range (0,6):
@@ -123,7 +124,7 @@ class freeKlampt():
 						if ( self.axisB[i] > 32767 ):
 							self.axisB[i] = self.axisB[i] - 65536
 
-						self.axisB[i] = self.axisB[i] / 10000
+						self.axisB[i] = self.axisB[i] / 5000
 					# print(self.axisB)
 				
 				self.recBuf = []
