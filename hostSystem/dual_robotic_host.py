@@ -1,9 +1,9 @@
 # @File Name: dual_robotic_host.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
 # @Author: 29505
 # @Date:   2019-04-18 16:53:15
-# @Last Modified by:   29505
-# @Last Modified time: 2019-04-18 20:06:08
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-04-19 11:36:12
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -25,7 +25,7 @@ from klampt.vis.glinterface import GLPluginInterface
 
 
 import serial
-
+import binascii
 
 _PI_ = 3.14159 
 _STEPNUM_ = 25
@@ -39,8 +39,9 @@ class freeKlampt():
 		self.axisA = [0,0,0,0,0,0]
 		self.axisB = [0,0,0,0,0,0]
 
-		self.ser = serial.Serial("COM1")
-		self.ser.baudrate = 9600
+		self.ser = serial.Serial("COM10")
+		self.ser.baudrate = 115200
+		self.ser.close()
 		self.ser.open()
 
 		self.rob1 = [0]
@@ -84,14 +85,18 @@ class freeKlampt():
 		self.ser.write(221)
 
 	def get_robotPose(self):
-		if (self.ser.in_waiting() != 0):
-			self.recBuf.append(ser.read())
+		if (self.ser.in_waiting != 0):
+			# self.recBuf.append(     (str(binascii.b2a_hex(self.ser.read()) )[2:-1])   )
+			self.recBuf.append(    ord(self.ser.read())  )
 
+			
 			bufLen = len(self.recBuf)
 			if ( bufLen >= 28 
 				and self.recBuf[bufLen - 28] == 251
 				and self.recBuf[bufLen - 27] == 109
 				and self.recBuf[bufLen - 26] == 37):
+
+				# print ( self.recBuf )
 
 				dataOffset = bufLen - 25
 
@@ -104,16 +109,28 @@ class freeKlampt():
 					self.recChk = self.recChk + self.recBuf[dataOffset+12 + 2*i] + self.recBuf[dataOffset+12 + 2*i + 1]
 
 
-				if ( self.recChk == self.recBuf[bufLen-1] ):
+				if ( self.recChk%256 == self.recBuf[bufLen-1] ):
 					for i in range (0,6):
-						axisA[i] = self.recBuf[dataOffset + 2*i]*256 + self.recBuf[dataOffset + 2*i + 1]
+						self.axisA[i] = (self.recBuf[dataOffset + 2*i]*256 + self.recBuf[dataOffset + 2*i + 1])
+						if ( self.axisA[i] > 32767 ):
+							self.axisA[i] = self.axisA[i] - 65536
 
+						self.axisA[i] = self.axisA[i]/ 10000
+					print(self.axisA)
 
 					for i in range (0,6):
-						axisB[i] = self.recBuf[dataOffset+12 + 2*i]*256 + self.recBuf[dataOffset+12 + 2*i + 1]
+						self.axisB[i] = (self.recBuf[dataOffset+12 + 2*i]*256 + self.recBuf[dataOffset+12 + 2*i + 1])
+						if ( self.axisB[i] > 32767 ):
+							self.axisB[i] = self.axisB[i] - 65536
 
+						self.axisB[i] = self.axisB[i] / 10000
+					print(self.axisB)
 				
 				self.recBuf = []
+
+			elif ( bufLen >= 80 ):
+				self.recBuf = []
+
 
 
 
@@ -130,16 +147,16 @@ class KepBoardCapture(GLPluginInterface,freeKlampt):
 	def keyboardfunc(self,c, x, y):
 
 		if ( c == "F11" ):
-			freecar.send_powerUp()
+			freeKlampt.send_powerUp()
 
 		elif ( c == "F12" ):
-			freecar.send_powerDown()
+			freeKlampt.send_powerDown()
 
 		elif ( c == "home" ):
-			freecar.send_enable()
+			freeKlampt.send_enable()
 
 		elif ( c == "end" ):
-			freecar.send_disable()
+			freeKlampt.send_disable()
 
 
 if __name__ == "__main__":
@@ -159,7 +176,7 @@ if __name__ == "__main__":
 	ctlRobot = world.robot(1)
 
 
-	plugin = KepBoardCapture(world,freeKlampt)
+	plugin = KepBoardCapture(world)
 	vis.pushPlugin(plugin)
 
 	vis.add("world",world)
@@ -177,5 +194,5 @@ if __name__ == "__main__":
 
 	while(1):
 		freeKlampt.get_robotPose()
-		prmRobotPose.set([0,axisA[0],axisA[1],axisA[2],axisA[3],axisA[4],axisA[5],0])
-		ctlRobotPose.set([0,axisB[0],axisB[1],axisB[2],axisB[3],axisB[4],axisB[5],0])
+		prmRobotPose.set([0,freeKlampt.axisA[0],freeKlampt.axisA[1],freeKlampt.axisA[2],freeKlampt.axisA[3],freeKlampt.axisA[4],freeKlampt.axisA[5],0])
+		ctlRobotPose.set([0,freeKlampt.axisB[0],freeKlampt.axisB[1],freeKlampt.axisB[2],freeKlampt.axisB[3],freeKlampt.axisB[4],freeKlampt.axisB[5],0])
