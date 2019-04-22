@@ -1,6 +1,14 @@
-# -*- coding: utf-8 -*-
 # @File Name: dual_robotic_host.py
 # @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
+# @Author: 29505
+# @Date:   2019-04-18 16:53:15
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-04-22 15:55:48
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
+# -*- coding: utf-8 -*-
+# @File Name: dual_robotic_host.py
+# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
 # @Author: Ruige_Lee
 # @Date:   2019-04-17 18:54:16
 # @Last Modified by:   Ruige_Lee
@@ -16,87 +24,133 @@ from klampt import vis
 from klampt.vis.glinterface import GLPluginInterface
 
 
-
-
+import serial
+import binascii
 
 _PI_ = 3.14159 
 _STEPNUM_ = 25
 
 
 
-class freecars():
+class freeKlampt():
 	def __init__(self):
 		self.recBuf = []
-		self.recChk = 0
+		self.recChk = 1
 		self.axisA = [0,0,0,0,0,0]
 		self.axisB = [0,0,0,0,0,0]
 
-		self.ser = serial.Serial("COM1")
-		self.ser.baudrate = 9600
+		self.ser = serial.Serial("COM10")
+		self.ser.baudrate = 115200
+		self.ser.close()
 		self.ser.open()
 
 		self.rob1 = [0]
 		self.rob2 = [0]
 
+
+
+	def send_order(self):
+		# print (bytes([255]))
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([10]))
+		self.ser.write(bytes([127]))
+
+
 	def send_powerUp(self):
-		self.ser.write()
+		# print (bytes([255]))
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([11]))
+		self.ser.write(bytes([128]))
+
 
 	def send_powerDown(self):
-		self.ser.write()	
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([12]))
+		self.ser.write(bytes([129]))
 
 	def send_enable(self):
-		self.ser.write()
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([101]))
+		self.ser.write(bytes([218]))
+		# print(self.axisA)
 
 	def send_disable(self):
-		self.ser.write()
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([104]))
+		self.ser.write(bytes([221]))
 
 	def get_robotPose(self):
-		if (self.ser.in_waiting() != 0):
-			self.recBuf.append(ser.read())
+		if (self.ser.in_waiting != 0):
 
-			if ( len(self.recBuf) > 3 and len(self.recBuf) < 28 ):
-				self.recChk = self.recChk + self.recBuf[len(self.recBuf)-1]%2
+			self.recBuf.append(    ord(self.ser.read())  )
+			
+			bufLen = len(self.recBuf)
+			if ( bufLen >= 28 
+				and self.recBuf[bufLen - 28] == 251
+				and self.recBuf[bufLen - 27] == 109
+				and self.recBuf[bufLen - 26] == 37):
+
+				# print ( self.recBuf )
+
+				dataOffset = bufLen - 25
+
+				self.recChk = 397
+
+				for i in range (0,6):
+					self.recChk = self.recChk + self.recBuf[dataOffset + 2*i] + self.recBuf[dataOffset + 2*i + 1]
+
+				for i in range (0,6):
+					self.recChk = self.recChk + self.recBuf[dataOffset+12 + 2*i] + self.recBuf[dataOffset+12 + 2*i + 1]
 
 
-			elif ( len(self.recBuf) == 1 ):
-				if ( self.recBuf[0] == 251 ):
-					pass
-				else:
-					self.recBuf = []
-					self.recChk = 0
+				if ( self.recChk%256 == self.recBuf[bufLen-1] ):
+					for i in range (0,6):
+						self.axisA[i] = (self.recBuf[dataOffset + 2*i]*256 + self.recBuf[dataOffset + 2*i + 1])
+						if ( self.axisA[i] > 32767 ):
+							self.axisA[i] = self.axisA[i] - 65536
 
-			elif ( len(self.recBuf) == 2 ):
-				if ( self.recBuf[1] == 109 ):
-					pass
-				else:
-					self.recBuf = []
-					self.recChk = 0
-
-			elif ( len(self.recBuf) == 3 ):
-				if ( self.recBuf[2] == 37 ):
-					pass
-				else:
-					self.recBuf = []
-					self.recChk = 0
-
-			elif ( len(self.recBuf) == 28 ):
-				if ( self.recBuf[27]%2 == self.recChk%2 ):
+						self.axisA[i] = self.axisA[i]/ 5000
+					# print(self.axisA)
 
 					for i in range (0,6):
-						axisA[i] = self.recBuf[3+2*i]*256 + self.recBuf[3+2*i+1]
+						self.axisB[i] = (self.recBuf[dataOffset+12 + 2*i]*256 + self.recBuf[dataOffset+12 + 2*i + 1])
+						if ( self.axisB[i] > 32767 ):
+							self.axisB[i] = self.axisB[i] - 65536
 
-					for i in range (0,6):
-						axisB[i] = self.recBuf[15+2*i]*256 + self.recBuf[15+2*i+1]
-
-					pass
+						self.axisB[i] = self.axisB[i] / 5000
+					# print(self.axisB)
 				
 				self.recBuf = []
-				self.recChk = 0
+
+			elif ( bufLen >= 80 ):
+				self.recBuf = []
 
 
 
 
-class KepBoardCapture(GLPluginInterface):
+
+
+class KepBoardCapture(GLPluginInterface,freeKlampt):
 
 	def __init__(self,world):
 
@@ -106,9 +160,26 @@ class KepBoardCapture(GLPluginInterface):
 
 	def keyboardfunc(self,c, x, y):
 
-		pass
+
+		if ( c == 'f10' ):
+			freeKlampt.send_order()
 
 
+		if ( c == "f11" ):
+			freeKlampt.send_powerUp()
+			# print ("done")
+
+		elif ( c == "f12" ):
+			freeKlampt.send_powerDown()
+			# print ("done")
+
+		elif ( c == "home" ):
+			freeKlampt.send_enable()
+			# print ("done")
+
+		elif ( c == "end" ):
+			freeKlampt.send_disable()
+			# print ("done")
 
 
 if __name__ == "__main__":
@@ -119,6 +190,10 @@ if __name__ == "__main__":
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 	del res
+
+
+	freeKlampt = freeKlampt()
+
 
 	prmRobot = world.robot(0)
 	ctlRobot = world.robot(1)
@@ -141,6 +216,6 @@ if __name__ == "__main__":
 	ctlRobotPose.set([0,0,0,0,0,0,0,0])
 
 	while(1):
-		time.sleep(0.1)
-		pass
-
+		freeKlampt.get_robotPose()
+		prmRobotPose.set([0,freeKlampt.axisA[0],freeKlampt.axisA[1],freeKlampt.axisA[2],freeKlampt.axisA[3],freeKlampt.axisA[4],freeKlampt.axisA[5],0])
+		ctlRobotPose.set([0,freeKlampt.axisB[0],freeKlampt.axisB[1],freeKlampt.axisB[2],freeKlampt.axisB[3],freeKlampt.axisB[4],freeKlampt.axisB[5],0])
