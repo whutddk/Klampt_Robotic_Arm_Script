@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-04-18 16:53:15
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-04-19 15:18:04
+# @Last Modified time: 2019-04-22 15:55:48
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -47,6 +47,19 @@ class freeKlampt():
 		self.rob1 = [0]
 		self.rob2 = [0]
 
+
+
+	def send_order(self):
+		# print (bytes([255]))
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([10]))
+		self.ser.write(bytes([127]))
+
+
 	def send_powerUp(self):
 		# print (bytes([255]))
 		self.ser.write(bytes([255]))
@@ -75,7 +88,7 @@ class freeKlampt():
 		self.ser.write(bytes([0]))
 		self.ser.write(bytes([101]))
 		self.ser.write(bytes([218]))
-		print(self.axisA)
+		# print(self.axisA)
 
 	def send_disable(self):
 		self.ser.write(bytes([255]))
@@ -146,6 +159,10 @@ class KepBoardCapture(GLPluginInterface,freeKlampt):
 		self.world = world
 
 	def keyboardfunc(self,c, x, y):
+
+
+		if ( c == 'f10' ):
+			freeKlampt.send_order()
 
 
 		if ( c == "f11" ):
