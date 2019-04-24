@@ -3,25 +3,56 @@
 # @Author: 29505
 # @Date:   2019-04-24 10:06:47
 # @Last Modified by:   29505
-# @Last Modified time: 2019-04-24 10:46:29
+# @Last Modified time: 2019-04-24 11:37:18
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
-import klampt
+
+from klampt import *
+from klampt.model.collide import *
+import sys
+import time
+from klampt.sim import *
+from klampt import vis
 from klampt.model import ik
 
+import random
 
 
-world = klampt.WorldModel()
-world.loadElement("../robots/probot_6axis.rob")
+if __name__ == "__main__":
 
-robot= world.robot(0)
-link = robot.link(7)
-print (robot.getConfig())
 
-obj = ik.objective(link,local=[1,0,0],world=[1.5,0,1])
-solver = ik.solver(obj)
-solver.solve()
+    world = WorldModel()
 
-robot.getConfig()
+    res = world.readFile('../dual_anno_check.xml')
+    if not res:
+        raise RuntimeError("Unable to load model ") 
+    del res
 
-print (solver.getResidual())
+    prmRobot = world.robot(0)
+    ctlRobot = world.robot(1)
+
+    vis.add("world",world)
+    vis.show()
+
+
+    # collisionTest = WorldCollider(world)
+    
+    prmRobotPose = RobotPoser(prmRobot)
+    ctlRobotPose = RobotPoser(ctlRobot)
+
+
+    robot= world.robot(0)
+    link = prmRobot.link(7)
+    obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0])
+
+    solver = ik.solver(obj)
+    solver.solve()
+
+    prmRobotPose.set(robot.getConfig())
+    ctlRobotPose.set([0,0,0,0,0,0,0,0])
+
+    while(1):
+        time.sleep(0.1)
+        pass
+
+
