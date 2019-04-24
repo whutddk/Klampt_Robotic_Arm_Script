@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-04-24 10:06:47
 # @Last Modified by:   29505
-# @Last Modified time: 2019-04-24 11:37:18
+# @Last Modified time: 2019-04-24 12:00:43
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -21,38 +21,47 @@ import random
 if __name__ == "__main__":
 
 
-    world = WorldModel()
+	world = WorldModel()
 
-    res = world.readFile('../dual_anno_check.xml')
-    if not res:
-        raise RuntimeError("Unable to load model ") 
-    del res
+	res = world.readFile('../dual_anno_check.xml')
+	if not res:
+		raise RuntimeError("Unable to load model ") 
+	del res
 
-    prmRobot = world.robot(0)
-    ctlRobot = world.robot(1)
+	prmRobot = world.robot(0)
+	ctlRobot = world.robot(1)
 
-    vis.add("world",world)
-    vis.show()
-
-
-    # collisionTest = WorldCollider(world)
-    
-    prmRobotPose = RobotPoser(prmRobot)
-    ctlRobotPose = RobotPoser(ctlRobot)
+	vis.add("world",world)
+	vis.show()
 
 
-    robot= world.robot(0)
-    link = prmRobot.link(7)
-    obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0])
+	# collisionTest = WorldCollider(world)
+	
+	prmRobotPose = RobotPoser(prmRobot)
+	ctlRobotPose = RobotPoser(ctlRobot)
 
-    solver = ik.solver(obj)
-    solver.solve()
 
-    prmRobotPose.set(robot.getConfig())
-    ctlRobotPose.set([0,0,0,0,0,0,0,0])
+	robot= world.robot(0)
+	link = prmRobot.link(7)
+	obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0])
 
-    while(1):
-        time.sleep(0.1)
-        pass
+	solver = ik.solver(obj)
+	solver.solve()
+
+	prmRobotPose.set(robot.getConfig())
+	ctlRobotPose.set([0,0,0,0,0,0,0,0])
+
+	for h in range(0,50):
+		obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0.01*h])
+
+		solver = ik.solver(obj)
+		solver.solve()
+
+		prmRobotPose.set(robot.getConfig())
+		time.sleep(0.1)
+	while(1):
+
+		time.sleep(0.1)
+		pass
 
 
