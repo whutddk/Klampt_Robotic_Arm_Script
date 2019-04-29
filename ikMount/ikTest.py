@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-04-29 16:00:25
+# @Last Modified time: 2019-04-29 18:22:43
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -48,20 +48,28 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 	else:
 		theta1 = atan(wristY/wristX)
 
-	theta3 = asin (( (wristX*wristX) / (cos(theta1) * cos(theta1))+ ( wristZ - 242 ) * ( wristZ - 242) - 103001.8996) / 102987)
+	# theta3 = asin (( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + ( wristZ - 264 ) * ( wristZ - 264) - 97844.29) / 97785)
+	theta3 = asin((225*225 + 217.3*217.3 - (wristX*wristX) - (wristY*wristY) - (wristZ - 318)*(wristZ - 318) ) / ( 2*225*217.3 ));
 
+	
 	print ( "theta1=",theta1 )
 	print ( "theta3=",theta3 )
 
-	d = 228.86 * cos( theta3 )
-	f = 228.86* sin ( theta3 ) + 225
+	d = 217.3 * cos( theta3 )
+	f = 217.3 * sin( theta3 ) - 225
 	g = wristX / cos(theta1)
-	h = wristZ - 242
+	h = wristZ - 304
 
-	if ( ( g * d - h * f ) == 0 ):
-		theta2 = 0
-	else:
-		theta2 = atan ((g * f - h * d) / ( g * d - h * f ))
+	# if ( ( g * d - h * f ) == 0 ):
+	# 	theta2 = 0
+	# else:
+	# 	theta2 = atan ((g * f - h * d) / ( g * d - h * f ))
+	# theta2 = theta2 - 3.14
+	
+		
+	u1 = (f) / (h - d) - sqrt( (f / (h - d))*(f / (h - d)) - ((h+d)/(h-d)) );
+	theta2 = atan(u1) * 2 ;	
+					
 	print ( "theta2=",theta2 )
 
 	return theta1,theta2,theta3
@@ -92,7 +100,7 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 		theta4 = 1.57
 	else:
 		theta4 = atan( ( -r23 / cos(theta5) )/( r33 / cos(theta5) ))
-	print ( "theta5=",theta5 )
+	print ( "theta4=",theta4 )
 
 	if ( ( r11 / cos( theta5 ) == 0 ) ):
 		theta6 = 1.57
@@ -134,8 +142,8 @@ if __name__ == "__main__":
 	# solver = ik.solver(obj)
 	# solver.solve()
 	for h in range(0,50):
-		wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,0,1,0,-1,0,300,0,10*h)
-		theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
+		# wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,0,1,0,-1,0,300,0,10*h)
+		theta1,theta2,theta3 = ik_solve_Coordinate(300,0,10*h)
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,0,1,0,-1,0,theta1,theta2,theta3)
 
 
