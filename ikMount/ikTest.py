@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   29505
-# @Last Modified time: 2019-04-29 22:48:21
+# @Last Modified time: 2019-04-30 11:08:01
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -60,11 +60,11 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 	g = wristX / cos(theta1)
 	h = wristZ - 264
 
-	if ( ( g * d - h * f ) == 0 ):
+	if ( ( g * d + h * f ) == 0 ):
 		theta2 = 0
 	else:
-		theta2 = atan ((g * f - h * d) / ( g * d - h * f )) 
-	# theta2 = theta2 - 3.14
+		theta2 = atan (( h * d - g * f) / ( g * d + h * f )) 
+	theta2 = theta2
 	
 	# u1 = (f) / (h - d) - sqrt( (f / (h - d))*(f / (h - d)) - ((h+d)/(h-d)) );
 	# theta2 = atan(u1) * 2 ;	
@@ -146,8 +146,8 @@ if __name__ == "__main__":
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,0,1,0,-1,0,theta1,theta2,theta3)
 
 
-		prmRobotPose.set([0,theta1,theta2,theta3,0,0,0,0])
-		ctlRobotPose.set([0,0,0,0,0,0,0,0])
+		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
+		ctlRobotPose.set([0,0,0.4,0.4,0,0,0,0])
 
 	
 	# 	obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0.01*h])
