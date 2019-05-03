@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # @File Name: ikTest.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
-# @Last Modified by:   29505
-# @Last Modified time: 2019-04-30 11:10:03
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-03 14:08:43
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -43,12 +43,11 @@ def ik_find_endCoordinate(N1,O1,A1,N2,O2,A2,N3,O3,A3,toolX,toolY,toolZ):
 
 def ik_solve_Coordinate(wristX,wristY,wristZ):
 
-	if ( wristX == 0 ):
-		theta1 = 1.57
-	else:
-		theta1 = atan(wristY/wristX)
 
-	theta3 = asin (( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785)
+	theta1 = atan2(wristY,wristX)
+
+	s3 = ( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785
+	theta3 = asin (s3)
 	# theta3 = asin((225*225 + 217.3*217.3 - (wristX*wristX) - (wristY*wristY) - (wristZ - 318)*(wristZ - 318) ) / ( 97785 ));
 
 	
@@ -56,15 +55,13 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 	print ( "theta3=",theta3 )
 
 	d = 217.3 * cos( theta3 )
-	f = 217.3 * sin( theta3 ) + 225
+	f = 217.3 * sin(theta3) + 225
 	g = wristX / cos(theta1)
 	h = wristZ - 264
 
-	if ( ( g * d + h * f ) == 0 ):
-		theta2 = 0
-	else:
-		theta2 = atan (( h * d - g * f) / ( g * d + h * f )) 
-	theta2 = theta2
+
+	theta2 = atan2 (( h * d - g * f) , ( g * d + h * f )) 
+
 	
 	# u1 = (f) / (h - d) - sqrt( (f / (h - d))*(f / (h - d)) - ((h+d)/(h-d)) );
 	# theta2 = atan(u1) * 2 ;	
@@ -140,9 +137,9 @@ if __name__ == "__main__":
 
 	# solver = ik.solver(obj)
 	# solver.solve()
-	for h in range(0,50):
+	for h in range(0,53):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,0,1,0,-1,0,300,0,10*h)
-		theta1,theta2,theta3 = ik_solve_Coordinate(-200,100,10*h)
+		theta1,theta2,theta3 = ik_solve_Coordinate(200,-100,10*h)
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,0,1,0,-1,0,theta1,theta2,theta3)
 
 
