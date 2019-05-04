@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-04 17:48:34
+# @Last Modified time: 2019-05-04 17:51:03
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -142,7 +142,7 @@ if __name__ == "__main__":
 	for h in range(0,53):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,0,1,0,-1,0,300,0,10*h)
 		theta1,theta2,theta3 = ik_solve_Coordinate(200,000,10*h)
-		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,0,1,0,-1,0,theta1,theta2,theta3)
+		theta4,theta5,theta6 = ik_solve_Posture(0,0,1,0,1,0,-1,0,0,theta1,theta2,theta3)
 
 
 		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
