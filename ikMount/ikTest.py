@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-03 16:30:05
+# @Last Modified time: 2019-05-04 16:36:04
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -109,9 +109,9 @@ def ik_solve_Posture(r11,r12,r13,r21,r22,r23,r31,r32,r33,theta1,theta2,theta3):
 
 	theta6 = atan2(s6,c6)
 
-	print ( "theta4=",theta4 )
-	print ( "theta5=",theta5 )
-	print ( "theta6=",theta6 )
+	# print ( "theta4=",theta4 )
+	# print ( "theta5=",theta5 )
+	# print ( "theta6=",theta6 )
 	return theta4,theta5,theta6
 
 
@@ -151,7 +151,8 @@ if __name__ == "__main__":
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,1,0,0,0,1,theta1,theta2,theta3)
 
 
-		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
+		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5+1.75,theta6,0])
+		print (theta1,theta2,theta3,theta4,theta5,theta6)
 		ctlRobotPose.set([0,0,0.4,0.4,0,0,0,0])
 
 	
