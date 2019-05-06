@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-06 14:55:28
+# @Last Modified time: 2019-05-06 15:30:36
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -121,15 +121,28 @@ if __name__ == "__main__":
 	# solver.solve()
 	for h in range(0,53):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(0,0,1,0,1,0,-1,0,0,000,-300,10*h)
-		theta1,theta2,theta3 = ik_solve_Coordinate(100,0,10*h)
+		theta1,theta2,theta3 = ik_solve_Coordinate(100,000,10*h)
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,1,0,0,0,1,theta1,theta2,theta3)
 
 
 		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
-		print (theta1,theta2,theta3,theta4,theta5,theta6)
+		# print (theta1,theta2,theta3,theta4,theta5,theta6)
 		ctlRobotPose.set([0,0,0.4,0.4,0,0,0,0])
 
-	
+		# R041 = [ -cos(theta1)*sin(theta2+theta3), -sin(theta1)*sin(theta2+theta3), cos(theta2+theta3)]
+		# R042 = [  sin(theta1),  -cos(theta1),0]
+		# R043 = [  cos(theta1)*cos(theta2+theta3),  sin(theta1)*cos(theta2+theta3), sin(theta2+theta3)]
+
+		R061 = [ cos(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
+		R062 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
+		R063 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - cos(theta4)*sin(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3))) + sin(theta4)*sin(theta6)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)),                                         cos(theta6)*sin(theta4)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) - sin(theta6)*(cos(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - cos(theta4)*sin(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3))),                       sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) + cos(theta4)*cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta4))]
+
+
+		print (R061)
+		print (R062)
+		print (R063)
+
+
 	# 	obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0.01*h])
 
 	# 	solver = ik.solver(obj)
