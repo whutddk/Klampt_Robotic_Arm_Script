@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-04 17:51:03
+# @Last Modified time: 2019-05-06 10:20:38
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -48,11 +48,7 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 
 	s3 = ( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785
 	theta3 = asin (s3)
-	# theta3 = asin((225*225 + 217.3*217.3 - (wristX*wristX) - (wristY*wristY) - (wristZ - 318)*(wristZ - 318) ) / ( 97785 ));
 
-	
-	# print ( "theta1=",theta1 )
-	# print ( "theta3=",theta3 )
 
 	d = 217.3 * cos( theta3 )
 	f = 217.3 * sin(theta3) + 225
@@ -62,11 +58,6 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 
 	theta2 = atan2 (( h * d - g * f) , ( g * d + h * f )) 
 
-	
-	# u1 = (f) / (h - d) - sqrt( (f / (h - d))*(f / (h - d)) - ((h+d)/(h-d)) );
-	# theta2 = atan(u1) * 2 ;	
-					
-	# print ( "theta2=",theta2 )
 
 	return theta1,theta2,theta3
 
@@ -93,18 +84,6 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 	
 	theta6 = atan2( ( -r12 / cos(theta5) ),( r11 / cos( theta5 ) ))
 	
-
-	# theta4 = atan2( -r13 * sin(theta1) + r23 * cos(theta1), -r13 * cos(theta1) * cos(theta2+theta3) - r23 * sin(theta1) * cos(theta2+theta3) + r33 * sin(theta2+theta3))
-	
-	# s5 = -( r13*( cos(theta1)*cos(theta2+theta3)*cos(theta4) + sin(theta1)*sin(theta4) ) + r23 * ( sin(theta1)*cos(theta2+theta3)*cos(theta4) - cos(theta1)*sin(theta4) ) - r33* ( sin(theta2+theta3)* cos(theta4) ) )
-	# c5 = r13*( -cos(theta1)*sin(theta2+theta3) ) + r23*( -sin(theta1)*sin(theta2+theta3) ) + r33*(-cos(theta2+theta3))
-	# theta5 = atan2(s5,c5)
-
-	# s6 = -r11*(cos(theta1)*cos(theta2+theta3)*sin(theta4) - sin(theta1)*cos(theta4)) - r21*(sin(theta1)*cos(theta2+theta3)*sin(theta4)+cos(theta1)*cos(theta4)) + r31*( sin(theta2+theta3)*sin(theta4) )
-	# c6 = r11*(( cos(theta1)*cos(theta2+theta3)*cos(theta4) +sin(theta1)*sin(theta4) )*cos(theta5) - cos(theta1)*sin(theta2+theta3)*sin(theta5) ) + r21*( ( sin(theta1)*cos(theta2+theta3)*cos(theta4) - cos(theta1)*sin(theta4) )*cos(theta5) - sin(theta1)*sin(theta2+theta3)*sin(theta5) ) - r31*(sin(theta2+theta3)*cos(theta4)*cos(theta5)+cos(theta2+theta3)*sin(theta5))
-
-	# theta6 = atan2(s6,c6)
-
 
 	return theta4,theta5,theta6
 
@@ -140,8 +119,8 @@ if __name__ == "__main__":
 	# solver = ik.solver(obj)
 	# solver.solve()
 	for h in range(0,53):
-		# wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,0,1,0,-1,0,300,0,10*h)
-		theta1,theta2,theta3 = ik_solve_Coordinate(200,000,10*h)
+		# wristX,wristY,wristZ = ik_find_endCoordinate(0,0,1,0,1,0,-1,0,0,000,-300,10*h)
+		theta1,theta2,theta3 = ik_solve_Coordinate(100,000,10*h)
 		theta4,theta5,theta6 = ik_solve_Posture(0,0,1,0,1,0,-1,0,0,theta1,theta2,theta3)
 
 
