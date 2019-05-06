@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-06 17:03:18
+# @Last Modified time: 2019-05-06 17:28:39
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -89,14 +89,14 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 	# r33 = A3*sin(theta2 + theta3) + A2*sin(theta1)*cos(theta2 + theta3) + cos(theta1)*A1*cos(theta2 + theta3) 
 
 
-	theta5 = atan2( r13 , sqrt(r11*r11 + r12*r12))
+	# theta5 = atan2( r13 , sqrt(r11*r11 + r12*r12))
 	
-	theta4 = atan2( ( -r23 / cos(theta5) ),( r33 / cos(theta5) ))
+	# theta4 = atan2( ( -r23 / cos(theta5) ),( r33 / cos(theta5) ))
 	
-	theta6 = atan2( ( -r12 / cos(theta5) ),( r11 / cos( theta5 ) ))
-	# theta4 = atan2(r23,r13)
-	# theta6 = atan2(-r32,r31)
-	# theta5 = asin(r33)
+	# theta6 = atan2( ( -r12 / cos(theta5) ),( r11 / cos( theta5 ) ))
+	theta4 = atan2(r23,r13)
+	theta6 = atan2(-r32,r31)
+	theta5 = asin(r33)
 	return theta4,theta5,theta6
 
 
@@ -132,22 +132,36 @@ if __name__ == "__main__":
 	# solver.solve()
 	for h in range(0,53):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(0,0,1,0,1,0,-1,0,0,100,100,10*h)
-		wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,1,0,0,0,1,100,100,10*h)
+		wristX,wristY,wristZ = ik_find_endCoordinate(1,0,0,0,1,0,0,0,1,100,000,10*h)
 		theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
 		theta4,theta5,theta6 = ik_solve_Posture(1,0,0,0,1,0,0,0,1,theta1,theta2,theta3)
+		
+		# obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.2,0.2,0.01*h])
+		# solver = ik.solver(obj)
+		# solver.solve()
+		# prmRobotPose.set(robot.getConfig())
 
+		# theta1 = robot.getConfig()[1]
+		# theta2 = robot.getConfig()[2]
+		# theta3 = robot.getConfig()[3]
+		# theta4 = robot.getConfig()[4]
+		# theta5 = robot.getConfig()[5]
+		# theta6 = robot.getConfig()[6]
 
 		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
-		# print (theta1,theta2,theta3,theta4,theta5,theta6)
+		print (theta1,theta2,theta3,theta4,theta5,theta6)
 		ctlRobotPose.set([0,0,0.4,0.4,0,0,0,0])
 
 		# R041 = [ -cos(theta1)*sin(theta2+theta3), -sin(theta1)*sin(theta2+theta3), cos(theta2+theta3)]
 		# R042 = [  sin(theta1),  -cos(theta1),0]
 		# R043 = [  cos(theta1)*cos(theta2+theta3),  sin(theta1)*cos(theta2+theta3), sin(theta2+theta3)]
 
-		R061 = [ cos(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
-		R062 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
-		R063 = [ cos(theta6)*(cos(theta5)*sin(theta2 +theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)) + sin(theta4)*sin(theta6)*cos(theta2+theta3),                                         cos(theta6)*sin(theta4)*cos(theta2+theta3) - sin(theta6)*(cos(theta5)*sin(theta2 + theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)),                       sin(theta5)*sin(theta2+theta3) + cos(theta4)*cos(theta5)*cos(theta2+theta3)]
+		# R061 = [ cos(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
+		# R062 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
+		# R063 = [ cos(theta6)*(cos(theta5)*sin(theta2 +theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)) + sin(theta4)*sin(theta6)*cos(theta2+theta3),                                         cos(theta6)*sin(theta4)*cos(theta2+theta3) - sin(theta6)*(cos(theta5)*sin(theta2 + theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)),                       sin(theta5)*sin(theta2+theta3) + cos(theta4)*cos(theta5)*cos(theta2+theta3)]
+		R061 = [ cos(theta4)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta6) - cos(theta6)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta4)*(cos(theta6)*sin(theta1) + sin(theta6)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta4)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta6) - cos(theta6)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta4)*(cos(theta6)*sin(theta1) + sin(theta6)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta6) - cos(theta6)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
+		R062 = [ cos(theta4)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta6) + cos(theta6)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta4)*(cos(theta1)*cos(theta6) - sin(theta6)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta4)*(cos(theta1)*cos(theta6) - sin(theta6)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta4)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta6) + cos(theta6)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta6) + cos(theta6)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
+		R063 = [ cos(theta4)*(cos(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - cos(theta6)*sin(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3))) + sin(theta4)*sin(theta6)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)),                                         cos(theta4)*sin(theta6)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) - sin(theta4)*(cos(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - cos(theta6)*sin(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3))),                       sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) + cos(theta5)*cos(theta6)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3))]
 
 
 		print (R061)
@@ -155,12 +169,7 @@ if __name__ == "__main__":
 		print (R063)
 
 
-	# 	obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.3,0,0.01*h])
 
-	# 	solver = ik.solver(obj)
-	# 	solver.solve()
-
-	# 	prmRobotPose.set(robot.getConfig())
 		time.sleep(0.1)
 	while(1):
 
