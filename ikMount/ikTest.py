@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # @File Name: ikTest.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
-# @Last Modified by:   29505
-# @Last Modified time: 2019-05-07 00:00:29
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-07 10:26:00
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -99,7 +99,7 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 	
 	theta4 = atan2( ( -r23  ),( r33 ))
 	
-	theta6 = atan2( ( -r12  ),( r11 ))
+	theta6 = atan2( ( r12  ),( r11 ))
 	
 	
 	# theta4 = atan2(r23,r13)
