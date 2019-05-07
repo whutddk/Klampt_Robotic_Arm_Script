@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-07 10:26:00
+# @Last Modified time: 2019-05-07 10:45:56
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -96,7 +96,7 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 	# theta6 = atan2( ( -r12 / cos(theta5) ),( r11 / cos( theta5 ) ))
 	
 	theta5 = atan2( r13 , -sqrt(r11*r11 + r12*r12))
-	
+	# theta5 = -asin(r13)
 	theta4 = atan2( ( -r23  ),( r33 ))
 	
 	theta6 = atan2( ( r12  ),( r11 ))
@@ -141,8 +141,8 @@ if __name__ == "__main__":
 	
 
 	for h in range(0,53):
-		# wristX,wristY,wristZ = ik_find_endCoordinate(0,0,1,0,1,0,-1,0,0,100,100,10*h)
-		wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,100,5*h,10*h)
+		# wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,100,100,10*h)
+		wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,-2*h,-100,10*h)
 		theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
 		theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
 		
