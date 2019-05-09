@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-07 10:45:56
+# @Last Modified time: 2019-05-08 19:24:06
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -31,7 +31,7 @@ from math import *
 
 def ik_find_endCoordinate(N1,O1,A1,N2,O2,A2,N3,O3,A3,toolX,toolY,toolZ):
 
-	L = 0
+	L = 40
 
 	wristX = toolX + A1 * L
 	wristY = toolY + A2 * L
