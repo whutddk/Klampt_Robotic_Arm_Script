@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-08 19:24:06
+# @Last Modified time: 2019-05-10 10:29:50
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -95,13 +95,22 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 	
 	# theta6 = atan2( ( -r12 / cos(theta5) ),( r11 / cos( theta5 ) ))
 	
-	theta5 = atan2( r13 , -sqrt(r11*r11 + r12*r12))
+	
 	# theta5 = -asin(r13)
 	theta4 = atan2( ( -r23  ),( r33 ))
-	
 	theta6 = atan2( ( r12  ),( r11 ))
 	
 	
+	if ( abs(theta4 + 3.14159) < abs(theta4) ):
+
+		theta4 = theta4 + 3.14159
+		theta5 = atan2( r13 , sqrt(r11*r11 + r12*r12))
+		theta6 = theta6 - 3.14159
+
+	else:
+		theta5 = atan2( r13 , -sqrt(r11*r11 + r12*r12))
+		
+
 	# theta4 = atan2(r23,r13)
 	# theta6 = atan2(-r32,r31)
 	# theta5 = asin(r33)
@@ -179,9 +188,9 @@ if __name__ == "__main__":
 		# R063 = [   cos(theta4)*(cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) - cos(theta6)*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2))) + sin(theta4)*sin(theta6)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)),                                       cos(theta4)*sin(theta6)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - sin(theta4)*(cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) - cos(theta6)*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2))),                         sin(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) + cos(theta5)*cos(theta6)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2))]
 
 
-		print (R061)
-		print (R062)
-		print (R063)
+		# print (R061)
+		# print (R062)
+		# print (R063)
 
 
 
