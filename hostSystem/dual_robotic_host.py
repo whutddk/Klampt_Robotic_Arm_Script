@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: dual_robotic_host.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
+# @Author: Ruige_Lee
+# @Date:   2019-04-22 17:09:53
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-09 10:11:45
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
 # @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\hostSystem\dual_robotic_host.py
 # @Author: 29505
@@ -39,7 +48,7 @@ class freeKlampt():
 		self.axisA = [0,0,0,0,0,0]
 		self.axisB = [0,0,0,0,0,0]
 
-		self.ser = serial.Serial("COM10")
+		self.ser = serial.Serial("COM5")
 		self.ser.baudrate = 115200
 		self.ser.close()
 		self.ser.open()
