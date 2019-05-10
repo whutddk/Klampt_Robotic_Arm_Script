@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-10 10:29:50
+# @Last Modified time: 2019-05-10 14:53:13
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -31,7 +31,7 @@ from math import *
 
 def ik_find_endCoordinate(N1,O1,A1,N2,O2,A2,N3,O3,A3,toolX,toolY,toolZ):
 
-	L = 40
+	L = 40.0
 
 	wristX = toolX + A1 * L
 	wristY = toolY + A2 * L
@@ -43,19 +43,23 @@ def ik_find_endCoordinate(N1,O1,A1,N2,O2,A2,N3,O3,A3,toolX,toolY,toolZ):
 
 def ik_solve_Coordinate(wristX,wristY,wristZ):
 
+	if ( wristX < -0.0001 or wristX > 0.0001 ):	
+		pass
+	else:
+		wristX = 0.01
 
+		
 	theta1 = atan2(wristY,wristX)
+
+	
 
 	s3 = ( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785
 	theta3 = asin (s3)
 
-
+	g = wristX / cos(theta1)
 	d = 217.3 * cos( theta3 )
 	f = 217.3 * sin(theta3) + 225
-	g = wristX / cos(theta1)
 	h = wristZ - 264
-
-
 	theta2 = atan2 (( h * d - g * f) , ( g * d + h * f )) 
 
 
@@ -151,7 +155,7 @@ if __name__ == "__main__":
 
 	for h in range(0,53):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,100,100,10*h)
-		wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,-2*h,-100,10*h)
+		wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,-200+8*h,-200,500)
 		theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
 		theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
 		
