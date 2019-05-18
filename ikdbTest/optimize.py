@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: optimize.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\ikdbTest\optimize.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 21:12:26
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 class Problem:
     """A holder for optimization problem data.  All attributes are optional,
     and some solvers can't handle certain types of problem data.
@@ -131,13 +140,13 @@ class LocalOptimizer:
                 jac = problem.objectiveGrad
             bounds = None
             if problem.bounds:
-                bounds = zip(*problem.bounds)
+                bounds = list(zip(*problem.bounds))
             constraintDicts = []
-            for i in xrange(len(problem.equalities)):
+            for i in range(len(problem.equalities)):
                 constraintDicts.append({'type':'eq','fun':problem.equalities[i]})
                 if problem.equalityGrads[i] is not None:
                     constraintDicts[-1]['jac'] = problem.equalityGrads[i]
-            for i in xrange(len(problem.inequalities)):
+            for i in range(len(problem.inequalities)):
                 constraintDicts.append({'type':'ineq','fun':problem.inequalities[i]})
                 if problem.inequalityGrads[i] is not None:
                     constraintDicts[-1]['jac'] = problem.inequalityGrads[i]
@@ -196,7 +205,7 @@ class LocalOptimizer:
                     #TEMP: test no analytic gradients
                     #sens_type = objfuncgrad
                 else:
-                    print "Warning, need all or no gradients provided"
+                    print ("Warning, need all or no gradients provided")
             [fstr, xstr, inform] = opt(opt_prob,sens_type=sens_type)
             if inform['value'] != 0:
                 return False,xstr.tolist()
@@ -209,7 +218,7 @@ class LocalOptimizer:
             if not feasible:
                 if not boundfeasible:
                     #try clamping
-                    for i in xrange(len(xstr)):
+                    for i in range(len(xstr)):
                         xstr[i] = min(max(xstr[i],problem.bounds[0][i]),problem.bounds[1][i])
                     f,g,flag = objfunc(xstr)
                     boundfeasible = True
@@ -278,7 +287,7 @@ class GlobalOptimizer:
                     toli = tol[i]
                 else:
                     toli = tol
-                print "Step",i,"method",m,'iters',itersi,'tol',toli
+                print ("Step",i,"method",m,'iters',itersi,'tol',toli)
                 if m == 'auto':
                     opt = LocalOptimizer(m)
                 else:
@@ -295,9 +304,9 @@ class GlobalOptimizer:
                 raise RuntimeError("Cannot use scipy differential_evolution method without a bounded search space")
             flattenedProblem = problem.flatten(objective_scale = 1e-5)
             res = optimize.differential_evolution(flattenedProblem.objective,zip(*flattenedProblem.bounds))
-            print "scipy.differential_evolution solution:",res.x
-            print "Objective value",res.fun
-            print "Equality error:",[gx(res.x) for gx in problem.equalities]
+            print ("scipy.differential_evolution solution:",res.x)
+            print ("Objective value",res.fun)
+            print ("Equality error:",[gx(res.x) for gx in problem.equalities])
             return (True,res.x)
         elif self.method == 'DIRECT':
             import DIRECT
@@ -312,11 +321,11 @@ class GlobalOptimizer:
                     userdata[1] = [float(xi) for xi in x]
                 return v
             (x,fmin,ierror)=DIRECT.solve(objfunc,problem.bounds[0],problem.bounds[1],eps=tol,maxT=numIters,maxf=40000,algmethod=1,user_data=minval)
-            print "DIRECT solution:",x
-            print "Objective value",fmin
-            print "Minimum value",minval[0],minval[1]
-            print "Error:",ierror
-            print "Equality error:",[gx(x) for gx in problem.equalities]
+            print ("DIRECT solution:",x)
+            print ("Objective value",fmin)
+            print ("Minimum value",minval[0],minval[1])
+            print ("Error:",ierror)
+            print ("Equality error:",[gx(x) for gx in problem.equalities])
             return (True,minval[1])
         elif self.method.startswith('random-restart'):
             import random
@@ -326,7 +335,7 @@ class GlobalOptimizer:
             lopt = LocalOptimizer(localmethod)
             best = self.seed
             fbest = (problem.objective(best) if best is not None else float('inf'))
-            for it in xrange(numIters[0]):
+            for it in range(numIters[0]):
                 x = [random.uniform(a,b) for a,b in zip(*problem.bounds)]
                 lopt.setSeed(x)
                 succ,x = lopt.solve(problem,numIters[1],tol)

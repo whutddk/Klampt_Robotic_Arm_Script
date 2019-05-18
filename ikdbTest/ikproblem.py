@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: ikproblem.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\ikdbTest\ikproblem.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 21:08:08
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 import pkg_resources
 if pkg_resources.get_distribution('klampt').version >= '0.7':
     NEW_KLAMPT = True
@@ -224,7 +233,7 @@ class IKProblem:
             return None
         if robot is None:
             if not hasattr(self.objectives[0],'robot'):
-                print "The objectives passed to IKSolver should come from ik.objective() or have their 'robot' member manually set"
+                print ("The objectives passed to IKSolver should come from ik.objective() or have their 'robot' member manually set")
             robot = self.objectives[0].robot
         else:
             for obj in self.objectives:
@@ -337,13 +346,13 @@ class IKProblem:
                 #optProblem.  If 0 objective value is not obtained, constrain the residual norm-squared to be that value
                 (succ,res) = global_solve(softOptProblem,params,x0)
                 if not succ:
-                    print "Global soft optimize returned failure"
+                    print ("Global soft optimize returned failure")
                     return None
                 for d,v in zip(activeDofs,res):
                     q[d] = v
                 if self.costFunction is None:
                     #no cost function, just return
-                    print "Global optimize succeeded! Cost",self.costFunction(q)
+                    print ("Global optimize succeeded! Cost",self.costFunction(q))
                     return q
                 x0 = res
                 #now modify the constraint of optProblem
@@ -370,20 +379,20 @@ class IKProblem:
             #do global optimization of the cost function and return
             (succ,res) = global_solve(optProblem,params,x0)
             if not succ:
-                print "Global optimize returned failure"
+                print ("Global optimize returned failure")
                 return None
             for d,v in zip(activeDofs,res):
                 q[d] = v
             #check feasibility if desired
             if self.feasibilityTest is not None and not self.feasibilityTest(q):
-                print "Result from global optimize isn't feasible"
+                print ("Result from global optimize isn't feasible")
                 return None
             if not softObjectives:
                 if max(abs(v) for v in solver.getResidual()) > params.tol:
-                    print "Result from global optimize doesn't satisfy tolerance.  Residual",vectorops.norm(solver.getResidual())
+                    print ("Result from global optimize doesn't satisfy tolerance.  Residual",vectorops.norm(solver.getResidual()))
                     return None
             #passed
-            print "Global optimize succeeded! Cost",self.costFunction(q)
+            print ("Global optimize succeeded! Cost",self.costFunction(q))
             return q                
 
         #DONT DO THIS... much faster to do newton solves first, then local optimize.
@@ -435,7 +444,7 @@ class IKProblem:
                 #quality is a tuple
                 bestQuality = bestQuality,bestQuality
             quality = None
-            for restart in xrange(params.numRestarts):
+            for restart in range(params.numRestarts):
                 if time.time() - t0 > params.timeout:
                     return best
                 t0 = time.time()
@@ -529,7 +538,7 @@ class IKProblem:
                         best = q
                         bestQuality = quality
                     elif quality > bestQuality + 1e-2:
-                        print "Got worse solution by local optimizing?",bestQuality,"->",quality
+                        print ("Got worse solution by local optimizing?",bestQuality,"->",quality)
         return best
     
     def score(self,robot):
@@ -588,7 +597,7 @@ def featuresToIkProblem(ikproblem0,featureList,values):
         obj.fromJson(ikproblem0)
         return obj
     else:
-        print "featureToIkProblem: slower version being called"
+        print ("featureToIkProblem: slower version being called")
         raw_input()
     if isinstance(ikproblem0,IKProblem):
         jsonObj = ikproblem0.toJson()

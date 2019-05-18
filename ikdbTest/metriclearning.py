@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: metriclearning.py
+# @File Path: M:\MAS2\dark_PRJ\ikdb\ikdb\metriclearning.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 19:57:11
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 import numpy as np
 import math
 
@@ -144,6 +153,6 @@ if __name__ == '__main__':
         #A = np.dot(L,L.T)
         #print "Update",i,":",A
     t1 = time.time()
-    print numpts,"updates, time",t1-t0
-    print "Result",A
-    print "Result cholesky",L
+    print (numpts,"updates, time",t1-t0)
+    print ("Result",A)
+    print ("Result cholesky",L)

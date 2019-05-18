@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: functionfactory.py
+# @File Path: M:\MAS2\dark_PRJ\ikdb\ikdb\functionfactory.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 19:57:40
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 import pkg_resources
 if pkg_resources.get_distribution('klampt').version >= '0.7':
     from klampt.math import vectorops
@@ -33,7 +42,7 @@ def registerFunction(type,f,varname='x'):
     if varname not in args:
         raise ValueError("The variable name "+varname+" must be in the function's argment list, instead got "+",".join(args))
     if varargs is not None:
-        print "registerFunction: Warning, may have errors with variable arguments"
+        print ("registerFunction: Warning, may have errors with variable arguments")
     argindex = args.index(varname)
     def makefunc(argbundle):
         if isinstance(argbundle,dict):
@@ -113,6 +122,6 @@ def makeFunction(type,arguments):
     try:
         f = _functionFactories[type]
     except KeyError:
-        print "Function of type",type,"does not exist"
+        print ("Function of type",type,"does not exist")
         return None
     return f(arguments)

@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: accumulator.py
+# @File Path: M:\MAS2\dark_PRJ\ikdb\ikdb\accumulator.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 19:56:56
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 import itertools 
 
 def Min():
@@ -159,4 +168,4 @@ if __name__=="__main__":
     m.add(2)
     m.add(3)
     m.add(4)
-    print m.asdict()
+    print (m.asdict())

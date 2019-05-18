@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+# @File Name: ikdb.py
+# @File Path: M:\MAS2\dark_PRJ\ikdb\ikdb\ikdb.py
+# @Author: Ruige_Lee
+# @Date:   2019-05-16 16:28:59
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-05-18 19:55:53
+# @Email: 295054118@whut.edu.cn
+# @page: https://whutddk.github.io/
 import pkg_resources
 if pkg_resources.get_distribution('klampt').version >= '0.7':
     from klampt.model import ik
@@ -124,7 +133,7 @@ class IKDatabase:
     def save(self,fn):
         """Saves the database from the given file."""
         with self.lock:
-            print "Saving IKDatabase data to",fn
+            print ("Saving IKDatabase data to",fn)
             assert(len(self.problemFeatures) == len(self.solutions))
             with open(fn,'w') as f:
                 for i,s in enumerate(self.solutions):
@@ -156,17 +165,17 @@ class IKDatabase:
                     else:
                         self.solutions.append([float(v) for v in sline.split()])
             self.problemFeatures.compress()
-        print "IKDatabase: Read",len(self.solutions),"solutions from file",fn
+        print ("IKDatabase: Read",len(self.solutions),"solutions from file",fn)
         assert len(self.solutions)==len(self.problemFeatures)
         t1 = time.time()
         self.buildNNDataStructure()
         t2 = time.time()
-        print "IKDatabase: Built query data structure in %fs"%(t2-t1,)
+        print ("IKDatabase: Built query data structure in %fs"%(t2-t1,))
 
     def saveMetadata(self,fn):
         """Saves metadata about this database to fn, in JSON format"""
         import json
-        print "Saving IKDatabase metadata to",fn
+        print ("Saving IKDatabase metadata to",fn)
         metadata = {}
         metadata['type'] = 'IKDatabase'
         metadata['robot'] = self.robot.getName()
@@ -178,7 +187,7 @@ class IKDatabase:
         if self.featureRanges is not None:
             metadata['featureRanges'] = self.featureRanges
         else:
-            print "Saving metadata... No feature ranges?"
+            print ("Saving metadata... No feature ranges?")
         if self.feasiblePredictionLearning:
             metadata['feasiblePredictionLearning'] = self.feasiblePredictionLearning
         if self.metricMatrix is not None:
@@ -249,13 +258,13 @@ class IKDatabase:
             t0 = time.time()
             if len(self.problems) > 0:
                 #rebuild problem feature list and nearest neighbor structure
-                print "Building problem feature list, first time..."
+                print ("Building problem feature list, first time...")
                 self.problemFeatures = DynamicArray2D([self.problemToFeatures(p) for p in self.problems])
                 self.problems = []
             elif len(self.problemFeatures) > 0:
                 if oldFeatureNames is not None:
                     #rebuild problems from old features
-                    print "Rebuilding problem feature list..."
+                    print ("Rebuilding problem feature list...")
                     n = len(self.problemFeatures)
                     self.problemFeatures.decompress()
                     assert len(self.problemFeatures) == n
@@ -273,7 +282,7 @@ class IKDatabase:
                     assert len(self.problemFeatures[0]) == len(self.featureNames),"Pre-existing problem feature array isn't the right size?"
         self.buildNNDataStructure()
         t1 = time.time()
-        print "IKDatabase: Rebuilt features and NN data structure in %fs"%(t1-t0,)
+        print ("IKDatabase: Rebuilt features and NN data structure in %fs"%(t1-t0,))
         #sanity check
         for p in self.problemFeatures:
             assert len(p) == len(self.featureNames)
@@ -302,12 +311,12 @@ class IKDatabase:
                                         fmin[i] = v
                                     elif v > b:
                                         fmax[i] = v
-                print "Feature ranges set to",fmin,fmax
+                print ("Feature ranges set to",fmin,fmax)
                 self.featureRanges = zip(fmin,fmax)
             else:
                 feasfeatures = [p for p,s in zip(self.problemFeatures,self.solutions) if s is not None]
                 if len(feasfeatures)==0:
-                    print "IKDatabase.autoSetFeatureRanges(): no feasible solutions"
+                    print ("IKDatabase.autoSetFeatureRanges(): no feasible solutions")
                     #can't set
                     return
                 feasfeatures = np.array(feasfeatures)
@@ -341,11 +350,11 @@ class IKDatabase:
             if len(self.problems) > 0: return self.problems[index]
             elif len(self.problemFeatures) > 0:
                 if index < 0 or index >= len(self.problemFeatures):
-                    print "Going to abort... data",index,len(self.problemFeatures)
+                    print ("Going to abort... data",index,len(self.problemFeatures))
                 assert index >= 0 and index < len(self.problemFeatures)
                 return featuresToIkProblem(self.ikTemplate,self.featureNames,self.problemFeatures[index])
             else:
-                print len(self.problems),len(self.problemFeatures),index
+                print (len(self.problems),len(self.problemFeatures),index)
                 raise ValueError("Invalid problem index")
         
     def problemToFeatures(self,problem):
@@ -366,7 +375,7 @@ class IKDatabase:
         solutionList = [self.solveRaw(p,solverParams) for p in problemList]
         t1 = time.time()
         numSolved = len([s for s in solutionList if s is not None])
-        print "IKDatabase: Solved %d/%d problems in %fs"%(numSolved,len(problemList),t1-t0)
+        print ("IKDatabase: Solved %d/%d problems in %fs"%(numSolved,len(problemList),t1-t0))
         with self.lock:
             self.solutions += solutionList
             if self.ikTemplate is None:
@@ -375,7 +384,7 @@ class IKDatabase:
                 self.problemFeatures += [self.problemToFeatures(p) for p in problemList]
         self.buildNNDataStructure()
         t2 = time.time()
-        print "IKDatabase: Built query data structure in %fs"%(t2-t1,)
+        print ("IKDatabase: Built query data structure in %fs"%(t2-t1,))
 
     def balance(self,fracPositive=0.5):
         """Balances the database so that approximately fracPositive fraction
@@ -389,12 +398,12 @@ class IKDatabase:
         if len(posExamples) >= fracPositive*self.numProblems():
             #subsample positive examples
             n = min(int(fracPositive*self.numProblems()),len(posExamples))
-            print "Subsampling",n,"/",len(posExamples),"positive examples"
+            print ("Subsampling",n,"/",len(posExamples),"positive examples")
             posExamples = random.sample(posExamples,n)
         else:
             #subsample negative examples
             n = min(int((1.0-fracPositive)*self.numProblems()),len(negExamples))
-            print "Subsampling",n,"/",len(negExamples),"negative  examples"
+            print ("Subsampling",n,"/",len(negExamples),"negative  examples")
             negExamples = random.sample(negExamples,n)
         self.solutions = [e[1] for e in posExamples]+[e[1] for e in negExamples]
         if self.ikTemplate is None:
@@ -404,7 +413,7 @@ class IKDatabase:
         t1 = time.time()
         self.buildNNDataStructure()
         t2 = time.time()
-        print "IKDatabase: Built query data structure in %fs"%(t2-t1,)
+        print ("IKDatabase: Built query data structure in %fs"%(t2-t1,))
         
     def solve(self,problem,numSolutionsToTry=None,params=None,features=None,tryCurrent=False):
         """Solves an instance of a problem using the database.
@@ -513,14 +522,14 @@ class IKDatabase:
                 #need to rebuild nn data structure
                 self.buildNNDataStructure()
                 if self.nn is None:
-                    print len(self.problemFeatures)
-                    print self.featureNames
-                    print self.ikTemplate
+                    print (len(self.problemFeatures))
+                    print (self.featureNames)
+                    print (self.ikTemplate)
                     raise ValueError("Can't do feasibility prediction learning, no NNdata structure available")
             self.feasiblePredictionLearning['N'] = len(self.problemFeatures)
             self.feasiblePredictionLearning['k'] = numSolutionsToQuery
             self.feasiblePredictionLearning['recallBias'] = recallBias
-            print "Running LOO cross validation for %d-NN classification, bias %f..."%(numSolutionsToQuery,recallBias)
+            print ("Running LOO cross validation for %d-NN classification, bias %f..."%(numSolutionsToQuery,recallBias))
             #run LOO cross validation
             try:
                 farray = self.problemFeatures.array
@@ -585,8 +594,8 @@ class IKDatabase:
                 else:
                     accuracyMap[index] = float(pos)/float(neg+pos)
             self.feasiblePredictionLearning['confidence'] = accuracyMap
-        print "  Resulting theshold",bestThreshold,"accuracy",float(bestAccuracy)/count
-        print "  Accuracy map:",accuracyMap
+        print ("  Resulting theshold",bestThreshold,"accuracy",float(bestAccuracy)/count)
+        print ("  Accuracy map:",accuracyMap)
 
     def solveRaw(self,problem,params):
         """Solves an instance of a problem from scratch, or returns None
@@ -613,7 +622,7 @@ class IKDatabase:
         if isinstance(problem,IKProblem):
             return problem.solve(self.robot,params)
         else:
-            print "Warning: creating IKProblem from raw IKObjectives?"
+            print ("Warning: creating IKProblem from raw IKObjectives?")
             return IKProblem(problem).solve(self.robot,params)
 
     def buildNNDataStructure(self):
@@ -636,7 +645,7 @@ class IKDatabase:
                 #self.nn = KDTree(farray)
                 self.nnBuildSize = len(self.problemFeatures)
         except ImportError:
-            print "IKDatabase: Warning, scikit-learn is not installed, queries will be much slower"
+            print ("IKDatabase: Warning, scikit-learn is not installed, queries will be much slower")
             with self.lock:
                 self.nn = None
                 self.nnBuildSize = 0
@@ -703,7 +712,7 @@ class IKDatabase:
         """Revises the database to reduce noise in generating solutions."""
         numNew = 0
         numBetter = 0
-        print "IKDatabase: Revising database..."
+        print ("IKDatabase: Revising database...")
         for i in xrange(self.numProblems()):
             p = self.getProblem(i)
             s,prim = self.solve(p,numSolutionsToTry=10)
@@ -714,7 +723,7 @@ class IKDatabase:
             elif p.costFunction(s) < p.costFunction(self.solutions[i]) - 1e-5:
                 self.solutions[i] = s
                 numBetter += 1
-        print "  Found",numNew,"new solutions, improved",numBetter,"solutions"
+        print ("  Found",numNew,"new solutions, improved",numBetter,"solutions")
 
     def metricLearnStep(self,features1,features2,solution1,solution2):
         """Performs 1 step of metric learning"""
@@ -786,7 +795,7 @@ class IKTestSet:
 
     def loadTest(self,fn):
         """Loads test instances with labels to a file: expanded version"""
-        print "Loading test instances from",fn
+        print ("Loading test instances from",fn)
         import json
         f = open(fn,'r')
         self.testSet = []
@@ -805,14 +814,14 @@ class IKTestSet:
             p.fromJson(problem)
             self.testSet.append(IKTestInstance(p,feasible,cost))
         f.close()
-        print "Loaded",len(self.testSet),"test instances"
-        print "  ",sum(1 for i in self.testSet if i.feasible == True),"feasible, ",sum(1 for i in self.testSet if i.feasible==False),"infeasible, ",sum(1 for i in self.testSet if i.feasible is None),"unknown"
+        print ("Loaded",len(self.testSet),"test instances")
+        print ("  ",sum(1 for i in self.testSet if i.feasible == True),"feasible, ",sum(1 for i in self.testSet if i.feasible==False),"infeasible, ",sum(1 for i in self.testSet if i.feasible is None),"unknown")
         return
 
     def loadTestFeatures(self,fn,ikTemplate,featureList):
         """Loads the test set as a feature list.  Saves some space on disk
         compared to saveTest."""
-        print "Loading test instances from",fn
+        print ("Loading test instances from",fn)
         f = open(fn,'r')
         self.testSet = []
         for line in f.readlines():
@@ -828,8 +837,8 @@ class IKTestSet:
             cost = float(cost)
             self.testSet.append(IKTestInstance(problem,feasible,cost))
         f.close()
-        print "Loaded",len(self.testSet),"test instances"
-        print "  ",sum(1 for i in self.testSet if i.feasible == True),"feasible, ",sum(1 for i in self.testSet if i.feasible==False),"infeasible, ",sum(1 for i in self.testSet if i.feasible is None),"unknown"
+        print ("Loaded",len(self.testSet),"test instances")
+        print ("  ",sum(1 for i in self.testSet if i.feasible == True),"feasible, ",sum(1 for i in self.testSet if i.feasible==False),"infeasible, ",sum(1 for i in self.testSet if i.feasible is None),"unknown")
         return
 
     def saveTestFeatures(self,fn,featureNames):
@@ -837,7 +846,7 @@ class IKTestSet:
         compared to saveTest."""
         f = open(fn,'w')
         for instance in self.testSet:
-            print instance.feasible
+            print (instance.feasible)
             v = ikProblemToFeatures(instance.problem,featureNames)
             v.append(int(instance.feasible) if instance.feasible is not None else -1)
             v.append(instance.cost if instance.cost is not None else 0)
@@ -865,7 +874,7 @@ class IKTestSet:
         """Generates this dataset, with labels, for the given problem list
         using the current value of groundTruthSolveParams."""
         self.testSet = [IKTestInstance(p) for p in problemList]
-        print "**** Generating ground truth labels ***"
+        print ("**** Generating ground truth labels ***")
         numFeasible,numInfeasible=0,0
         feasibleTime,infeasibleTime = 0,0
         costSum = 0
@@ -886,12 +895,12 @@ class IKTestSet:
                 p.feasible = False
                 numInfeasible += 1
                 infeasibleTime += t1-t0
-        print "IK with 100 random restarts: solved %d/%d in time %f"%(numFeasible,len(self.testSet),feasibleTime+infeasibleTime)
+        print ("IK with 100 random restarts: solved %d/%d in time %f"%(numFeasible,len(self.testSet),feasibleTime+infeasibleTime))
         numFeasible = max(numFeasible,1)
         numInfeasible = max(numInfeasible,1)
-        print "  Average time for feasible %f, infeasible %f"%(feasibleTime/numFeasible,infeasibleTime/numInfeasible)
+        print ("  Average time for feasible %f, infeasible %f"%(feasibleTime/numFeasible,infeasibleTime/numInfeasible))
         if costCount > 0:
-            print "  Average cost function value",costSum / costCount
+            print ("  Average cost function value",costSum / costCount)
 
     def test(self,solveFunc,name):
         """Generic tester of a solver function.  solveFunc takes in an
@@ -920,11 +929,11 @@ class IKTestSet:
                     numFeasibleSolved += 1
                 else:
                     numInfeasibleSolved += 1
-        print "IKTestSet method %s: solved %d/%d in time %f"%(name,numFeasibleSolved+numInfeasibleSolved,len(self.testSet),feasibleTime+infeasibleTime)
+        print ("IKTestSet method %s: solved %d/%d in time %f"%(name,numFeasibleSolved+numInfeasibleSolved,len(self.testSet),feasibleTime+infeasibleTime))
         numFeasible = max(numFeasible,1)
         numInfeasible = max(numInfeasible,1)
-        print "  Average time for feasible %f, infeasible %f"%(feasibleTime/numFeasible,infeasibleTime/numInfeasible)
-        if numCostsCounted > 0: print "  Average cost suboptimality",costSuboptimality / numCostsCounted
+        print ("  Average time for feasible %f, infeasible %f"%(feasibleTime/numFeasible,infeasibleTime/numInfeasible))
+        if numCostsCounted > 0: print ("  Average cost suboptimality",costSuboptimality / numCostsCounted)
 
     def testRaw(self,numRestarts=1):
         """Example: tests the performance of a numRestarts-random restart technique."""
@@ -961,19 +970,19 @@ class IKDBTester(IKTestSet):
         self.groundTruthSolveParams.numIters = numIters
 
     def generateDB(self,numTraining,numRestarts=100):
-        print "Generating",numTraining,"training problems, with",numRestarts,"random restarts"
+        print ("Generating",numTraining,"training problems, with",numRestarts,"random restarts")
         trainingSet = [self.db.sampleRandomProblem() for i in range(numTraining)]
-        print "**** Training ***"
+        print ("**** Training ***")
         solverParams = copy.copy(self.solveRawParams)
         solverParams.numRestarts = numRestarts
         self.db.generate(trainingSet,solverParams=solverParams)
 
     def loadDB(self,fn):
-        print "Loading database metadata from",fn+'.meta'
+        print ("Loading database metadata from",fn+'.meta')
         self.db.loadMetadata(fn+'.meta')
-        print "Loading database from",fn
+        print ("Loading database from",fn)
         self.db.load(fn)
-        print "IK database has",len(self.db.solutions),"instances"
+        print ("IK database has",len(self.db.solutions),"instances")
         params = copy.copy(self.solveAdaptParams)
         params.localMethod = 'auto'
         #the following code is for debugging incorrectly built DBs
@@ -998,9 +1007,9 @@ class IKDBTester(IKTestSet):
         """
         
     def saveDB(self,fn):
-        print "Saving IK database to",fn
+        print ("Saving IK database to",fn)
         self.db.save(fn)
-        print "Saving IK database metadata to",fn+'.meta'
+        print ("Saving IK database metadata to",fn+'.meta')
         self.db.saveMetadata(fn+'.meta')
 
     def loadTest(self,fn):
@@ -1014,7 +1023,7 @@ class IKDBTester(IKTestSet):
         return IKTestSet.saveTest(self,fn)
 
     def generateTest(self,numTesting):
-        print "Generating",numTesting,"testing problems"
+        print ("Generating",numTesting,"testing problems")
         problems = [self.db.sampleRandomProblem() for i in range(numTesting)]
         self.generateTestLabels(problems)
 
@@ -1036,13 +1045,13 @@ class IKDBTester(IKTestSet):
                 tn += 1
             else:
                 raise RuntimeError("Ground truth labels aren't available...")
-        print "Feasibility prediction %d-NN: precision %f, recall %f"%(numQueries,float(tp)/max(1,fp+tp),float(tp)/max(1,fn+tp))
-        print "  Prediction time",predictionTime
+        print ("Feasibility prediction %d-NN: precision %f, recall %f"%(numQueries,float(tp)/max(1,fp+tp),float(tp)/max(1,fn+tp)))
+        print ("  Prediction time",predictionTime)
 
     def testDB(self,numQueries=1):
         self.db.resetStats()
         self.test((lambda problem:self.db.solve(problem,numSolutionsToTry=numQueries,params=self.solveAdaptParams)[0]),'%d-NN query'%(numQueries,))
-        print "  lookup time: %f, solve time: %f"%(self.db.lookupTime,self.db.solveTime)
+        print ("  lookup time: %f, solve time: %f"%(self.db.lookupTime,self.db.solveTime))
 
 
 class MultiIKDatabase:
@@ -1128,20 +1137,20 @@ class MultiIKDatabase:
                 'numRawSolves':self.numRawSolves,'numRawSolvesSuccessful':self.numRawSolvesSuccessful,'rawSolveTime':self.rawSolveTime}
 
     def printStats(self):
-        print "MultiIKDatabase:"
-        print "  Problems stored:",self.size
-        print "  Databases:",len(self.databases)
-        print "  Database lookups: %d, time %f"%(self.numDbLookups,self.dbLookupTime)
-        print "  Problems solved via adaptation: %d, %d successful, time %f"%(self.numAdaptSolves,self.numAdaptSolvesSuccessful,self.adaptSolvetime)
-        print "  Problems solved via raw solver: %d, %d successful, time %f"%(self.numRawSolves,self.numRawSolvesSuccessful,self.rawSolvetime)
+        print ("MultiIKDatabase:")
+        print ("  Problems stored:",self.size)
+        print ("  Databases:",len(self.databases))
+        print ("  Database lookups: %d, time %f"%(self.numDbLookups,self.dbLookupTime))
+        print ("  Problems solved via adaptation: %d, %d successful, time %f"%(self.numAdaptSolves,self.numAdaptSolvesSuccessful,self.adaptSolvetime))
+        print ("  Problems solved via raw solver: %d, %d successful, time %f"%(self.numRawSolves,self.numRawSolvesSuccessful,self.rawSolvetime))
 
         for k in self.databases:
-            print "  IKDatabase",k,":"
-            print "    File:",self.databaseFiles[k]
-            print "    Num problems:",self.databases[k].numProblems()
-            print "    Num queries:",self.databases[k].numQueries
-            print "    Lookup time:",self.databases[k].lookupTime
-            print "    Solve time:",self.databases[k].solveTime
+            print ("  IKDatabase",k,":")
+            print ("    File:",self.databaseFiles[k])
+            print ("    Num problems:",self.databases[k].numProblems())
+            print ("    Num queries:",self.databases[k].numQueries)
+            print ("    Lookup time:",self.databases[k].lookupTime)
+            print ("    Solve time:",self.databases[k].solveTime)
 
     def save(self,folder_prefix):
         """Saves the entire package to disk."""
@@ -1178,11 +1187,11 @@ class MultiIKDatabase:
         mkdir_p(folder_prefix)
         with open(os.path.join(folder_prefix,"package.txt"),'w') as f:
             json.dump(package,f)
-        print "Saving package data to",os.path.join(folder_prefix,"package.txt")
+        print ("Saving package data to",os.path.join(folder_prefix,"package.txt"))
         #need to save metadata
         for (k,v) in self.databases.iteritems():
             fnmeta = os.path.join(folder_prefix,v.fileName+'.meta')
-            print "  Saving IK database meta data to",fnmeta
+            print ("  Saving IK database meta data to",fnmeta)
             v.saveMetadata(fnmeta)
 
     def loadPackageData(self,folder_prefix):
@@ -1194,7 +1203,7 @@ class MultiIKDatabase:
                 raise IOError("Invalid JSON object loaded from package.txt")
             package = obj
             if package['robot'] != self.robot.getName():
-                print "MultiIKDatabase: warning, robot in package does not match that of robot provided to constructor"
+                print ("MultiIKDatabase: warning, robot in package does not match that of robot provided to constructor")
             self.size = int(package['size'])
             #package['stats'] = self.stats()
             self.databases = dict()
@@ -1356,16 +1365,16 @@ class MultiIKDatabase:
                     features = np.array(db.problemToFeatures(problem))
                 prediction,confidence = db.predictFeasible(problem,k,features=features)
                 if prediction or confidence < 0.65:
-                    print "Predicted feasible or unconfident:",confidence
+                    print ("Predicted feasible or unconfident:",confidence)
                     #predicted feasible or not confident, run global solver
                     self.onSolveSuccess(p,db,problem,prediction)
                 elif confidence<self.infeasibilityConfidence:
-                    print "Semi-confident that problem is infeasible:",confidence
+                    print ("Semi-confident that problem is infeasible:",confidence)
                     #not entirely confident, so put on backburner
                     self.onSolveFailure(p,db,problem)
                     return None
                 else:
-                    print "Confident that problem is infeasible:",confidence
+                    print ("Confident that problem is infeasible:",confidence)
                     self.onSolveSuccess(p,db,problem,prediction)
                     return None
         return None
@@ -1503,12 +1512,12 @@ class ManagedIKDatabase(MultiIKDatabase):
             try:
                 self.load()
             except IOError as e:
-                print "Warning, couldn't load managed IK database from",folder_prefix
+                print ("Warning, couldn't load managed IK database from",folder_prefix)
                 c = raw_input("Folder exists, do you want to override it? (y/n) > ")
                 if c != 'y':
                     raise IOError("IK database creation canceled")
         else:
-            print "IK database will be placed in",folder_prefix
+            print ("IK database will be placed in",folder_prefix)
         
     def stats(self):
         return {'size':self.size,
@@ -1519,40 +1528,40 @@ class ManagedIKDatabase(MultiIKDatabase):
                 'numAutoPopulated':self.numAutoPopulated,'numAutoPopulatedSuccessful':self.numAutoPopulatedSuccessful,'autoPopulateTime':self.autoPopulateTime}
 
     def printStats(self):
-        print "ManagedIKDatabase:"
-        print "  Problems stored:",self.size
-        print "  Databases:",len(self.databases)
-        print "  Database lookups: %d, time %f"%(self.numDbLookups,self.dbLookupTime)
-        print "  Problems solved via adaptation: %d, %d successful, time %f"%(self.numAdaptSolves,self.numAdaptSolvesSuccessful,self.adaptSolvetime)
-        print "  Problems solved via raw solver: %d, %d successful, time %f"%(self.numRawSolves,self.numRawSolvesSuccessful,self.rawSolvetime)
+        print ("ManagedIKDatabase:")
+        print ("  Problems stored:",self.size)
+        print ("  Databases:",len(self.databases))
+        print ("  Database lookups: %d, time %f"%(self.numDbLookups,self.dbLookupTime))
+        print ("  Problems solved via adaptation: %d, %d successful, time %f"%(self.numAdaptSolves,self.numAdaptSolvesSuccessful,self.adaptSolvetime))
+        print ("  Problems solved via raw solver: %d, %d successful, time %f"%(self.numRawSolves,self.numRawSolvesSuccessful,self.rawSolvetime))
 
-        print "  Problems on backburner queue:",len(self.backburner)
-        print "  Problems solved in background: %d, %d successful, time %f"%(self.numAutoPopulated,self.numAutoPopulatedSuccessful,self.autoPopulateTime)
+        print ("  Problems on backburner queue:",len(self.backburner))
+        print ("  Problems solved in background: %d, %d successful, time %f"%(self.numAutoPopulated,self.numAutoPopulatedSuccessful,self.autoPopulateTime))
         for k in self.databases:
-            print "  IKDatabase",k,":"
-            print "    File:",self.databaseFiles[k]
-            print "    Num problems:",len(self.databases[k].numProblems())
-            print "    Num queries:",self.databases[k].numQueries
-            print "    Lookup time:",self.databases[k].lookupTime
-            print "    Solve time:",self.databases[k].solveTime
+            print ("  IKDatabase",k,":")
+            print ("    File:",self.databaseFiles[k])
+            print ("    Num problems:",len(self.databases[k].numProblems()))
+            print ("    Num queries:",self.databases[k].numQueries)
+            print ("    Lookup time:",self.databases[k].lookupTime)
+            print ("    Solve time:",self.databases[k].solveTime)
 
     def flush(self):
         """Flushes all changes to the database to disk."""
         with self.lock:
-            print "Flushing changes to disk:"
+            print ("Flushing changes to disk:")
             if self.packageChanged:
-                print "  Package changed"
+                print ("  Package changed")
             if self.backburnerChanged:
-                print "  Backburner changed"
+                print ("  Backburner changed")
             numMetadataChanged = 0
             for (k,v) in self.databaseMetadataChanged.iteritems():
                 if v:
                     numMetadataChanged += 1
-                    print "  Metadata for",features.structure(self.databases[k].ikTemplate,hashable=False),"changed"
+                    print ("  Metadata for",features.structure(self.databases[k].ikTemplate,hashable=False),"changed")
             for (k,db) in self.databases.iteritems():
                 cnt = self.databaseSavedProblemCount.get(k,0)
                 if cnt < db.numProblems():
-                    print "  %d new problems for"%(db.numProblems()-cnt,),features.structure(db.ikTemplate,hashable=False)
+                    print ("  %d new problems for"%(db.numProblems()-cnt,),features.structure(db.ikTemplate,hashable=False))
             #now do the saving
             if self.packageChanged or self.backburnerChanged or numMetadataChanged > 0:
                 self.savePackageData()
@@ -1591,13 +1600,13 @@ class ManagedIKDatabase(MultiIKDatabase):
         #clear new feature counters
         for k,v in self.featureMiner.structureToFeatureMiner.iteritems():
             if k not in self.databases:
-                print "Uh... structure",k,"was discovered by feature miner"
-                print "Available keys:"
-                print self.databases.keys()
+                print ("Uh... structure",k,"was discovered by feature miner")
+                print ("Available keys:")
+                print (self.databases.keys())
                 raw_input()
             for f in self.databases[k].featureNames:
                 if f not in v.features:
-                    print "Warning: feature",f,"discovered before was not in dynamically discovered features",v.features
+                    print ("Warning: feature",f,"discovered before was not in dynamically discovered features",v.features)
                     raw_input()
             v.newFeatureCount = 0
 
@@ -1648,7 +1657,7 @@ class ManagedIKDatabase(MultiIKDatabase):
         """Saves the latest numLatest entries to database k"""
         self.assignDatabaseFilename(self,db)
         fn = os.path.join(self.folder_prefix,db.fileName)
-        print "Save increment: saving increment to",fn
+        print ("Save increment: saving increment to",fn)
         assert len(db.problems) == 0,"Can't save an increment without a feature space..." 
         with open(fn,'a') as f:
             k = self.getDatabaseKey(db)
@@ -1690,8 +1699,8 @@ class ManagedIKDatabase(MultiIKDatabase):
                         #TODO: split databases by string type
                         pass
                 #regenerate features for the given database
-                print "Regenerating features for database",features.structure(obj,hashable=False)
-                print "  Feature names:",db.featureNames,"mapping to",newFeatureNames
+                print ("Regenerating features for database",features.structure(obj,hashable=False))
+                print ("  Feature names:",db.featureNames,"mapping to",newFeatureNames)
                 db.setIKProblemSpace(db.ikTemplate,newFeatureNames,None)
                 db.autoSetFeatureRanges()
                 self.databaseMetadataChanged[features.structure(obj,hashable=True)] = True
@@ -1700,7 +1709,7 @@ class ManagedIKDatabase(MultiIKDatabase):
                 self.packageManagementTime += t1-t0
 
             if db.featureRanges is None and len(db.featureNames) > 0 and solution is not None:
-                print "Got a first feasible solution..."
+                print ("Got a first feasible solution...")
                 #first feasible solution
                 db.autoSetFeatureRanges()
 
@@ -1724,13 +1733,13 @@ class ManagedIKDatabase(MultiIKDatabase):
 
     def onSolveFailure(self,policy,db,problem):
         if policy == MultiIKDatabase.POLICY_RAW:
-            print "IKDB: Raw solve fail"
+            print ("IKDB: Raw solve fail")
             if self.size < self.maxSize:
                 self.add(db,problem,None)
         elif policy == MultiIKDatabase.POLICY_PREDICT:
             if self.backburnerEnabled:
                 with self.lock:
-                    print "IKDB: Adding to backburner..."
+                    print ("IKDB: Adding to backburner...")
                     if len(self.backburner) > 100:
                         del self.backburner[random.randint(0,len(self.backburner)-1)]
                     self.backburner.append((problem.toJson(),None))
@@ -1747,13 +1756,13 @@ class ManagedIKDatabase(MultiIKDatabase):
                     self.backburner.append((problem.toJson(),solution[0]))
                     self.backburnerChanged = True
         elif policy == MultiIKDatabase.POLICY_RAW:
-            print "IKDB: Raw solve success"
+            print ("IKDB: Raw solve success")
             if self.size < self.maxSize:
                 self.add(db,problem,solution)
         elif (policy == MultiIKDatabase.POLICY_ADAPT or policy == MultiIKDatabase.POLICY_CURRENT_OR_ADAPT) and solution[1] > 0:
             #a non-closest example was adapted
             if self.size < self.maxSize:
-                print "Non-closest problem adapted:",solution[1],"adding to db"
+                print ("Non-closest problem adapted:",solution[1],"adding to db")
                 self.add(db,problem,solution[0])
 
     def startBackgroundLoop(self,saveRate=100):
@@ -1851,7 +1860,7 @@ class ManagedIKDatabase(MultiIKDatabase):
                         snew = problem.score(self.robot)
                         if sold < snew:
                             #previous solution was better than database
-                            print "Old solution was better than database, adding"
+                            print ("Old solution was better than database, adding")
                             self.add(db,problem,solution)
                     self.numAutoPopulatedSuccessful += 1
                 self.backburnerEnabled = True
@@ -1902,8 +1911,8 @@ class MultiIKDBTester (IKTestSet):
         return self.db.save(prefix)
 
     def generateDB(self,numTraining):
-        print "Generating",numTraining,"training problems"
-        print "**** Training ***"
+        print ("Generating",numTraining,"training problems")
+        print ("**** Training ***")
         for iter in xrange(numTraining):
             p = self.db.sampleRandomProblem(0.1,0.1)
             db = self.db.getDatabase(p)
@@ -1911,7 +1920,7 @@ class MultiIKDBTester (IKTestSet):
             self.db.add(db,p,s)
     
     def generateTest(self,numTesting):
-        print "Generating",numTesting,"testing problems"
+        print ("Generating",numTesting,"testing problems")
         problems = [self.db.sampleRandomProblem(0.1,0.1) for i in range(numTesting)]
         self.generateTestLabels(problems)
 
@@ -1941,8 +1950,8 @@ class MultiIKDBTester (IKTestSet):
                 tn += 1
             else:
                 raise RuntimeError("Ground truth labels aren't available...")
-        print "Feasibility prediction %d-NN: precision %f, recall %f"%(numQueries,float(tp)/max(1,fp+tp),float(tp)/max(1,fn+tp))
-        print "  Prediction time",predictionTime
+        print ("Feasibility prediction %d-NN: precision %f, recall %f"%(numQueries,float(tp)/max(1,fp+tp),float(tp)/max(1,fn+tp)))
+        print ("  Prediction time",predictionTime)
 
 
 
