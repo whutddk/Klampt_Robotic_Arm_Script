@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-10 16:17:59
+# @Last Modified time: 2019-05-19 14:42:06
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -196,8 +196,11 @@ if __name__ == "__main__":
 		# print (R062)
 		# print (R063)
 
+		FK_X = (217.3*cos(theta1)*cos(theta2)*cos(theta3)) - 40*sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - 40*cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))) - 225*cos(theta1)*sin(theta2) - (217.3*cos(theta1)*sin(theta2)*sin(theta3))
+		FK_Y = 40*cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - 40*sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - 225*sin(theta1)*sin(theta2) + (217.3*cos(theta2)*cos(theta3)*sin(theta1)) - (217.3*sin(theta1)*sin(theta2)*sin(theta3))
+		FK_Z = 225*cos(theta2) + (217.3*cos(theta2)*sin(theta3)) + (217.3*cos(theta3)*sin(theta2)) - 40*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - 40*cos(theta4)*cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) + 264
 
-
+		print ( "X,Y,Z",FK_X,FK_Y,FK_Z )
 		time.sleep(0.1)
 	while(1):
 
