@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-24 19:15:24
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-19 14:42:06
+# @Last Modified time: 2019-05-31 16:45:51
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: ikTest.py
@@ -153,10 +153,11 @@ if __name__ == "__main__":
 	# solver.solve()
 	
 
-	for h in range(0,53):
+	for h in range(0,1):
 		# wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,100,100,10*h)
-		wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,0,200,10*h)
-		theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
+		# wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,0,200,100)
+		# theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
+		theta1,theta2,theta3 = ik_solve_Coordinate(200,50,100)
 		theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
 		
 		# obj = ik.objective(link,R=[1,0,0,0,0,1,0,-1,0],t=[0.2,0.2,0.01*h])
@@ -173,7 +174,7 @@ if __name__ == "__main__":
 
 		prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
 		print (theta1,theta2,theta3,theta4,theta5,theta6)
-		ctlRobotPose.set([0,0,0.4,0.4,0,0,0,0])
+		ctlRobotPose.set([0,-0.5,-1.57,1.57,0,1.57,0,0])
 
 		# R041 = [ -cos(theta1)*sin(theta2+theta3), -sin(theta1)*sin(theta2+theta3), cos(theta2+theta3)]
 		# R042 = [  sin(theta1),  -cos(theta1),0]
