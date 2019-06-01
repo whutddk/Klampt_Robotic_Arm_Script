@@ -1,33 +1,27 @@
-# @File Name: createCheckPoint.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\state2\createCheckpointNetwork\createCheckPoint.py
-# @Author: 29505
-# @Date:   2019-06-01 10:12:39
-# @Last Modified by:   29505
-# @Last Modified time: 2019-06-01 10:24:03
-# @Email: 295054118@whut.edu.cn
-# @page: https://whutddk.github.io/
-
-
-
-
-
 # -*- coding: utf-8 -*-
-# @File Name: ikTest.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
+# @File Name: createCheckPoint.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\state2\createCheckpointNetwork\createCheckPoint.py
 # @Author: Ruige_Lee
-# @Date:   2019-04-24 19:15:24
+# @Date:   2019-06-01 17:04:10
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-31 16:45:51
+# @Last Modified time: 2019-06-01 19:42:30
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
-# @File Name: ikTest.py
-# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\ikMount\ikTest.py
-# @Author: 29505
-# @Date:   2019-04-24 10:06:47
-# @Last Modified by:   29505
-# @Last Modified time: 2019-04-24 12:00:43
-# @Email: 295054118@whut.edu.cn
-# @page: https://whutddk.github.io/
+
+
+## 产生 X-10 Y-24 Z-12 个节点 （2880）
+# 编号 X(0-9) Y(0-23) Z(0-11)
+# 结点编号 Z*240 + Y*10 + X
+
+# 产生10*24*11 + 10*23*12 + 9*24*12 = 7992条edge
+# edge 编号 (0-7991)
+# 建立二维数组从pose映射到edge
+# X方向edge 0 + 10 * 23 * 12
+# Y方向edge 2760 + 9 * 24 * 12
+# Z方向edge 5352 + 10 * 24 * 11
+
+
+
 
 from klampt import *
 from klampt.model.collide import *
