@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
 # @Last Modified by:   29505
-# @Last Modified time: 2019-06-02 14:28:37
+# @Last Modified time: 2019-06-02 15:34:04
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -41,7 +41,7 @@ def ik_find_endCoordinate(N1,O1,A1,N2,O2,A2,N3,O3,A3,toolX,toolY,toolZ):
 	L = 40.0
 	wristX = toolX + A1 * L
 	wristY = toolY + A2 * L
-	wristZ = toolZ + A3 * L
+	wristZ = toolZ - A3 * L
 	return wristX,wristY,wristZ
 
 
@@ -54,9 +54,9 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 	theta1 = atan2(wristY,wristX)
 
 	s3 = ( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785
-	print (s3)
-	if (s3 > 1):
-		s3 = 1
+	# print (s3)
+	# if (s3 > 1):
+	# 	s3 = 1
 	theta3 = asin (s3)
 
 	g = wristX / cos(theta1)
@@ -114,14 +114,15 @@ if __name__ == "__main__":
 # 结点编号 Z*275 + Y*11 + X
 
 
-	for Z in range(0,12):
-		for Y in range(0,25):
+	for Z in range(0,13):
+		for Y in range(0,17):
 			for X in range(0,11):
 				xRange = 100 + 25*X
-				yRange = -300 + 25*Y
+				yRange = -200 + 25*Y
 				zRange = 100 + 25*Z
-
-				theta1,theta2,theta3 = ik_solve_Coordinate(xRange,yRange,zRange)
+				print (xRange,yRange,zRange)
+				wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,xRange,yRange,zRange)
+				theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
 				theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
 				
 				prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
