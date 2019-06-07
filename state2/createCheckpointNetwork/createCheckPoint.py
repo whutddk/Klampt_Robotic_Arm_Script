@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
 # @Last Modified by:   29505
-# @Last Modified time: 2019-06-02 15:39:43
+# @Last Modified time: 2019-06-07 17:31:23
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -54,9 +54,6 @@ def ik_solve_Coordinate(wristX,wristY,wristZ):
 	theta1 = atan2(wristY,wristX)
 
 	s3 = ( (wristX*wristX) / ( cos(theta1)*cos(theta1) ) + (wristZ-264)*(wristZ-264) - 97844.29) / 97785
-	# print (s3)
-	# if (s3 > 1):
-	# 	s3 = 1
 	theta3 = asin (s3)
 
 	g = wristX / cos(theta1)
@@ -87,6 +84,11 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 		theta6 = theta6 - 3.14159
 	else:
 		theta5 = atan2( r13 , -sqrt(r11*r11 + r12*r12))
+
+	if ( theta6 > 0 ):
+		theta6 =  theta6 % 3.14159
+	else:
+		theta6 =  theta6 % -3.14159
 
 	return theta4,theta5,theta6
 
@@ -125,6 +127,13 @@ if __name__ == "__main__":
 				theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
 				theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
 				
+				theta1 = round(theta1,3)
+				theta2 = round(theta2,3)
+				theta3 = round(theta3,3)
+				theta4 = round(theta4,3)
+				theta5 = round(theta5,3)
+				theta6 = round(theta6,3)
+
 				prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
 				print (theta1,theta2,theta3,theta4,theta5,theta6)
 				ctlRobotPose.set([0,-0.5,-1.57,1.57,0,1.57,0,0])
@@ -137,7 +146,7 @@ if __name__ == "__main__":
 				FK_Y = 40*cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - 40*sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - 225*sin(theta1)*sin(theta2) + (217.3*cos(theta2)*cos(theta3)*sin(theta1)) - (217.3*sin(theta1)*sin(theta2)*sin(theta3))
 				FK_Z = 225*cos(theta2) + (217.3*cos(theta2)*sin(theta3)) + (217.3*cos(theta3)*sin(theta2)) - 40*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - 40*cos(theta4)*cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) + 264
 
-				print ( "X,Y,Z",FK_X,FK_Y,FK_Z )
+				# print ( "X,Y,Z",FK_X,FK_Y,FK_Z )
 
 	while(1):
 		time.sleep(0.1)
