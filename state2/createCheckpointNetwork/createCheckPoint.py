@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
 # @Last Modified by:   29505
-# @Last Modified time: 2019-06-07 18:08:09
+# @Last Modified time: 2019-06-07 18:11:51
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -92,24 +92,6 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 		theta6 =  theta6 % -3.14159
 
 	return theta4,theta5,theta6
-
-
-
-
-# def createCFunction():
-
-# 	with open('./poseTable.c','w') as poseTableFile:
-		
-# 		poseTableFile.write("#include \"stdint.h\"\n")
-# 		poseTableFile.write("float poseTable[]")
-
-# 	pass
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
