@@ -4,12 +4,12 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
 # @Last Modified by:   29505
-# @Last Modified time: 2019-06-07 17:31:23
+# @Last Modified time: 2019-06-07 18:08:09
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
 
-## 产生 X-11 Y-17 Z-13 个节点 （4862）
+## 产生 X-11 Y-17 Z-13 个节点 （2431）
 ## X:100~350 Y:-200~200 Z:100~400
 # 编号 X(0-10) Y(0-16) Z(0-12)
 # 结点编号 Z*187 + Y*11 + X
@@ -34,6 +34,7 @@ from klampt.model import ik
 
 import random
 from math import *
+
 
 
 
@@ -94,6 +95,23 @@ def ik_solve_Posture(N1,O1,A1,N2,O2,A2,N3,O3,A3,theta1,theta2,theta3):
 
 
 
+
+# def createCFunction():
+
+# 	with open('./poseTable.c','w') as poseTableFile:
+		
+# 		poseTableFile.write("#include \"stdint.h\"\n")
+# 		poseTableFile.write("float poseTable[]")
+
+# 	pass
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
 	world = WorldModel()
 
@@ -110,43 +128,59 @@ if __name__ == "__main__":
 	ctlRobotPose = RobotPoser(ctlRobot)
 
 
-## 产生 X-11 Y-17 Z-13 个节点 （4862）
+## 产生 X-11 Y-17 Z-13 个节点 （2431）
 ## X:100~350 Y:-200~200 Z:100~400
 # 编号 X(0-10) Y(0-16) Z(0-12)
 # 结点编号 Z*187 + Y*11 + X
 
+	with open('./poseTable.txt','w') as poseTableFile:
+		for Z in range(0,13):
+			for Y in range(0,17):
+				for X in range(0,11):
+					xRange = 100 + 25*X
+					yRange = -200 + 25*Y
+					zRange = 100 + 25*Z
+					print (xRange,yRange,zRange)
+					wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,xRange,yRange,zRange)
+					theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
+					theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
+					
+					theta1 = round(theta1,3)
+					theta2 = round(theta2,3)
+					theta3 = round(theta3,3)
+					theta4 = round(theta4,3)
+					theta5 = round(theta5,3)
+					theta6 = round(theta6,3)
 
-	for Z in range(0,13):
-		for Y in range(0,17):
-			for X in range(0,11):
-				xRange = 100 + 25*X
-				yRange = -200 + 25*Y
-				zRange = 100 + 25*Z
-				print (xRange,yRange,zRange)
-				wristX,wristY,wristZ = ik_find_endCoordinate(-1,0,0,0,-1,0,0,0,-1,xRange,yRange,zRange)
-				theta1,theta2,theta3 = ik_solve_Coordinate(wristX,wristY,wristZ)
-				theta4,theta5,theta6 = ik_solve_Posture(-1,0,0,0,-1,0,0,0,-1,theta1,theta2,theta3)
-				
-				theta1 = round(theta1,3)
-				theta2 = round(theta2,3)
-				theta3 = round(theta3,3)
-				theta4 = round(theta4,3)
-				theta5 = round(theta5,3)
-				theta6 = round(theta6,3)
+					prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
 
-				prmRobotPose.set([0,theta1,theta2,theta3,theta4,theta5,theta6,0])
-				print (theta1,theta2,theta3,theta4,theta5,theta6)
-				ctlRobotPose.set([0,-0.5,-1.57,1.57,0,1.57,0,0])
+					
+					poseTableFile.write(str(theta1))
+					poseTableFile.write(",")
+					poseTableFile.write(str(theta2))
+					poseTableFile.write(",")
+					poseTableFile.write(str(theta3))
+					poseTableFile.write(",")
+					poseTableFile.write(str(theta4))
+					poseTableFile.write(",")
+					poseTableFile.write(str(theta5))
+					poseTableFile.write(",")
+					poseTableFile.write(str(theta6))
 
-				R061 = [ cos(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
-				R062 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
-				R063 = [ cos(theta6)*(cos(theta5)*sin(theta2 +theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)) + sin(theta4)*sin(theta6)*cos(theta2+theta3),                                         cos(theta6)*sin(theta4)*cos(theta2+theta3) - sin(theta6)*(cos(theta5)*sin(theta2 + theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)),                       sin(theta5)*sin(theta2+theta3) + cos(theta4)*cos(theta5)*cos(theta2+theta3)]
+					poseTableFile.write("\n")
 
-				FK_X = (217.3*cos(theta1)*cos(theta2)*cos(theta3)) - 40*sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - 40*cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))) - 225*cos(theta1)*sin(theta2) - (217.3*cos(theta1)*sin(theta2)*sin(theta3))
-				FK_Y = 40*cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - 40*sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - 225*sin(theta1)*sin(theta2) + (217.3*cos(theta2)*cos(theta3)*sin(theta1)) - (217.3*sin(theta1)*sin(theta2)*sin(theta3))
-				FK_Z = 225*cos(theta2) + (217.3*cos(theta2)*sin(theta3)) + (217.3*cos(theta3)*sin(theta2)) - 40*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - 40*cos(theta4)*cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) + 264
+					print (theta1,theta2,theta3,theta4,theta5,theta6)
+					ctlRobotPose.set([0,-0.5,-1.57,1.57,0,1.57,0,0])
 
-				# print ( "X,Y,Z",FK_X,FK_Y,FK_Z )
+					R061 = [ cos(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - sin(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), - sin(theta6)*(cos(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - sin(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))) - cos(theta6)*(cos(theta4)*sin(theta1) + sin(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))), sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) + cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2)))]
+					R062 = [ cos(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))) + sin(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))),   cos(theta6)*(cos(theta1)*cos(theta4) - sin(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - sin(theta6)*(cos(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) + sin(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))), sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2)))]
+					R063 = [ cos(theta6)*(cos(theta5)*sin(theta2 +theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)) + sin(theta4)*sin(theta6)*cos(theta2+theta3),                                         cos(theta6)*sin(theta4)*cos(theta2+theta3) - sin(theta6)*(cos(theta5)*sin(theta2 + theta3) - cos(theta4)*sin(theta5)*cos(theta2+theta3)),                       sin(theta5)*sin(theta2+theta3) + cos(theta4)*cos(theta5)*cos(theta2+theta3)]
+
+					FK_X = (217.3*cos(theta1)*cos(theta2)*cos(theta3)) - 40*sin(theta5)*(cos(theta1)*cos(theta2)*cos(theta3) - cos(theta1)*sin(theta2)*sin(theta3)) - 40*cos(theta5)*(sin(theta1)*sin(theta4) - cos(theta4)*(cos(theta1)*cos(theta2)*sin(theta3) + cos(theta1)*cos(theta3)*sin(theta2))) - 225*cos(theta1)*sin(theta2) - (217.3*cos(theta1)*sin(theta2)*sin(theta3))
+					FK_Y = 40*cos(theta5)*(cos(theta1)*sin(theta4) + cos(theta4)*(cos(theta2)*sin(theta1)*sin(theta3) + cos(theta3)*sin(theta1)*sin(theta2))) - 40*sin(theta5)*(cos(theta2)*cos(theta3)*sin(theta1) - sin(theta1)*sin(theta2)*sin(theta3)) - 225*sin(theta1)*sin(theta2) + (217.3*cos(theta2)*cos(theta3)*sin(theta1)) - (217.3*sin(theta1)*sin(theta2)*sin(theta3))
+					FK_Z = 225*cos(theta2) + (217.3*cos(theta2)*sin(theta3)) + (217.3*cos(theta3)*sin(theta2)) - 40*sin(theta5)*(cos(theta2)*sin(theta3) + cos(theta3)*sin(theta2)) - 40*cos(theta4)*cos(theta5)*(cos(theta2)*cos(theta3) - sin(theta2)*sin(theta3)) + 264
+
+					# print ( "X,Y,Z",FK_X,FK_Y,FK_Z )
 
 	while(1):
 		time.sleep(0.1)
