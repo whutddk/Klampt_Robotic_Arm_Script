@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
 # @Last Modified by:   29505
-# @Last Modified time: 2019-06-07 18:11:51
+# @Last Modified time: 2019-06-16 22:52:01
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -17,8 +17,8 @@
 # 产生11*17*12 + 11*16*13 + 10*17*13 = 6742条edge
 # edge 编号 (0-6741)
 # 建立二维数组从pose映射到edge
-# X方向edge 0 + 11 * 16 * 13
-# Y方向edge 2288 + 10 * 17 * 13
+# X方向edge 0 + 10 * 17 * 13
+# Y方向edge 2210 + 11 * 16 * 13
 # Z方向edge 4498 + 11 * 17 * 12
 
 
