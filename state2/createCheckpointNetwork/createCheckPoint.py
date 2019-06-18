@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # @File Name: createCheckPoint.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\state2\createCheckpointNetwork\createCheckPoint.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\state2\createCheckpointNetwork\createCheckPoint.py
 # @Author: Ruige_Lee
 # @Date:   2019-06-01 17:04:10
-# @Last Modified by:   29505
-# @Last Modified time: 2019-06-16 22:52:01
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-06-18 20:27:33
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 

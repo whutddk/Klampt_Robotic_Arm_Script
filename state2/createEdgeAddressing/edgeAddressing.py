@@ -1,11 +1,15 @@
+# -*- coding: utf-8 -*-
 # @File Name: edgeAddressing.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\state2\createEdgeAddressing\edgeAddressing.py
-# @Author: 29505
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\state2\createEdgeAddressing\edgeAddressing.py
+# @Author: Ruige_Lee
 # @Date:   2019-06-07 18:41:28
-# @Last Modified by:   29505
-# @Last Modified time: 2019-06-16 22:54:06
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-06-18 19:27:34
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
+
+
+
 
 ## 产生 X-11 Y-17 Z-13 个节点 （2431）
 # 产生11*17*12 + 11*16*13 + 10*17*13 = 6742条edge
