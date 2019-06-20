@@ -2,3 +2,4 @@ ikdbTest/__pycache__/
 state2/createCheckpointNetwork/poseTable.txt
 state2/createCheckpointNetwork/poseTable.c
 state2/createEdgeAddressing/edgeAddressing.txt
+state2/offLineCollisionChecking/gridEncode.txt

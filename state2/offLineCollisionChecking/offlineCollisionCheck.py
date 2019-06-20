@@ -4,13 +4,14 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-18 19:35:33
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-06-18 20:36:42
+# @Last Modified time: 2019-06-20 19:58:13
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
 
 poseList = []
 edgeList = []
+gridCnt = 0
 
 def checkingPose():
 	with open('../createCheckpointNetwork/poseTable.txt','r') as poseTableFile:
@@ -34,8 +35,7 @@ def checkingPose():
 
 
 def checkingEdge():
-	with open('../createEdgeAddressing/edgeAddressing.txt','r') as edgeTableFile:
-	
+	with open('../createEdgeAddressing/edgeAddressing.txt','r') as edgeTableFile:	
 		for line in edgeTableFile.readlines():
 			strTemp = ''
 			Edge = []
@@ -49,21 +49,31 @@ def checkingEdge():
 					data = int(strTemp)
 					Edge.append(data)
 					edgeList.append(Edge)
-					print (Edge)
+					# print (Edge)
 					continue
 				strTemp = strTemp + char
-		print (edgeList)
+		# print (edgeList)
 	pass
 
 def checkingGrid():
+
+	global gridCnt
+	with open('./gridEncode.txt','r') as gridEncodeFile:
+		for line in gridEncodeFile.readlines():
+			if line[0] == "{" and line[-1] == "}":
+				gridCnt = gridCnt + 1
+		print (gridCnt)
 	pass
 
 
-def checkPointReflash():
+def checkPointReflash(data):
+	with open('./gridEncode.txt','a') as gridEncodeFile:
+		gridEncodeFile.write(data)
+		gridEncodeFile.write('\n')
 	pass
 
 
-checkingEdge()
 
+checkingGrid()
 
 
