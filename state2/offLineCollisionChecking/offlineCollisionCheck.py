@@ -1,17 +1,29 @@
 # -*- coding: utf-8 -*-
 # @File Name: offlineCollisionCheck.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Klampt_Robotic_Arm_Script\state2\offLineCollisionChecking\offlineCollisionCheck.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\state2\offLineCollisionChecking\offlineCollisionCheck.py
 # @Author: Ruige_Lee
 # @Date:   2019-06-18 19:35:33
-# @Last Modified by:   29505
-# @Last Modified time: 2019-06-21 20:53:10
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-06-22 15:51:18
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
 
+
+from klampt import *
+from klampt.model.collide import *
+import sys
+import time
+from klampt.sim import *
+from klampt import vis
+
+
+
+
+
 poseList = []
 edgeList = []
-gridCnt = 0
+
 
 def checkingPose():
 	with open('../createCheckpointNetwork/poseTable.txt','r') as poseTableFile:
@@ -56,19 +68,18 @@ def checkingEdge():
 	pass
 
 def checkingGrid():
-
-	global gridCnt
+	gridCnt = 0
 	with open('./gridEncode.txt','r') as gridEncodeFile:
 		for line in gridEncodeFile.readlines():
-			if line[0] == "{" and line[-1] == "}":
+			if line[0] == "[" and line[-2] == "]":
 				gridCnt = gridCnt + 1
 		print (gridCnt)
-	pass
+	return gridCnt
 
 
 def checkPointReflash(data):
 	with open('./gridEncode.txt','a') as gridEncodeFile:
-		gridEncodeFile.write(data)
+		gridEncodeFile.write(str(data))
 		gridEncodeFile.write('\n')
 	pass
 
@@ -87,7 +98,7 @@ def make_testing_mesh(world):
 
 				grid.loadFile("../../terrains/cube.off")
 
-				grid.transform([0.023,0,0,  0,0.030,0,  0,0,0.020],[0.023*x + 0.120,0.030*y-0.480,0.020*z])			
+				grid.transform([0.025,0,0,  0,0.025,0,  0,0,0.025],[0.025*x + 0.120,0.025*y-0.400,0.025*z])			
 
 				Mesh = world.makeTerrain("Grid," + "%3d"%x + "," + "%3d"%y + "," + "%3d"%z)
 
@@ -98,29 +109,28 @@ def make_testing_mesh(world):
 
 def create_Edge(Index):
 
-	global Pose
-	global edgeIndex
-	global edge
+	global poseList
+	global edgeList
 
 	print ("now Create Edge:")
 	print (Index)
 
-	i = edgeIndex[Index][0]
-	j = edgeIndex[Index][1]
+	i = edgeList[Index][0]
+	j = edgeList[Index][1]
 
-	shoulderStart = Pose[j][0]
-	armStart = Pose[j][1]
-	elbowStart = Pose[j][2]
-	wristStart = Pose[j][3]
-	fingerStart = Pose[j][4]
-	toolStart = Pose[j][5]
+	shoulderStart = poseList[j][0]
+	armStart = poseList[j][1]
+	elbowStart = poseList[j][2]
+	wristStart = poseList[j][3]
+	fingerStart = poseList[j][4]
+	toolStart = poseList[j][5]
 
-	shoulderEnd = Pose[i][0]
-	armEnd = Pose[i][1]
-	elbowEnd = Pose[i][2]
-	wristEnd = Pose[i][3]
-	fingerEnd = Pose[i][4]
-	toolEnd = Pose[i][5]
+	shoulderEnd = poseList[i][0]
+	armEnd = poseList[i][1]
+	elbowEnd = poseList[i][2]
+	wristEnd = poseList[i][3]
+	fingerEnd = poseList[i][4]
+	toolEnd = poseList[i][5]
 
 	shoulderDis = (shoulderEnd - shoulderStart) / 100
 	armDis = (armEnd - armStart) / 100
@@ -151,16 +161,16 @@ def create_Edge(Index):
 			x = int(result[5:8])
 			y = int(result [9:12])
 			z = int(result[13:16])
-			oneEdge[1024*x+32*y+z] = 1
+			oneEdge[512*z+16*y+x] = 1
 			cnt = cnt + 1;
-			# print (x)
-			# print (y)
-			# print (z)
+
+
 		print ("cnt in this frame")
 		print (cnt)
 
-	edge.append(oneEdge)
-	store_Edge()
+	checkPointReflash(oneEdge)
+	# edge.append(oneEdge)
+	# store_Edge()
 	pass
 
 
@@ -174,33 +184,33 @@ if __name__ == "__main__":
 	if not res:
 		raise RuntimeError("Unable to load model ") 
 			
-	load_Pose()
-	load_Index()
-	load_edge()
+	checkingPose()
+	checkingEdge()
+	checkingGrid()
 
 	make_testing_mesh(world)
 				
 	
-	#sim = Simulator(world)
 	robot = world.robot(0)
 
-	#vis.add("world",world)
-	#vis.show()
+	vis.add("world",world)
+	vis.show()
 
 	collisionTest = WorldCollider(world)
 	
 	robotPose = RobotPoser(robot)
 	
-	#print robotPose.get()
-	while(len(edge) < 4096):
-		create_Edge(len(edge))
+	edgeCnt = checkingGrid()
+	while(edgeCnt <= len(edgeList)):
+		edgeCnt = checkingGrid()
+		create_Edge(edgeCnt)
 
 
 
 
-	#while(1):
-		#time.sleep(0.1)
-		#vis.shown()
+	while(1):
+		time.sleep(0.1)
+		vis.shown()
 		#pass
 
 			#pass
