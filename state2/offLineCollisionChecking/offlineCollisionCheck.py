@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-18 19:35:33
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-06-22 15:51:18
+# @Last Modified time: 2019-06-22 16:19:02
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -67,9 +67,9 @@ def checkingEdge():
 		# print (edgeList)
 	pass
 
-def checkingGrid():
+def checkingGrid(process):
 	gridCnt = 0
-	with open('./gridEncode.txt','r') as gridEncodeFile:
+	with open('./gridEncode'+ str(process) +'.txt','r') as gridEncodeFile:
 		for line in gridEncodeFile.readlines():
 			if line[0] == "[" and line[-2] == "]":
 				gridCnt = gridCnt + 1
@@ -77,8 +77,8 @@ def checkingGrid():
 	return gridCnt
 
 
-def checkPointReflash(data):
-	with open('./gridEncode.txt','a') as gridEncodeFile:
+def checkPointReflash(process,data):
+	with open('./gridEncode'+ str(process) +'.txt','a') as gridEncodeFile:
 		gridEncodeFile.write(str(data))
 		gridEncodeFile.write('\n')
 	pass
@@ -107,10 +107,11 @@ def make_testing_mesh(world):
 	return 
 
 
-def create_Edge(Index):
+def create_Edge(process,Index):
 
 	global poseList
 	global edgeList
+
 
 	print ("now Create Edge:")
 	print (Index)
@@ -168,7 +169,7 @@ def create_Edge(Index):
 		print ("cnt in this frame")
 		print (cnt)
 
-	checkPointReflash(oneEdge)
+	checkPointReflash(process,oneEdge)
 	# edge.append(oneEdge)
 	# store_Edge()
 	pass
@@ -183,34 +184,42 @@ if __name__ == "__main__":
 	res = world.readFile('../../anno_check.xml')
 	if not res:
 		raise RuntimeError("Unable to load model ") 
+
+	process = int(sys.argv[1])
+
+	print ("process=",process)
 			
 	checkingPose()
 	checkingEdge()
-	checkingGrid()
 
 	make_testing_mesh(world)
 				
 	
 	robot = world.robot(0)
 
-	vis.add("world",world)
-	vis.show()
+	# vis.add("world",world)
+	# vis.show()
 
 	collisionTest = WorldCollider(world)
 	
 	robotPose = RobotPoser(robot)
 	
-	edgeCnt = checkingGrid()
+	edgeCnt = checkingGrid(process)
+	edgeCnt = edgeCnt + process * 1000
 	while(edgeCnt <= len(edgeList)):
-		edgeCnt = checkingGrid()
-		create_Edge(edgeCnt)
+		edgeCnt = checkingGrid(process)
+		if (edgeCnt == 1000):
+			break
+		edgeCnt = edgeCnt + process * 1000
+
+		create_Edge(process,edgeCnt)
 
 
 
 
 	while(1):
 		time.sleep(0.1)
-		vis.shown()
+		# vis.shown()
 		#pass
 
 			#pass
