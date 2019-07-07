@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-07-07 11:34:44
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-07 15:19:40
+# @Last Modified time: 2019-07-07 16:11:25
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -32,12 +32,14 @@ def load_CollideData(num):
 					oneEdge.append(1)
 
 			collisionData.append(oneEdge)
+		# print (len(collisionData))
+
 		
 
 def createEmptyTrueTable():
 	for grid in range(0,16384):
 		oneGrid = []
-		for grid in range (0,1000):
+		for grid in range (0,len(collisionData)):
 			oneGrid.append(0)
 		TrueTable.append(oneGrid)
 
