@@ -4,12 +4,17 @@
 # @Author: Ruige_Lee
 # @Date:   2019-07-07 11:34:44
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-07 14:52:53
+# @Last Modified time: 2019-07-07 15:19:40
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
 # 6742edge * 16384(5+5+4bit) grid
 # 一个文件有16384个grid 和1000edge
+
+import json
+import sys
+
+
 
 collisionData = []
 TrueTable = []
@@ -25,15 +30,16 @@ def load_CollideData(num):
 					oneEdge.append(0)
 				if char == '1':
 					oneEdge.append(1)
-			collisionData.append(oneEdge)
-			print (oneEdge)
 
-def createEmptyTrueTable(num):
-	for edge in range(0,1000):
-		oneEdge = []
-		for grid in range (0,16384):
-			oneEdge.append(0)
-		TrueTable.append(oneEdge)
+			collisionData.append(oneEdge)
+		
+
+def createEmptyTrueTable():
+	for grid in range(0,16384):
+		oneGrid = []
+		for grid in range (0,1000):
+			oneGrid.append(0)
+		TrueTable.append(oneGrid)
 
 
 def createTrueTable(num):
@@ -42,9 +48,15 @@ def createTrueTable(num):
 		for edge in collisionData:
 			for gridCnt in range(0,16384):
 				TrueTable[gridCnt][edgeCnt] = edge[gridCnt]
+			print (edgeCnt)
 			edgeCnt = edgeCnt + 1
 
 
-load_CollideData(0)
+		data = json.dumps(TrueTable)
+		trueTableFile.write(data)
 
-
+if __name__ == "__main__":
+	process = int(sys.argv[1])
+	load_CollideData(process )
+	createEmptyTrueTable()
+	createTrueTable(process )
