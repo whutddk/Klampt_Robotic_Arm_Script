@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-06-07 18:41:28
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-28 20:11:28
+# @Last Modified time: 2019-07-28 20:14:44
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 
@@ -39,7 +39,7 @@ with open('./edgeAddressing.c','w') as edgeAddressFile:
 	strSyntax = strSyntax + '********************************************/\n\n'
 
 
-	strSyntax = strSyntax + 'const uint8_t lookUpedgeTable[8192][2] = {\n'
+	strSyntax = strSyntax + '#include <stdint.h> \nconst uint16_t lookUpedgeTable[8192][2] = {\n'
 	edgeAddressFile.write(strSyntax)
 
 

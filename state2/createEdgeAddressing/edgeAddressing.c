@@ -1,13 +1,3 @@
-/*
-* @File Name edgeAddressing.c
-* @File Path M:\MAS2\PRM_Robotic_Arm\Klampt_Robotic_Arm_Script\state2\createEdgeAddressing\edgeAddressing.c
-* @Author: Ruige_Lee
-* @Date:   2019-07-28 20:11:01
-* @Last Modified by:   Ruige_Lee
-* @Last Modified time: 2019-07-28 20:11:40
-* @Email: 295054118@whut.edu.cn
-* @page: https://whutddk.github.io/
-*/
 /*******************************************
 ****** Wuhan University of Technology ******
 ****** Ruige Lee ******
@@ -15,11 +5,12 @@ year: 2019
 month: 7
 date: 28
 hour: 20
-minutes: 11
-second: 29
+minutes: 15
+second: 3
 ********************************************/
 
-const uint8_t lookUpedgeTable[8192][2] = {
+#include <stdint.h> 
+const uint16_t lookUpedgeTable[8192][2] = {
 	{0,1},
 	{1,2},
 	{2,3},
@@ -6761,5 +6752,5 @@ const uint8_t lookUpedgeTable[8192][2] = {
 	{2240,2427},
 	{2241,2428},
 	{2242,2429},
-	{2243,2430}
+	{2243,2430},
 };
