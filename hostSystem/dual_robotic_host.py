@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-22 17:09:53
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-05-09 10:11:45
+# @Last Modified time: 2019-07-30 20:59:06
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
@@ -191,6 +191,25 @@ class KepBoardCapture(GLPluginInterface,freeKlampt):
 			# print ("done")
 
 
+def make_obstacle(world):
+	"""automatically create a mesh test grid
+	"""
+	grid = Geometry3D()
+
+	grid.loadFile("../terrains/cube.off")
+
+	grid.transform([0.075,0,0,  0,0.100,0,  0,0,0.25],[0.350,-0.125,0.1])			
+
+	Mesh = world.makeTerrain("Grid")
+
+	Mesh.geometry().set(grid)
+	Mesh.appearance().setColor(0.5,0.1,0.1,0.8)
+	return 
+
+
+
+
+
 if __name__ == "__main__":
 
 	world = WorldModel()
@@ -200,6 +219,8 @@ if __name__ == "__main__":
 		raise RuntimeError("Unable to load model ") 
 	del res
 
+	
+	make_obstacle(world)
 
 	freeKlampt = freeKlampt()
 
@@ -212,6 +233,7 @@ if __name__ == "__main__":
 	vis.pushPlugin(plugin)
 
 	vis.add("world",world)
+
 	vis.show()
 	
 
