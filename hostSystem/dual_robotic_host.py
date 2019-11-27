@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-22 17:09:53
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-30 20:59:06
+# @Last Modified time: 2019-11-19 16:48:46
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
@@ -220,7 +220,7 @@ if __name__ == "__main__":
 	del res
 
 	
-	make_obstacle(world)
+	# make_obstacle(world)
 
 	freeKlampt = freeKlampt()
 

@@ -21,7 +21,7 @@ qmin	0 -3.1416 -2.0071 -0.6981 -3.1416 -1.309 -3.1416 0
 
 qmax	0 3.1416 2.0071 3.8397 3.1416 4.4506 3.1416 0 
 
-geometry  "base_link.tri" "link_1.tri" "link_2.tri" "link_3.tri" "link_4.tri" "link_5.tri" "link_6.tri" "targetCube.off" 
+geometry  "base_link.tri" "link_1.tri" "link_2.tri" "link_3.tri" "link_4.tri" "link_5.tri" "link_6.tri" "" 
 
 
 
