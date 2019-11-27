@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-22 17:09:53
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-11-19 16:48:46
+# @Last Modified time: 2019-11-27 16:14:34
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
@@ -40,13 +40,14 @@ _PI_ = 3.14159
 _STEPNUM_ = 25
 
 
-
 class freeKlampt():
 	def __init__(self):
 		self.recBuf = []
 		self.recChk = 1
 		self.axisA = [0,0,0,0,0,0]
 		self.axisB = [0,0,0,0,0,0]
+		self.data = [0,0,0,0]
+		self.data_pre = 0
 
 		self.ser = serial.Serial("COM5")
 		self.ser.baudrate = 115200
@@ -114,14 +115,14 @@ class freeKlampt():
 			self.recBuf.append(    ord(self.ser.read())  )
 			
 			bufLen = len(self.recBuf)
-			if ( bufLen >= 28 
-				and self.recBuf[bufLen - 28] == 251
-				and self.recBuf[bufLen - 27] == 109
-				and self.recBuf[bufLen - 26] == 37):
+			if ( bufLen >= 36 
+				and self.recBuf[bufLen - 36] == 251
+				and self.recBuf[bufLen - 35] == 109
+				and self.recBuf[bufLen - 34] == 37):
 
 				# print ( self.recBuf )
 
-				dataOffset = bufLen - 25
+				dataOffset = bufLen - 33
 
 				self.recChk = 397
 
@@ -130,6 +131,9 @@ class freeKlampt():
 
 				for i in range (0,6):
 					self.recChk = self.recChk + self.recBuf[dataOffset+12 + 2*i] + self.recBuf[dataOffset+12 + 2*i + 1]
+
+				for i in range (0,4):
+					self.recChk = self.recChk + self.recBuf[dataOffset+24 + 2*i] + self.recBuf[dataOffset+24 + 2*i + 1]
 
 
 				if ( self.recChk%256 == self.recBuf[bufLen-1] ):
@@ -148,6 +152,18 @@ class freeKlampt():
 
 						self.axisB[i] = self.axisB[i] / 5000
 					# print(self.axisB)
+					
+					for i in range (0,4):
+						self.data[i] = (self.recBuf[dataOffset+24 + 2*i]*256 + self.recBuf[dataOffset+24 + 2*i + 1])
+						if ( self.data[i] > 32767 ):
+							self.data[i] = self.data[i] - 65536
+
+					if ( self.data_pre == self.data[0] ):
+						pass
+					else:
+						print(self.data[0],self.data[1],self.data[2],self.data[3])	
+						self.data_pre = self.data[0]	
+					
 				
 				self.recBuf = []
 
