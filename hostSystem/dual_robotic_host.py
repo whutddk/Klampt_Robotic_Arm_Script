@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-22 17:09:53
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-11-27 16:14:34
+# @Last Modified time: 2019-11-29 15:03:32
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
@@ -49,7 +49,8 @@ class freeKlampt():
 		self.data = [0,0,0,0]
 		self.data_pre = 0
 
-		self.ser = serial.Serial("COM5")
+		# self.ser = serial.Serial("COM5")
+		self.ser = serial.Serial("COM4")
 		self.ser.baudrate = 115200
 		self.ser.close()
 		self.ser.open()
