@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-04-22 17:09:53
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2020-01-02 17:50:25
+# @Last Modified time: 2020-01-09 16:26:21
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # @File Name: dual_robotic_host.py
@@ -59,9 +59,17 @@ class freeKlampt():
 		self.rob1 = [0]
 		self.rob2 = [0]
 
+	def send_order1(self):
+		# print (bytes([255]))
+		self.ser.write(bytes([255]))
+		self.ser.write(bytes([85]))
+		self.ser.write(bytes([170]))
+		self.ser.write(bytes([119]))
+		self.ser.write(bytes([0]))
+		self.ser.write(bytes([9]))
+		self.ser.write(bytes([126]))
 
-
-	def send_order(self):
+	def send_order2(self):
 		# print (bytes([255]))
 		self.ser.write(bytes([255]))
 		self.ser.write(bytes([85]))
@@ -187,9 +195,11 @@ class KepBoardCapture(GLPluginInterface,freeKlampt):
 
 	def keyboardfunc(self,c, x, y):
 
+		if ( c == 'f9' ):
+			freeKlampt.send_order1()
 
 		if ( c == 'f10' ):
-			freeKlampt.send_order()
+			freeKlampt.send_order2()
 
 
 		if ( c == "f11" ):
