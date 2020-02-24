@@ -49,9 +49,9 @@ class freeKlampt():
 		self.data = [0,0,0,0]
 		self.data_pre = 0
 
-		self.ser = serial.Serial("COM5")
+		# self.ser = serial.Serial("COM5")
 		# self.ser = serial.Serial("COM4")
-		# self.ser = serial.Serial("COM11")
+		self.ser = serial.Serial("COM11")
 		self.ser.baudrate = 115200
 		self.ser.close()
 		self.ser.open()
