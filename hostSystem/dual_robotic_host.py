@@ -48,6 +48,7 @@ class freeKlampt():
 		self.axisB = [0,0,0,0,0,0]
 		self.data = [0,0,0,0]
 		self.data_pre = 0
+		self.data_pre2 = 0
 
 		self.ser = serial.Serial("COM5")
 		# self.ser = serial.Serial("COM4")
@@ -168,13 +169,12 @@ class freeKlampt():
 						if ( self.data[i] > 32767 ):
 							self.data[i] = self.data[i] - 65536
 
-					if ( self.data_pre == self.data[0] ):
+					if ( self.data_pre == self.data[1] and self.data_pre2 == self.data[2] ):
 						pass
 					else:
-						print(self.axisA)
-						print(self.axisB)
 						print(self.data[0],self.data[1],self.data[2],self.data[3])	
-						self.data_pre = self.data[0]	
+						self.data_pre = self.data[1]	
+						self.data_pre2 = self.data[2]
 					
 				
 				self.recBuf = []
