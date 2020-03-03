@@ -171,6 +171,8 @@ class freeKlampt():
 					if ( self.data_pre == self.data[0] ):
 						pass
 					else:
+						print(self.axisA)
+						print(self.axisB)
 						print(self.data[0],self.data[1],self.data[2],self.data[3])	
 						self.data_pre = self.data[0]	
 					
