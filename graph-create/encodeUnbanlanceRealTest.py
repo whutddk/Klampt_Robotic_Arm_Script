@@ -235,7 +235,7 @@ if __name__ == "__main__":
 
 
 	prmRobotPose.set([0,-0.15,-1.57,0,0,1.57,0,0])
-	ctlRobotPose.set([0,-0.15,-1.57,0,0,1.57,0,0])
+	ctlRobotPose.set([0,1.57,-1.57,0,0,1.57,0,0])
 
 	while(1):
 		time.sleep(0.1)
