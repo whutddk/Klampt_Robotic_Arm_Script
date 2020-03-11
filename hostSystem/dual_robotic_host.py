@@ -49,9 +49,9 @@ class freeKlampt():
 		self.data = [0,0,0,0]
 		self.data_pre = 0
 
-		# self.ser = serial.Serial("COM5")
+		self.ser = serial.Serial("COM5")
 		# self.ser = serial.Serial("COM4")
-		self.ser = serial.Serial("COM11")
+		# self.ser = serial.Serial("COM11")
 		self.ser.baudrate = 115200
 		self.ser.close()
 		self.ser.open()
@@ -171,6 +171,8 @@ class freeKlampt():
 					if ( self.data_pre == self.data[0] ):
 						pass
 					else:
+						print(self.axisA)
+						print(self.axisB)
 						print(self.data[0],self.data[1],self.data[2],self.data[3])	
 						self.data_pre = self.data[0]	
 					
