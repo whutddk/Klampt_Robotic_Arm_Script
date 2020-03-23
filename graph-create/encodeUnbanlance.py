@@ -86,21 +86,24 @@ def create_cube(world):
 					y_size = 0.015 
 					y_loc = 0.13+0.015*(y-14)
 
-				if z < 2:
-					z_size = 0.015
-					z_loc = -0.264+0.015*z
-				elif z < 6:
-					z_size = 0.020
-					z_loc = -0.264 + 0.03 +0.020*(z-2)
-				elif z < 10:
-					z_size = 0.025
-					z_loc = -0.264 + 0.11 +0.025*(z-6)
-				elif z < 14:
-					z_size = 0.020
-					z_loc = -0.264 + 0.21 +0.020*(z-10)
-				else:
-					z_size = 0.015 
-					z_loc = -0.264 + 0.29 + 0.015*(z-14)
+				# if z < 2:
+				# 	z_size = 0.015
+				# 	z_loc = -0.264+0.015*z
+				# elif z < 6:
+				# 	z_size = 0.020
+				# 	z_loc = -0.264 + 0.03 +0.020*(z-2)
+				# elif z < 10:
+				# 	z_size = 0.025
+				# 	z_loc = -0.264 + 0.11 +0.025*(z-6)
+				# elif z < 14:
+				# 	z_size = 0.020
+				# 	z_loc = -0.264 + 0.21 +0.020*(z-10)
+				# else:
+				# 	z_size = 0.015 
+				# 	z_loc = -0.264 + 0.29 + 0.015*(z-14)
+
+				z_size = 0.020
+				z_loc = -0.264 + 0.020*z
 
 
 				grid.loadFile("../terrains/cube.off")
