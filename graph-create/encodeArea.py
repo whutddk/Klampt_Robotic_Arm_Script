@@ -135,8 +135,8 @@ if __name__ == "__main__":
 	ctlRobotPose = RobotPoser(ctlRobot)
 
 
-	prmRobotPose.set([0,0,0,0,0,0,0,0])
-	ctlRobotPose.set([0,0,0,0,0,0,0,0])
+	prmRobotPose.set([0,0.75,-1.15,0.34,0,1.49,0,0])
+	ctlRobotPose.set([0,0,-2.0,1.99,0,1.57,0,0])
 
 	while(1):
 		time.sleep(0.1)
